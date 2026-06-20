@@ -1,4 +1,4 @@
-modules = ["nodejs-24"]
+modules = ["nodejs-20", "web", "bash"]
 
 [deployment]
 router = "application"
@@ -33,7 +33,7 @@ args = "PORT=8080 pnpm --filter @workspace/api-server run dev & PORT=22817 BASE_
 waitForPort = 22817
 
 [agent]
-stack = "PNPM_WORKSPACE"
+stack = "BEST_EFFORT_FALLBACK"
 expertMode = true
 
 [postMerge]
@@ -54,3 +54,4 @@ externalPort = 3000
 
 [nix]
 packages = ["nano"]
+channel = "stable-25_05"
