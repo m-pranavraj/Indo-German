@@ -1,127 +1,361 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useListCourses, useListEnrollments } from '@workspace/api-client-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
-import { BookOpen, MapPin, Clock, CheckCircle2 } from 'lucide-react';
+import { ExternalLink, CheckCircle2, Clock, Play, Award, BookOpen, Scissors, Globe, Wrench } from 'lucide-react';
 
-const mockCourses = [
-  { id: 1, name: 'Intensive A1 German', languageLevel: 'A1', providerName: 'Goethe-Institut', durationWeeks: 8, feeAmount: 25000, mode: 'hybrid', city: 'Delhi' },
-  { id: 2, name: 'B1 Professional German', languageLevel: 'B1', providerName: 'Max Mueller Bhavan', durationWeeks: 12, feeAmount: 35000, mode: 'online' },
-  { id: 3, name: 'A2 Fast Track', languageLevel: 'A2', providerName: 'German Academy', durationWeeks: 6, feeAmount: 20000, mode: 'offline', city: 'Mumbai' },
+const CARD = '#183256';
+const CARD2 = '#102544';
+const ACCENT = '#FF9D00';
+const SUCCESS = '#00C853';
+const PURPLE = '#8B5CF6';
+const BORDER = 'rgba(255,157,0,0.15)';
+const TEXT2 = '#B8C4D9';
+
+const ACADEMY_URL = 'https://academy.koutuhal.in/account/login';
+
+const FEATURED_COURSES = [
+  {
+    id: 'barber',
+    title: 'Professional Barbering & Hair Styling',
+    subtitle: 'Friseur / Friseurin — Germany Ready',
+    provider: 'Koutuhal Academy',
+    duration: '12 weeks',
+    level: 'Beginner → Advanced',
+    language: 'A1+ German',
+    salary: '€22,000–€30,000/yr',
+    spots: 20,
+    enrolled: 847,
+    rating: 4.8,
+    badge: 'High Demand 🇩🇪',
+    badgeColor: ACCENT,
+    icon: <Scissors className="w-8 h-8" />,
+    color: '#EC4899',
+    gradient: 'linear-gradient(135deg, #4A0030 0%, #7B1050 50%, #4A0030 100%)',
+    skills: ['Hair cutting & styling', 'Beard & shaving techniques', 'German salon standards', 'Customer interaction (A1)', 'Colour & treatment'],
+    modules: 8,
+    certificate: 'IHK-aligned Barbering Certificate',
+    illustration: (
+      <div className="relative w-full h-full flex items-center justify-center">
+        <div className="absolute inset-0 flex items-center justify-center opacity-20">
+          <div className="grid grid-cols-4 gap-2">
+            {Array.from({ length: 16 }).map((_, i) => (
+              <div key={i} className="w-6 h-6 rounded-full" style={{ background: '#EC4899', opacity: 0.3 + (i % 4) * 0.2 }} />
+            ))}
+          </div>
+        </div>
+        <div className="relative z-10 flex flex-col items-center gap-2">
+          <div className="w-20 h-20 rounded-full flex items-center justify-center" style={{ background: 'rgba(236,72,153,0.2)', border: '2px solid rgba(236,72,153,0.5)' }}>
+            <Scissors className="w-10 h-10" style={{ color: '#EC4899' }} />
+          </div>
+          <div className="text-xs font-bold text-center" style={{ color: '#EC4899' }}>FRISEUR</div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'german',
+    title: 'German Language — A1 to B2 Complete',
+    subtitle: 'Deutsche Sprache für Berufseinsteiger',
+    provider: 'Koutuhal Academy',
+    duration: '24 weeks',
+    level: 'A1 → B2 (CEFR)',
+    language: 'Hindi / English',
+    salary: 'Unlocks all German jobs',
+    spots: 200,
+    enrolled: 3241,
+    rating: 4.9,
+    badge: 'Most Popular ⭐',
+    badgeColor: ACCENT,
+    icon: <Globe className="w-8 h-8" />,
+    color: ACCENT,
+    gradient: 'linear-gradient(135deg, #3A2000 0%, #6B3A00 50%, #3A2000 100%)',
+    skills: ['Speaking & pronunciation', 'Grammar fundamentals', 'Workplace German', 'Goethe exam prep', 'Reading & writing'],
+    modules: 24,
+    certificate: 'Goethe-Zertifikat Prep Certificate',
+    illustration: (
+      <div className="relative w-full h-full flex items-center justify-center">
+        <div className="absolute inset-0 flex items-center justify-center opacity-15">
+          {['Hallo', 'Danke', 'Bitte', 'Guten Morgen', 'Arbeit', 'Deutsch'].map((word, i) => (
+            <span key={i} className="absolute text-xs font-bold" style={{ color: ACCENT, top: `${15 + (i * 14)}%`, left: `${10 + (i % 3) * 30}%`, opacity: 0.4 + (i % 3) * 0.2 }}>{word}</span>
+          ))}
+        </div>
+        <div className="relative z-10 flex flex-col items-center gap-2">
+          <div className="w-20 h-20 rounded-full flex items-center justify-center" style={{ background: 'rgba(255,157,0,0.2)', border: '2px solid rgba(255,157,0,0.5)' }}>
+            <Globe className="w-10 h-10" style={{ color: ACCENT }} />
+          </div>
+          <div className="flex gap-1">
+            {['A1', 'A2', 'B1', 'B2'].map((l, i) => (
+              <span key={l} className="text-[10px] font-black px-1.5 py-0.5 rounded" style={{ background: i < 2 ? ACCENT : 'rgba(255,157,0,0.3)', color: '#07142B' }}>{l}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    ),
+  },
+  {
+    id: 'automotive',
+    title: 'Kfz-Mechatroniker (Automotive Technician)',
+    subtitle: 'Germany\'s #1 Most Hired Trade',
+    provider: 'Koutuhal Academy',
+    duration: '16 weeks',
+    level: 'Intermediate',
+    language: 'B1 German Recommended',
+    salary: '€36,000–€48,000/yr',
+    spots: 35,
+    enrolled: 1523,
+    rating: 4.7,
+    badge: '🚗 Top Salary',
+    badgeColor: SUCCESS,
+    icon: <Wrench className="w-8 h-8" />,
+    color: SUCCESS,
+    gradient: 'linear-gradient(135deg, #00250F 0%, #004A1E 50%, #00250F 100%)',
+    skills: ['Engine diagnostics (OBD2)', 'EV & high-voltage systems', 'IHK FOSA recognition', 'German workshop standards', 'Safety compliance'],
+    modules: 16,
+    certificate: 'Kfz-Mechatroniker Competency Certificate',
+    illustration: (
+      <div className="relative w-full h-full flex items-center justify-center">
+        <div className="absolute inset-0 opacity-10 flex items-center justify-center">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="absolute w-16 h-16 rounded-full border-2" style={{ borderColor: SUCCESS, transform: `rotate(${i * 45}deg) translateX(40px)`, opacity: 0.3 }} />
+          ))}
+        </div>
+        <div className="relative z-10 flex flex-col items-center gap-2">
+          <div className="w-20 h-20 rounded-full flex items-center justify-center" style={{ background: 'rgba(0,200,83,0.2)', border: '2px solid rgba(0,200,83,0.5)' }}>
+            <Wrench className="w-10 h-10" style={{ color: SUCCESS }} />
+          </div>
+          <div className="text-xs font-bold text-center" style={{ color: SUCCESS }}>KFZ-MECHATRONIKER</div>
+        </div>
+      </div>
+    ),
+  },
 ];
 
 const mockEnrollments = [
-  { id: 1, batchName: 'Intensive A1 German - Batch 2023-01', languageLevel: 'A1', status: 'passed', attendancePercent: 95, assessmentScore: 88, certificateIssued: true, enrolledAt: '2023-01-10T10:00:00Z' },
-  { id: 2, batchName: 'A2 Fast Track - Evening', languageLevel: 'A2', status: 'attending', attendancePercent: 82, assessmentScore: null, certificateIssued: false, enrolledAt: '2023-03-15T10:00:00Z' },
+  { id: 1, batchName: 'German A1 Intensive - Batch 2024-02', languageLevel: 'A1', status: 'attending', attendancePercent: 88, assessmentScore: null, certificateIssued: false, enrolledAt: '2024-03-15T10:00:00Z', progress: 68 },
+  { id: 2, batchName: 'A2 Fast Track - Morning Batch', languageLevel: 'A2', status: 'passed', attendancePercent: 95, assessmentScore: 88, certificateIssued: true, enrolledAt: '2023-09-10T10:00:00Z', progress: 100 },
 ];
 
 export function CandidateTraining() {
-  const { data: coursesData } = useListCourses();
   const { data: enrollmentsData } = useListEnrollments();
-
-  const courses = coursesData || mockCourses;
   const enrollments = enrollmentsData || mockEnrollments;
+  const [enrolledCourses, setEnrolledCourses] = useState<Set<string>>(new Set());
+
+  const handleEnroll = (courseId: string) => {
+    setEnrolledCourses(prev => new Set([...prev, courseId]));
+  };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 min-h-screen" style={{ background: '#07142B' }}>
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Language Training</h1>
-        <p className="text-slate-500 mt-1">Manage your German language courses and track progress.</p>
+        <h1 className="text-3xl font-bold text-white tracking-tight">Training & Courses</h1>
+        <p className="mt-1" style={{ color: TEXT2 }}>Skill up for Germany — certified courses designed for the Indo-German corridor.</p>
       </div>
 
-      <Tabs defaultValue="my-learning" className="w-full">
-        <TabsList className="mb-4">
-          <TabsTrigger value="my-learning">My Learning</TabsTrigger>
-          <TabsTrigger value="explore">Explore Courses</TabsTrigger>
+      <Tabs defaultValue="featured" className="w-full">
+        <TabsList className="mb-6 gap-1" style={{ background: CARD2, border: `1px solid ${BORDER}` }}>
+          <TabsTrigger value="featured" className="data-[state=active]:text-[#07142B]" style={{ '--tw-bg-opacity': 1 } as any}>🎓 Featured Courses</TabsTrigger>
+          <TabsTrigger value="my-learning">📚 My Learning</TabsTrigger>
         </TabsList>
-        
+
+        {/* ── Featured Courses ── */}
+        <TabsContent value="featured" className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {FEATURED_COURSES.map(course => {
+              const isEnrolled = enrolledCourses.has(course.id);
+              return (
+                <div
+                  key={course.id}
+                  className="rounded-2xl overflow-hidden flex flex-col transition-all hover:scale-[1.02] hover:shadow-2xl"
+                  style={{ background: CARD, border: `1px solid rgba(255,255,255,0.08)`, boxShadow: `0 4px 30px rgba(0,0,0,0.3)` }}
+                >
+                  {/* Course Visual Header */}
+                  <div className="relative h-44 overflow-hidden" style={{ background: course.gradient }}>
+                    <div className="absolute inset-0">
+                      {course.illustration}
+                    </div>
+                    {/* Badge */}
+                    <div className="absolute top-3 left-3">
+                      <span className="text-xs font-bold px-2.5 py-1 rounded-full" style={{ background: `${course.badgeColor}20`, color: course.badgeColor, border: `1px solid ${course.badgeColor}40` }}>
+                        {course.badge}
+                      </span>
+                    </div>
+                    {/* Provider */}
+                    <div className="absolute bottom-3 right-3 text-xs px-2 py-1 rounded-full font-medium" style={{ background: 'rgba(0,0,0,0.5)', color: '#fff', backdropFilter: 'blur(4px)' }}>
+                      {course.provider}
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-5 flex flex-col flex-1">
+                    <h3 className="font-bold text-white text-base leading-tight mb-1">{course.title}</h3>
+                    <p className="text-xs mb-3" style={{ color: course.color }}>{course.subtitle}</p>
+
+                    {/* Stats row */}
+                    <div className="grid grid-cols-2 gap-2 mb-4">
+                      {[
+                        { label: 'Duration', value: course.duration, icon: <Clock className="w-3 h-3" /> },
+                        { label: 'Level', value: course.level, icon: <Award className="w-3 h-3" /> },
+                        { label: 'Language', value: course.language, icon: <Globe className="w-3 h-3" /> },
+                        { label: 'Salary Range', value: course.salary, icon: <BookOpen className="w-3 h-3" /> },
+                      ].map(stat => (
+                        <div key={stat.label} className="rounded-lg p-2" style={{ background: CARD2 }}>
+                          <div className="flex items-center gap-1 mb-0.5" style={{ color: TEXT2 }}>
+                            {stat.icon}
+                            <span className="text-[10px]">{stat.label}</span>
+                          </div>
+                          <div className="text-xs font-semibold text-white truncate">{stat.value}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Skills */}
+                    <div className="mb-4 flex-1">
+                      <div className="text-xs font-medium mb-2" style={{ color: TEXT2 }}>What you'll learn:</div>
+                      <ul className="space-y-1">
+                        {course.skills.slice(0, 3).map((skill, i) => (
+                          <li key={i} className="flex items-center gap-2 text-xs" style={{ color: TEXT2 }}>
+                            <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: course.color }} />
+                            {skill}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Enrollment stats */}
+                    <div className="flex items-center gap-3 mb-4 text-xs" style={{ color: TEXT2 }}>
+                      <span>⭐ {course.rating}</span>
+                      <span>👥 {course.enrolled.toLocaleString()} enrolled</span>
+                      <span style={{ color: course.spots <= 10 ? '#EF4444' : SUCCESS }}>{course.spots} spots left</span>
+                    </div>
+
+                    {/* Certificate */}
+                    <div className="text-xs mb-4 px-3 py-2 rounded-lg" style={{ background: 'rgba(255,157,0,0.07)', border: '1px solid rgba(255,157,0,0.15)', color: ACCENT }}>
+                      🏆 {course.certificate}
+                    </div>
+
+                    {/* CTAs */}
+                    <div className="flex gap-2">
+                      <a
+                        href={ACADEMY_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-bold transition-all hover:opacity-90 active:scale-95"
+                        style={{ background: course.color === ACCENT ? ACCENT : course.color, color: '#07142B' }}
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        Go to Course
+                      </a>
+                      {!isEnrolled ? (
+                        <button
+                          onClick={() => handleEnroll(course.id)}
+                          className="px-3 py-2.5 rounded-xl text-xs font-medium transition-all"
+                          style={{ background: CARD2, color: TEXT2, border: `1px solid ${BORDER}` }}
+                        >
+                          Enrol
+                        </button>
+                      ) : (
+                        <div className="px-3 py-2.5 rounded-xl flex items-center" style={{ background: 'rgba(0,200,83,0.1)', color: SUCCESS }}>
+                          <CheckCircle2 className="w-4 h-4" />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Browse more on Academy */}
+          <div className="rounded-2xl p-6 text-center" style={{ background: 'linear-gradient(135deg,#102544,#183256)', border: `1px solid ${BORDER}` }}>
+            <div className="text-lg font-bold text-white mb-2">Explore 50+ More Courses</div>
+            <p className="text-sm mb-4" style={{ color: TEXT2 }}>Full catalog of Germany-ready skill courses on Koutuhal Academy — carpentry, plumbing, nursing assistants, IT, hospitality & more.</p>
+            <a
+              href={ACADEMY_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold transition-all hover:opacity-90"
+              style={{ background: ACCENT, color: '#07142B' }}
+            >
+              <Play className="w-4 h-4" />
+              Browse All Courses on Koutuhal Academy
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </div>
+        </TabsContent>
+
+        {/* ── My Learning ── */}
         <TabsContent value="my-learning" className="space-y-4">
-          {enrollments.map(enrollment => (
-            <Card key={enrollment.id} className="border-slate-200 shadow-sm overflow-hidden">
+          {enrollments.length === 0 && (
+            <div className="text-center py-16 rounded-2xl" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
+              <BookOpen className="w-12 h-12 mx-auto mb-3" style={{ color: TEXT2 }} />
+              <div className="text-lg font-semibold text-white mb-1">No courses yet</div>
+              <div className="text-sm mb-4" style={{ color: TEXT2 }}>Enrol in a featured course to start your learning journey</div>
+              <a href={ACADEMY_URL} target="_blank" rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold"
+                style={{ background: ACCENT, color: '#07142B' }}>
+                Browse Courses <ExternalLink className="w-4 h-4" />
+              </a>
+            </div>
+          )}
+          {enrollments.map((enrollment: any) => (
+            <div key={enrollment.id} className="rounded-2xl overflow-hidden" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
               <div className="flex flex-col md:flex-row">
-                <div className="bg-slate-900 text-white p-6 flex flex-col justify-center items-center min-w-[150px]">
-                  <span className="text-4xl font-bold text-amber-500">{enrollment.languageLevel}</span>
-                  <Badge variant="outline" className="mt-2 bg-white/10 text-white border-white/20">
-                    {enrollment.status.toUpperCase()}
-                  </Badge>
+                <div className="text-white p-6 flex flex-col justify-center items-center min-w-[160px]"
+                  style={{ background: 'linear-gradient(135deg,#07142B,#102544)' }}>
+                  <span className="text-4xl font-black mb-2" style={{ color: ACCENT }}>{enrollment.languageLevel}</span>
+                  <div className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
+                    style={{ background: enrollment.status === 'passed' ? 'rgba(0,200,83,0.2)' : 'rgba(255,157,0,0.2)', color: enrollment.status === 'passed' ? SUCCESS : ACCENT }}>
+                    {enrollment.status === 'passed' ? 'COMPLETED' : 'IN PROGRESS'}
+                  </div>
                 </div>
                 <div className="p-6 flex-1 flex flex-col justify-between">
                   <div>
-                    <h3 className="text-xl font-bold text-slate-800">{enrollment.batchName}</h3>
-                    <div className="flex gap-4 mt-2 text-sm text-slate-500">
+                    <h3 className="text-lg font-bold text-white mb-1">{enrollment.batchName}</h3>
+                    <div className="flex gap-4 text-sm" style={{ color: TEXT2 }}>
                       <span>Enrolled: {new Date(enrollment.enrolledAt).toLocaleDateString()}</span>
                       {enrollment.certificateIssued && (
-                        <span className="flex items-center text-green-600 font-medium">
-                          <CheckCircle2 className="w-4 h-4 mr-1" /> Certificate Issued
+                        <span className="flex items-center gap-1 font-medium" style={{ color: SUCCESS }}>
+                          <CheckCircle2 className="w-4 h-4" /> Certificate Issued
                         </span>
                       )}
                     </div>
                   </div>
-                  
                   {enrollment.status === 'attending' && (
-                    <div className="mt-6">
+                    <div className="mt-4">
                       <div className="flex justify-between text-sm mb-1.5">
-                        <span className="font-medium text-slate-700">Attendance</span>
-                        <span className="text-slate-500">{enrollment.attendancePercent}%</span>
+                        <span className="font-medium text-white">Attendance</span>
+                        <span style={{ color: TEXT2 }}>{enrollment.attendancePercent}%</span>
                       </div>
-                      <Progress value={enrollment.attendancePercent || 0} className="h-2 bg-slate-100" indicatorClassName={enrollment.attendancePercent! >= 80 ? 'bg-green-500' : 'bg-amber-500'} />
+                      <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.08)' }}>
+                        <div className="h-2 rounded-full transition-all" style={{ width: `${enrollment.attendancePercent}%`, background: enrollment.attendancePercent >= 80 ? SUCCESS : ACCENT }} />
+                      </div>
                     </div>
                   )}
-
                   {enrollment.status === 'passed' && (
-                    <div className="mt-6 flex gap-6">
+                    <div className="mt-4 flex gap-6 items-end">
                       <div>
-                        <p className="text-sm text-slate-500">Final Score</p>
-                        <p className="text-xl font-bold text-slate-800">{enrollment.assessmentScore}%</p>
+                        <p className="text-xs" style={{ color: TEXT2 }}>Final Score</p>
+                        <p className="text-2xl font-black" style={{ color: SUCCESS }}>{enrollment.assessmentScore}%</p>
                       </div>
                       <div>
-                        <p className="text-sm text-slate-500">Attendance</p>
-                        <p className="text-xl font-bold text-slate-800">{enrollment.attendancePercent}%</p>
+                        <p className="text-xs" style={{ color: TEXT2 }}>Attendance</p>
+                        <p className="text-2xl font-black text-white">{enrollment.attendancePercent}%</p>
                       </div>
-                      <div className="ml-auto flex items-end">
-                        <Button variant="outline" className="border-slate-200">Download Certificate</Button>
+                      <div className="ml-auto">
+                        <a href={ACADEMY_URL} target="_blank" rel="noopener noreferrer"
+                          className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold"
+                          style={{ background: SUCCESS, color: '#07142B' }}>
+                          <Award className="w-4 h-4" /> View Certificate
+                        </a>
                       </div>
                     </div>
                   )}
                 </div>
               </div>
-            </Card>
-          ))}
-        </TabsContent>
-
-        <TabsContent value="explore" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {courses.map(course => (
-            <Card key={course.id} className="border-slate-200 shadow-sm flex flex-col">
-              <CardHeader className="pb-3 border-b border-slate-100">
-                <div className="flex justify-between items-start mb-2">
-                  <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-200 border-none">{course.languageLevel}</Badge>
-                  <Badge variant="outline" className="text-slate-500 capitalize">{course.mode}</Badge>
-                </div>
-                <CardTitle className="text-lg leading-tight">{course.name}</CardTitle>
-                <CardDescription className="text-slate-500 font-medium">{course.providerName}</CardDescription>
-              </CardHeader>
-              <CardContent className="py-4 space-y-3 flex-1">
-                <div className="flex items-center text-sm text-slate-600">
-                  <Clock className="w-4 h-4 mr-2 text-slate-400" />
-                  {course.durationWeeks} Weeks
-                </div>
-                {course.city && (
-                  <div className="flex items-center text-sm text-slate-600">
-                    <MapPin className="w-4 h-4 mr-2 text-slate-400" />
-                    {course.city}
-                  </div>
-                )}
-                <div className="flex items-center text-sm text-slate-600 font-medium mt-4">
-                  ₹ {course.feeAmount?.toLocaleString('en-IN')}
-                </div>
-              </CardContent>
-              <CardFooter className="pt-0 pb-4">
-                <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white">View Batches</Button>
-              </CardFooter>
-            </Card>
+            </div>
           ))}
         </TabsContent>
       </Tabs>

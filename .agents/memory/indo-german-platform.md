@@ -25,31 +25,42 @@ description: Full-stack India→Germany skilled migration platform — auth, AI,
 | Government | official@msde.gov.in |
 | Admin | admin@mobicorridor.in |
 
-## Color System
-- Navy: #0F1B35 (sidebar, headers)
-- Gold/Amber: #D97706 (accents, CTA, AI)
-- Steel Blue: #1E3A5F (card backgrounds)
-- Emerald: #059669 (success)
-- No purple, no neon — professional
+## Color System (Phase 2 — Premium German Corporate)
+- BG: #07142B (deep navy)
+- CARD: #183256
+- CARD2: #102544
+- ACCENT: #FF9D00 (gold)
+- SUCCESS: #00C853
+- PURPLE: #8B5CF6
+- All pages use this system consistently
 
-## AI Routes (no API key needed — rule-based)
-- POST /api/ai/chat → pre-scripted intelligent responses by keyword matching; returns `{ response, suggestions, links }`
-- POST /api/ai/roadmap → personalized journey roadmap with phases, costs (INR+EUR), timeline
-- POST /api/ai/resume-suggest → occupation-specific resume improvements + ATS score
-- GET /api/geo/states → 20 Indian states with district lists
+## AI Routes (GROQ llama-3.1-8b-instant)
+- POST /api/ai/onboarding — full AI onboarding, generates readinessScore, roadmap[], estimatedTimeline, germanResume, keyStrengths
+- POST /api/ai/chat → intelligent responses by keyword matching
+- POST /api/ai/resume-suggest → German Lebenslauf + translation
+- POST /api/ai/gap-analysis
 
-**Why:** All AI works without any API key for demo purposes — rule-based logic in `artifacts/api-server/src/routes/ai.ts`
+**Why:** GROQ_API_KEY is wired; fallback rule-based if key absent.
 
 ## DB Schema Tables (14 total)
 users, candidates, employers, vacancies, applications, documents, recognition_cases, enrollments, batches, courses, visa_cases, interviews, offers, welfare_tickets, notifications, certifications
 
 ## Frontend Pages (all wired in App.tsx — zero Placeholders)
-Candidate: dashboard, roadmap (AI), resume (AI), journey, readiness, documents, certifications, training, recognition, applications, visa, welfare, profile
+Candidate: dashboard, roadmap (AI), resume (AI), journey, readiness, documents, certifications, training, recognition, applications, visa, welfare, profile, network
 Employer: dashboard, vacancies, matches (/:id/matches), applications, interviews, offers, profile
 Trainer: dashboard, courses, batches, students
 Facilitator: dashboard, candidates, recognition, visa, welfare
 Government: dashboard, pipeline
 Admin: dashboard, candidates, employers, documents
+
+## Academy Course Link
+All training "Go to Course" buttons link to: https://academy.koutuhal.in/account/login
+
+## AIOnboarding Flight Animation
+- `FlightCountdownBanner` component added to result screen
+- Parses months from `estimatedTimeline` string (e.g. "14–18 months" → 16)
+- Animated plane flies across India→Germany path with milestones
+- Color coded: green ≤8 months, amber ≤14, purple >14
 
 ## Global Components
 - `AIChatPopup.tsx` — floating bottom-right, calls /api/ai/chat, streaming-style dots loader, suggestion chips, navigable links
@@ -57,3 +68,7 @@ Admin: dashboard, candidates, employers, documents
 
 ## Key packages in mobility-platform
 axios, date-fns (both installed as deps)
+
+## Pre-existing TypeScript Errors (not introduced by Phase 2)
+- TS6305 on api-client-react dist: pre-existing, does not affect runtime (Vite doesn't use tsc for bundling)
+- Implicit `any` in facilitator/trainer pages: pre-existing, low severity

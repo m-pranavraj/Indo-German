@@ -301,6 +301,64 @@ export function GovernmentDashboard() {
               </div>
             </div>
           </div>
+
+          {/* Deep Financial Stats */}
+          <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
+            <h3 className="text-lg font-bold text-white mb-1">Revenue & Invoicing — Recruitment Agency Transactions</h3>
+            <p className="text-sm mb-5" style={{ color: TEXT2 }}>Total clearances, agency fees, visa expenditure and salary disbursement intelligence</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+              {[
+                { label: 'Total Revenue Generated', sublabel: 'Platform & placement fees', value: '₹184 Cr', color: SUCCESS, icon: '💰' },
+                { label: 'Invoices Cleared', sublabel: 'To recruitment agencies', value: '₹42.8 Cr', color: ACCENT, icon: '🧾' },
+                { label: 'Total Visa Expenditure', sublabel: 'All candidates combined', value: '₹5.2 Cr', color: BLUE, icon: '🛂' },
+                { label: 'Net Salary Remittances', sublabel: 'India ← Germany (est.)', value: '₹780 Cr', color: PURPLE, icon: '💸' },
+              ].map((item, i) => (
+                <div key={i} className="rounded-xl p-4" style={{ background: CARD2, border: `1px solid ${item.color}25` }}>
+                  <div className="text-2xl mb-2">{item.icon}</div>
+                  <div className="text-2xl font-black mb-0.5" style={{ color: item.color }}>{item.value}</div>
+                  <div className="text-sm font-semibold text-white mb-0.5">{item.label}</div>
+                  <div className="text-xs" style={{ color: TEXT2 }}>{item.sublabel}</div>
+                </div>
+              ))}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <div className="text-sm font-semibold text-white mb-3">Agency Invoice Breakdown</div>
+                <div className="space-y-2">
+                  {[
+                    { label: 'Placement Fee (per hire)', value: '₹45,000–₹1.2 Lakh', color: ACCENT },
+                    { label: 'Total Invoices Raised', value: '8,542 invoices', color: TEXT },
+                    { label: 'Avg Invoice Value', value: '₹50,000', color: SUCCESS },
+                    { label: 'Disputed / Pending', value: '₹2.1 Cr (4.9%)', color: DANGER },
+                    { label: 'Fully Settled', value: '₹40.7 Cr (95.1%)', color: SUCCESS },
+                  ].map((row, i) => (
+                    <div key={i} className="flex justify-between text-xs py-1.5 border-b" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
+                      <span style={{ color: TEXT2 }}>{row.label}</span>
+                      <span className="font-semibold" style={{ color: row.color }}>{row.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <div className="text-sm font-semibold text-white mb-3">Salary & CTC Intelligence</div>
+                <div className="space-y-2">
+                  {[
+                    { label: 'Avg Annual CTC (Germany)', value: '€42,000', color: ACCENT },
+                    { label: 'Avg Net Salary / month', value: '€2,833 (~₹2.6 L)', color: SUCCESS },
+                    { label: 'Highest CTC role (Nurse)', value: '€52,000/yr', color: SUCCESS },
+                    { label: 'Lowest CTC role (Domestic Help)', value: '€26,400/yr', color: '#F59E0B' },
+                    { label: 'Total Annual Salary Pool', value: '€287 Million', color: ACCENT },
+                    { label: 'Employer Social Contribution', value: '~20% on top of CTC', color: PURPLE },
+                  ].map((row, i) => (
+                    <div key={i} className="flex justify-between text-xs py-1.5 border-b" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
+                      <span style={{ color: TEXT2 }}>{row.label}</span>
+                      <span className="font-semibold" style={{ color: row.color }}>{row.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 

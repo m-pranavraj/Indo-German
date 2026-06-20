@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'wouter';
-import { Bot, Sparkles, ArrowRight, CheckCircle2, Download, RotateCcw, Loader2, Euro, Clock, ChevronRight } from 'lucide-react';
+import { Bot, Sparkles, ArrowRight, CheckCircle2, Download, RotateCcw, Loader2, Euro, Clock, ChevronRight, Plane } from 'lucide-react';
 import axios from 'axios';
 
 const BG = '#07142B';
@@ -24,6 +24,163 @@ const QUESTIONS = [
   { id: 'germanLevel', question: "What's your current German language level? 🇩🇪", placeholder: '', autoFill: 'A2', type: 'select', options: ['None / A0', 'A1 (Beginner)', 'A2 (Basic)', 'B1 (Intermediate)', 'B2 (Upper-Intermediate)', 'C1 (Advanced)'], readinessContrib: 20 },
   { id: 'hasPassport', question: "Do you have a valid Indian passport? 🛂", placeholder: '', autoFill: 'yes', type: 'select', options: ['yes', 'no', 'Applied — awaiting'], readinessContrib: 15 },
 ];
+
+// ── Flight Countdown Banner ──
+function FlightCountdownBanner({ timeline, name }: { timeline?: string; name?: string }) {
+  const [planePos, setPlanePos] = React.useState(0);
+  const [visible, setVisible] = React.useState(false);
+
+  // Parse months from timeline string like "14–18 months", "12 months", "About 10 months"
+  const months = React.useMemo(() => {
+    if (!timeline) return 12;
+    const nums = timeline.match(/\d+/g);
+    if (!nums) return 12;
+    const parsed = nums.map(Number);
+    return Math.round(parsed.reduce((a, b) => a + b, 0) / parsed.length);
+  }, [timeline]);
+
+  React.useEffect(() => {
+    const timer = setTimeout(() => setVisible(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  React.useEffect(() => {
+    let frame: number;
+    let start: number | null = null;
+    const duration = 2400;
+    const animate = (ts: number) => {
+      if (!start) start = ts;
+      const progress = Math.min((ts - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setPlanePos(eased * 85);
+      if (progress < 1) frame = requestAnimationFrame(animate);
+    };
+    if (visible) frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
+  }, [visible]);
+
+  const getColor = () => months <= 8 ? '#00C853' : months <= 14 ? '#FF9D00' : '#8B5CF6';
+  const getMessage = () => months <= 6 ? 'Almost there! 🚀' : months <= 12 ? 'Great progress — keep going!' : 'Your journey is mapped out!';
+
+  return (
+    <div
+      className="rounded-2xl overflow-hidden transition-all duration-700"
+      style={{
+        background: 'linear-gradient(135deg, #030E1E 0%, #07142B 40%, #0D1F3C 100%)',
+        border: `1px solid ${getColor()}40`,
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(20px)',
+        boxShadow: `0 0 40px ${getColor()}15`,
+      }}
+    >
+      {/* Stars background */}
+      <div className="relative p-6 md:p-8">
+        <div className="absolute inset-0 overflow-hidden">
+          {Array.from({ length: 20 }).map((_, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full"
+              style={{
+                width: Math.random() * 2 + 1,
+                height: Math.random() * 2 + 1,
+                background: '#fff',
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+                opacity: Math.random() * 0.5 + 0.1,
+              }}
+            />
+          ))}
+        </div>
+
+        <div className="relative z-10">
+          {/* Header */}
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-2xl">🇮🇳</span>
+            <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.1)' }} />
+            <span className="text-xs font-medium px-2" style={{ color: 'rgba(255,255,255,0.4)' }}>your flight path</span>
+            <div className="flex-1 h-px" style={{ background: 'rgba(255,255,255,0.1)' }} />
+            <span className="text-2xl">🇩🇪</span>
+          </div>
+
+          {/* Main headline */}
+          <div className="text-center mb-6">
+            <div className="text-sm mb-2" style={{ color: 'rgba(255,255,255,0.5)' }}>
+              {name ? `${name}, you are` : 'You are'}
+            </div>
+            <div className="flex items-baseline justify-center gap-3 flex-wrap">
+              <span
+                className="font-black leading-none"
+                style={{
+                  fontSize: 'clamp(3rem, 10vw, 5rem)',
+                  color: getColor(),
+                  textShadow: `0 0 30px ${getColor()}60`,
+                }}
+              >
+                {months}
+              </span>
+              <span className="text-2xl font-bold text-white">months</span>
+              <span className="text-xl font-medium" style={{ color: 'rgba(255,255,255,0.6)' }}>away from</span>
+              <span className="text-2xl font-bold text-white flex items-center gap-2">
+                flying to Germany
+                <span className="text-3xl">✈️</span>
+              </span>
+            </div>
+            <div className="mt-2 text-sm font-medium" style={{ color: getColor() }}>{getMessage()}</div>
+          </div>
+
+          {/* Animated flight path */}
+          <div className="relative h-12 mb-4">
+            {/* Ground track */}
+            <div className="absolute inset-y-1/2 left-0 right-0 h-px" style={{ background: 'rgba(255,255,255,0.07)' }} />
+            {/* Dashed completed path */}
+            <div
+              className="absolute inset-y-1/2 left-0 h-0.5 rounded-full transition-all"
+              style={{
+                width: `${planePos}%`,
+                background: `linear-gradient(90deg, ${getColor()}, ${getColor()}80)`,
+                boxShadow: `0 0 6px ${getColor()}`,
+              }}
+            />
+            {/* Plane icon */}
+            <div
+              className="absolute top-1/2 -translate-y-1/2 transition-none"
+              style={{ left: `${planePos}%`, transform: `translateX(-50%) translateY(-50%)` }}
+            >
+              <div
+                className="w-8 h-8 rounded-full flex items-center justify-center"
+                style={{ background: getColor(), boxShadow: `0 0 12px ${getColor()}` }}
+              >
+                <Plane className="w-4 h-4 text-white rotate-45" />
+              </div>
+            </div>
+            {/* Origin / Destination */}
+            <div className="absolute left-0 -bottom-1 text-xs font-bold" style={{ color: 'rgba(255,255,255,0.4)' }}>🇮🇳 India</div>
+            <div className="absolute right-0 -bottom-1 text-xs font-bold" style={{ color: 'rgba(255,255,255,0.4)' }}>Germany 🇩🇪</div>
+          </div>
+
+          {/* Month markers */}
+          <div className="flex justify-between mt-6 pt-4 border-t" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
+            {[
+              { label: 'Training', months: Math.round(months * 0.25) },
+              { label: 'Credential Recognition', months: Math.round(months * 0.5) },
+              { label: 'Employer Match', months: Math.round(months * 0.7) },
+              { label: '✈ Fly to Germany', months },
+            ].map((milestone, i) => (
+              <div key={i} className="flex flex-col items-center text-center">
+                <div className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mb-1"
+                  style={{ background: `${getColor()}20`, border: `1px solid ${getColor()}50`, color: getColor() }}>
+                  {i + 1}
+                </div>
+                <div className="text-[10px] font-medium text-white hidden sm:block">{milestone.label}</div>
+                <div className="text-[10px]" style={{ color: 'rgba(255,255,255,0.4)' }}>Mo. {milestone.months}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // Typing animation hook
 function useTypewriter(text: string, speed = 35) {
@@ -419,6 +576,9 @@ export function AIOnboarding() {
           ) : aiResult ? (
             <>
               {error && <div className="text-sm text-amber-400 bg-amber-400/10 border border-amber-400/20 rounded-lg p-3">{error}</div>}
+
+              {/* ✈ "Months Away" Flight Animation Banner */}
+              <FlightCountdownBanner timeline={aiResult.estimatedTimeline} name={answers.name} />
 
               {/* Hero readiness */}
               <div className="rounded-2xl p-6" style={{ background: 'linear-gradient(135deg,#102544,#183256)', border: `1px solid ${BORDER}` }}>
