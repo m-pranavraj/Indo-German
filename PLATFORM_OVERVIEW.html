@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Indo German Mobility Corridor — Complete Platform Deep Overview</title>
+<style>
+:root{
+  --navy:#0F1B35;--navy-dark:#091226;--navy-mid:#1E3A5F;
+  --gold:#D97706;--gold-light:#F59E0B;--gold-muted:#FEF3C7;
+  --emerald:#059669;--emerald-light:#D1FAE5;
+  --red:#DC2626;--purple:#7C3AED;--blue:#1D4ED8;--teal:#0F766E;
+  --slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;
+  --slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;
+  --slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;
+  --slate-900:#0F172A;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--slate-50);color:var(--slate-800);line-height:1.6;}
+
+/* NAV */
+.top-nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(9,18,38,0.97);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+  padding:0 40px;
+  display:flex;align-items:center;gap:0;overflow-x:auto;
+}
+.nav-logo{color:var(--gold);font-weight:800;font-size:15px;margin-right:32px;white-space:nowrap;padding:16px 0;}
+.nav-link{
+  color:rgba(255,255,255,0.55);font-size:12px;font-weight:600;
+  letter-spacing:0.5px;text-transform:uppercase;
+  padding:16px 16px;cursor:pointer;white-space:nowrap;
+  border-bottom:2px solid transparent;transition:all 0.15s;text-decoration:none;
+}
+.nav-link:hover{color:white;border-bottom-color:var(--gold);}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-mid) 100%);
+  color:white;padding:100px 40px 120px;text-align:center;position:relative;overflow:hidden;
+}
+.hero-grid-bg{
+  position:absolute;inset:0;opacity:0.04;
+  background-image:linear-gradient(rgba(255,255,255,0.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.5) 1px,transparent 1px);
+  background-size:60px 60px;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(217,119,6,0.15);border:1px solid rgba(217,119,6,0.35);
+  color:var(--gold-light);font-size:11px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;padding:7px 20px;border-radius:100px;margin-bottom:28px;
+}
+.hero h1{font-size:clamp(36px,6vw,68px);font-weight:900;letter-spacing:-2px;margin-bottom:20px;line-height:1.05;}
+.hero h1 .accent{color:var(--gold);}
+.hero-sub{font-size:18px;color:rgba(255,255,255,0.65);max-width:700px;margin:0 auto 60px;line-height:1.7;}
+.stats-row{display:flex;justify-content:center;gap:56px;flex-wrap:wrap;}
+.stat{text-align:center;}
+.stat-n{font-size:44px;font-weight:900;color:var(--gold);line-height:1;}
+.stat-l{font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:1.5px;text-transform:uppercase;margin-top:6px;}
+
+/* SECTION */
+.section{padding:80px 40px;max-width:1240px;margin:0 auto;}
+.section-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);background:var(--gold-muted);padding:4px 16px;border-radius:100px;margin-bottom:14px;}
+.section-title{font-size:clamp(26px,3.5vw,42px);font-weight:900;color:var(--navy);letter-spacing:-1px;margin-bottom:12px;}
+.section-sub{color:var(--slate-500);font-size:16px;max-width:640px;line-height:1.7;}
+.section-header{margin-bottom:56px;}
+.center{text-align:center;}.center .section-sub{margin:0 auto;}
+
+hr.divider{border:none;border-top:1px solid var(--slate-200);}
+
+/* ── ARCHITECTURE DIAGRAM ── */
+.arch-wrap{background:linear-gradient(160deg,var(--navy-dark),#0d2545,var(--navy-mid));border-radius:24px;padding:56px;position:relative;overflow:hidden;}
+.arch-wrap::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,rgba(217,119,6,0.06) 0%,transparent 60%);}
+.arch-layer{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:16px;padding:22px 28px;margin-bottom:4px;position:relative;z-index:1;}
+.arch-layer-title{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.arch-pills{display:flex;flex-wrap:wrap;gap:8px;}
+.pill{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:5px 12px;font-size:12px;color:rgba(255,255,255,0.85);}
+.pill.gold{background:rgba(217,119,6,0.18);border-color:rgba(217,119,6,0.4);color:var(--gold-light);}
+.pill.green{background:rgba(5,150,105,0.18);border-color:rgba(5,150,105,0.4);color:#34D399;}
+.pill.red{background:rgba(220,38,38,0.18);border-color:rgba(220,38,38,0.4);color:#FCA5A5;}
+.arch-arrow{text-align:center;padding:10px 0;color:rgba(255,255,255,0.2);font-size:22px;position:relative;z-index:1;}
+
+/* ── FLOW DIAGRAM (SVG-style HTML) ── */
+.flow-diagram{overflow-x:auto;padding:8px 0 24px;}
+.flow-row{display:flex;align-items:stretch;gap:0;min-width:900px;}
+.flow-node{
+  flex:1;min-width:100px;
+  display:flex;flex-direction:column;align-items:center;position:relative;
+}
+.flow-node-box{
+  width:100%;border-radius:12px;padding:14px 8px;text-align:center;
+  border:2px solid;transition:all 0.2s;cursor:default;position:relative;z-index:1;
+}
+.flow-node-box.done{background:var(--emerald-light);border-color:var(--emerald);color:var(--emerald);}
+.flow-node-box.active{background:var(--gold-muted);border-color:var(--gold);color:var(--navy);}
+.flow-node-box.pending{background:white;border-color:var(--slate-200);color:var(--slate-600);}
+.flow-node-box.locked{background:var(--slate-100);border-color:var(--slate-200);color:var(--slate-400);}
+.flow-node-num{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin:0 auto 8px;}
+.done .flow-node-num{background:var(--emerald);color:white;}
+.active .flow-node-num{background:var(--gold);color:white;}
+.pending .flow-node-num,.locked .flow-node-num{background:var(--slate-200);color:var(--slate-500);}
+.flow-node-label{font-size:11px;font-weight:700;line-height:1.35;}
+.flow-node-sub{font-size:10px;margin-top:4px;opacity:0.75;line-height:1.3;}
+.flow-connector{display:flex;align-items:center;padding-top:30px;color:var(--slate-300);font-size:22px;flex-shrink:0;width:20px;justify-content:center;}
+.flow-legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:16px;font-size:12px;color:var(--slate-500);}
+.flow-legend-item{display:flex;align-items:center;gap:6px;}
+.legend-dot{width:10px;height:10px;border-radius:3px;}
+
+/* ── JOURNEY DEEP DIVE ── */
+.journey-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:32px;}
+.journey-tab{
+  padding:8px 18px;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;
+  background:white;border:1.5px solid var(--slate-200);color:var(--slate-600);
+  transition:all 0.15s;
+}
+.journey-tab.active{background:var(--navy);border-color:var(--navy);color:white;}
+.journey-panel{display:none;}.journey-panel.active{display:block;}
+
+.journey-diagram{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  gap:0;
+  border:1px solid var(--slate-200);
+  border-radius:20px;
+  overflow:hidden;
+  background:white;
+  box-shadow:0 4px 32px rgba(0,0,0,0.06);
+}
+.journey-left{
+  background:linear-gradient(180deg,var(--navy-dark),var(--navy-mid));
+  padding:40px 32px;
+  color:white;
+  min-width:220px;
+  display:flex;flex-direction:column;justify-content:flex-start;
+}
+.journey-left-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.journey-left-name{font-size:22px;font-weight:800;margin-bottom:4px;}
+.journey-left-sub{font-size:12px;color:rgba(255,255,255,0.55);margin-bottom:24px;}
+.journey-cred{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:12px;margin-bottom:12px;}
+.journey-cred-label{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:4px;}
+.journey-cred-value{font-size:12px;font-family:monospace;color:rgba(255,255,255,0.85);}
+.journey-pages-list{margin-top:20px;}
+.journey-pages-title{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:10px;}
+.journey-page-item{
+  display:flex;align-items:center;gap:8px;
+  font-size:12px;color:rgba(255,255,255,0.65);
+  padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.journey-page-item:last-child{border-bottom:none;}
+.journey-page-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+
+.journey-right{padding:40px;overflow:hidden;}
+.journey-steps-title{font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--slate-400);margin-bottom:24px;}
+.journey-step-flow{display:flex;flex-direction:column;gap:0;}
+.jstep{
+  display:flex;gap:20px;align-items:flex-start;position:relative;
+  padding-bottom:0;
+}
+.jstep::before{
+  content:'';position:absolute;left:19px;top:40px;bottom:-1px;
+  width:2px;background:var(--slate-100);
+  display:block;
+}
+.jstep:last-child::before{display:none;}
+.jstep-icon-col{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+.jstep-circle{
+  width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;border:2px solid;flex-shrink:0;
+  background:white;
+}
+.jstep-body{flex:1;padding-bottom:28px;}
+.jstep-header{display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap;}
+.jstep-num{font-size:10px;font-weight:700;color:var(--slate-400);letter-spacing:1px;}
+.jstep-title{font-size:15px;font-weight:700;color:var(--navy);}
+.jstep-badges{display:flex;gap:6px;flex-wrap:wrap;}
+.jbadge{
+  font-size:10px;font-weight:600;padding:2px 9px;border-radius:100px;
+  background:var(--gold-muted);color:var(--gold);border:1px solid rgba(217,119,6,0.2);
+}
+.jbadge.green{background:var(--emerald-light);color:var(--emerald);border-color:rgba(5,150,105,0.2);}
+.jbadge.navy{background:rgba(15,27,53,0.08);color:var(--navy);border-color:rgba(15,27,53,0.15);}
+.jbadge.red{background:#FEE2E2;color:var(--red);border-color:rgba(220,38,38,0.2);}
+.jstep-desc{font-size:13px;color:var(--slate-600);line-height:1.65;margin-bottom:8px;}
+.jstep-details{display:flex;flex-wrap:wrap;gap:6px;}
+.jdetail{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:11px;color:var(--slate-500);
+  background:var(--slate-50);border:1px solid var(--slate-200);
+  border-radius:6px;padding:3px 10px;
+}
+.jdetail::before{content:'›';color:var(--gold);font-weight:700;}
+
+/* Color states for step circles */
+.jstep.done .jstep-circle{background:var(--emerald-light);border-color:var(--emerald);color:var(--emerald);}
+.jstep.active .jstep-circle{background:var(--gold-muted);border-color:var(--gold);color:var(--gold);}
+.jstep.info .jstep-circle{background:#EFF6FF;border-color:#3B82F6;color:#3B82F6;}
+.jstep.warn .jstep-circle{background:#FEF3C7;border-color:var(--gold);color:var(--gold);}
+.jstep.neutral .jstep-circle{background:var(--slate-50);border-color:var(--slate-300);color:var(--slate-500);}
+
+/* ── STAKEHOLDER GRID ── */
+.stakeholder-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:24px;}
+.stakeholder-card{background:white;border-radius:20px;overflow:hidden;border:1px solid var(--slate-200);box-shadow:0 2px 20px rgba(0,0,0,0.05);transition:transform 0.2s,box-shadow 0.2s;}
+.stakeholder-card:hover{transform:translateY(-3px);box-shadow:0 8px 40px rgba(0,0,0,0.1);}
+.scard-header{padding:24px;display:flex;align-items:center;gap:16px;}
+.scard-icon{width:56px;height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;}
+.scard-meta h3{font-size:18px;font-weight:800;color:var(--navy);}
+.scard-meta p{font-size:12px;color:var(--slate-400);margin-top:2px;}
+.scard-body{padding:0 24px 24px;}
+.scard-pages{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
+.scard-page{font-size:11px;padding:3px 10px;border-radius:6px;font-weight:600;background:var(--slate-100);color:var(--slate-700);border:1px solid var(--slate-200);}
+.scard-cred{background:var(--slate-50);border:1px solid var(--slate-200);border-radius:12px;padding:14px;}
+.scard-cred-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--slate-400);margin-bottom:8px;}
+.scard-cred-row{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+.scard-cred-row:last-child{margin-bottom:0;}
+.scard-cred-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;flex-shrink:0;}
+.scard-cred-email{font-size:11px;font-family:monospace;color:var(--slate-600);}
+
+/* ── FEATURES DARK ── */
+.features-dark{background:linear-gradient(160deg,var(--navy-dark),#0c2040);padding:80px 40px;}
+.features-dark-inner{max-width:1240px;margin:0 auto;}
+.features-dark .section-tag{background:rgba(217,119,6,0.15);color:var(--gold);}
+.features-dark .section-title{color:white;}
+.features-dark .section-sub{color:rgba(255,255,255,0.55);}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;margin-top:48px;}
+.feat-card{
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);
+  border-radius:18px;padding:28px;
+  transition:background 0.2s,border-color 0.2s;
+}
+.feat-card:hover{background:rgba(255,255,255,0.08);border-color:rgba(217,119,6,0.3);}
+.feat-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:18px;}
+.feat-card h4{font-size:16px;font-weight:700;color:white;margin-bottom:8px;}
+.feat-card p{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:12px;}
+.feat-list{list-style:none;}
+.feat-list li{font-size:12px;color:rgba(255,255,255,0.6);padding:4px 0;display:flex;align-items:flex-start;gap:8px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.feat-list li:last-child{border-bottom:none;}
+.feat-list li::before{content:'›';color:var(--gold);font-weight:700;flex-shrink:0;}
+
+/* ── AI ENGINE ── */
+.ai-section{background:linear-gradient(135deg,#FFFBEB,#FEF3C7);padding:80px 40px;}
+.ai-inner{max-width:1240px;margin:0 auto;}
+.ai-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-top:48px;}
+.ai-card{background:white;border-radius:18px;padding:28px;border:1px solid rgba(217,119,6,0.12);box-shadow:0 2px 16px rgba(217,119,6,0.06);}
+.ai-icon{font-size:36px;margin-bottom:14px;}
+.ai-card h4{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:8px;}
+.ai-card p{font-size:13px;color:var(--slate-600);line-height:1.65;margin-bottom:14px;}
+.ai-endpoint{background:var(--slate-50);border:1px solid var(--slate-200);border-radius:8px;padding:9px 14px;font-size:12px;font-family:monospace;color:var(--slate-700);margin-bottom:8px;}
+.method{color:var(--gold);font-weight:700;margin-right:6px;}
+.ai-io{font-size:11px;color:var(--slate-400);line-height:1.6;}
+
+/* ── DB SCHEMA ── */
+.db-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:12px;}
+.db-card{background:white;border:1px solid var(--slate-200);border-radius:14px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,0.04);}
+.db-head{padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;color:white;display:flex;align-items:center;gap:6px;}
+.db-body{padding:10px 14px;}
+.db-field{font-size:11px;color:var(--slate-600);padding:3px 0;border-bottom:1px solid var(--slate-100);}
+.db-field:last-child{border-bottom:none;}
+.pk{color:var(--gold);font-weight:700;}
+.fk{color:var(--emerald);}
+
+/* ── TECH STACK ── */
+.tech-section{background:var(--slate-100);padding:80px 40px;}
+.tech-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;}
+.tech-card{background:white;border:1px solid var(--slate-200);border-radius:16px;padding:22px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.04);}
+.tech-card .emoji{font-size:34px;margin-bottom:10px;}
+.tech-card h4{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px;}
+.tech-card p{font-size:12px;color:var(--slate-400);}
+
+/* ── DEMO SECTION ── */
+.demo-section{background:linear-gradient(160deg,var(--navy-dark),var(--navy-mid));padding:80px 40px;}
+.demo-inner{max-width:960px;margin:0 auto;text-align:center;}
+.demo-section h2{color:white;font-size:clamp(28px,4vw,44px);font-weight:900;letter-spacing:-1px;margin-bottom:12px;}
+.demo-section p{color:rgba(255,255,255,0.6);font-size:15px;margin-bottom:44px;}
+.demo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;text-align:left;}
+.demo-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:18px;transition:background 0.15s;}
+.demo-card:hover{background:rgba(255,255,255,0.1);}
+.demo-role{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.demo-name{font-size:14px;font-weight:700;color:white;margin-bottom:3px;}
+.demo-email{font-size:11px;color:rgba(255,255,255,0.45);font-family:monospace;margin-bottom:8px;}
+.demo-badge{display:inline-block;background:rgba(217,119,6,0.15);border:1px solid rgba(217,119,6,0.3);border-radius:6px;padding:3px 10px;font-size:11px;color:var(--gold-light);}
+
+footer{background:var(--slate-900);color:rgba(255,255,255,0.4);text-align:center;padding:36px;font-size:13px;}
+footer strong{color:var(--gold);}
+
+@media(max-width:768px){
+  .section{padding:56px 20px;}
+  .hero{padding:72px 20px 90px;}
+  .arch-wrap{padding:28px 20px;}
+  .journey-diagram{grid-template-columns:1fr;}
+  .journey-left{min-width:auto;}
+  .features-dark,.ai-section,.tech-section,.demo-section{padding:56px 20px;}
+  .flow-row{min-width:700px;}
+  .top-nav{padding:0 20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="top-nav">
+  <span class="nav-logo">🇮🇳→🇩🇪 Indo German</span>
+  <a class="nav-link" href="#architecture">Architecture</a>
+  <a class="nav-link" href="#journey">10-Stage Journey</a>
+  <a class="nav-link" href="#stakeholders">Stakeholders</a>
+  <a class="nav-link" href="#user-journeys">User Journeys</a>
+  <a class="nav-link" href="#features">Features</a>
+  <a class="nav-link" href="#ai">AI Engine</a>
+  <a class="nav-link" href="#database">Database</a>
+  <a class="nav-link" href="#techstack">Tech Stack</a>
+  <a class="nav-link" href="#demo">Demo Login</a>
+</nav>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-badge">🚀 Production-Grade MVP · Complete Platform Overview</div>
+  <h1>Indo <span class="accent">German</span><br>Mobility Corridor</h1>
+  <p class="hero-sub">End-to-end digital infrastructure for skilled Indian professionals to discover, qualify, match, interview, and work in Germany — six stakeholder portals, one unified pipeline.</p>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-n">6</div><div class="stat-l">Stakeholder Roles</div></div>
+    <div class="stat"><div class="stat-n">30+</div><div class="stat-l">Feature Pages</div></div>
+    <div class="stat"><div class="stat-n">16</div><div class="stat-l">DB Tables</div></div>
+    <div class="stat"><div class="stat-n">4</div><div class="stat-l">AI Endpoints</div></div>
+    <div class="stat"><div class="stat-n">10</div><div class="stat-l">Journey Stages</div></div>
+    <div class="stat"><div class="stat-n">9</div><div class="stat-l">Demo Accounts</div></div>
+  </div>
+</div>
+
+<!-- ── ARCHITECTURE ── -->
+<div class="section" id="architecture">
+  <div class="section-header center">
+    <div class="section-tag">System Architecture</div>
+    <h2 class="section-title">How the Platform Is Built</h2>
+    <p class="section-sub">4-layer architecture from end users to the database — everything connected, nothing mocked.</p>
+  </div>
+  <div class="arch-wrap">
+    <div class="arch-layer">
+      <div class="arch-layer-title">👤 LAYER 1 — End Users (6 Portal Types)</div>
+      <div class="arch-pills">
+        <span class="pill">🇮🇳 Candidates — 13 pages</span>
+        <span class="pill">🏭 German Employers — 7 pages</span>
+        <span class="pill">🎓 Training Institutes — 4 pages</span>
+        <span class="pill">🤝 Facilitators — 5 pages</span>
+        <span class="pill">🏛️ Government Officials — 2 pages</span>
+        <span class="pill">⚙️ Platform Admins — 4 pages</span>
+      </div>
+    </div>
+    <div class="arch-arrow">↕</div>
+    <div class="arch-layer">
+      <div class="arch-layer-title">🖥 LAYER 2 — Frontend (React 18 + Vite + Tailwind CSS v4)</div>
+      <div class="arch-pills">
+        <span class="pill gold">Role-Based Auth (JWT)</span>
+        <span class="pill">Wouter SPA Routing</span>
+        <span class="pill">TanStack React Query</span>
+        <span class="pill">Radix UI Primitives</span>
+        <span class="pill">React Hook Form + Zod</span>
+        <span class="pill">Recharts Dashboards</span>
+        <span class="pill gold">AI Chat Popup (Global)</span>
+        <span class="pill">Candidate Profile Slide-out</span>
+        <span class="pill">Framer Motion</span>
+      </div>
+    </div>
+    <div class="arch-arrow">↕</div>
+    <div class="arch-layer">
+      <div class="arch-layer-title">⚙️ LAYER 3 — Backend API (Node.js + Express + TypeScript)</div>
+      <div class="arch-pills">
+        <span class="pill gold">POST /api/auth/login</span>
+        <span class="pill gold">POST /api/auth/register</span>
+        <span class="pill green">GET /api/candidates/*</span>
+        <span class="pill green">GET /api/vacancies/*</span>
+        <span class="pill green">GET /api/applications/*</span>
+        <span class="pill green">GET /api/interviews/*</span>
+        <span class="pill green">GET /api/welfare/*</span>
+        <span class="pill gold">POST /api/ai/chat</span>
+        <span class="pill gold">POST /api/ai/roadmap</span>
+        <span class="pill gold">POST /api/ai/resume-suggest</span>
+        <span class="pill green">GET /api/geo/states</span>
+        <span class="pill red">OpenAPI spec + Zod validation</span>
+      </div>
+    </div>
+    <div class="arch-arrow">↕</div>
+    <div class="arch-layer">
+      <div class="arch-layer-title">🗄 LAYER 4 — Database (PostgreSQL + Drizzle ORM — 16 Tables)</div>
+      <div class="arch-pills">
+        <span class="pill">users</span><span class="pill">candidates</span><span class="pill">employers</span>
+        <span class="pill">vacancies</span><span class="pill">applications</span><span class="pill">documents</span>
+        <span class="pill">recognition_cases</span><span class="pill">enrollments</span><span class="pill">batches</span>
+        <span class="pill">courses</span><span class="pill">visa_cases</span><span class="pill">interviews</span>
+        <span class="pill">offers</span><span class="pill">welfare_tickets</span><span class="pill">notifications</span>
+        <span class="pill">certifications</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- ── 10-STAGE PIPELINE ── -->
+<div class="section" id="journey">
+  <div class="section-header center">
+    <div class="section-tag">Candidate Pipeline</div>
+    <h2 class="section-title">The 10-Stage Journey</h2>
+    <p class="section-sub">Every candidate progresses through a sequential, milestone-gated pipeline. Stages unlock only when prerequisites are met — preventing skipping.</p>
+  </div>
+  <div class="flow-diagram">
+    <div class="flow-row">
+      <div class="flow-node">
+        <div class="flow-node-box done">
+          <div class="flow-node-num">✓</div>
+          <div class="flow-node-label">Discovery</div>
+          <div class="flow-node-sub">AI Roadmap generated</div>
+        </div>
+      </div>
+      <div class="flow-connector">›</div>
+      <div class="flow-node">
+        <div class="flow-node-box done">
+          <div class="flow-node-num">✓</div>
+          <div class="flow-node-label">Registration</div>
+          <div class="flow-node-sub">Profile + eligibility check</div>
+        </div>
+      </div>
+      <div class="flow-connector">›</div>
+      <div class="flow-node">
+        <div class="flow-node-box done">
+          <div class="flow-node-num">✓</div>
+          <div class="flow-node-label">Eligibility</div>
+          <div class="flow-node-sub">Readiness score ≥ threshold</div>
+        </div>
+      </div>
+      <div class="flow-connector">›</div>
+      <div class="flow-node">
+        <div class="flow-node-box active">
+          <div class="flow-node-num">4</div>
+          <div class="flow-node-label">Language Training</div>
+          <div class="flow-node-sub">A1 → B2 certification</div>
+        </div>
+      </div>
+      <div class="flow-connector">›</div>
+      <div class="flow-node">
+        <div class="flow-node-box pending">
+          <div class="flow-node-num">5</div>
+          <div class="flow-node-label">Qualification Recognition</div>
+          <div class="flow-node-sub">ZAB / Anerkennung case</div>
+        </div>
+      </div>
+      <div class="flow-connector">›</div>
+      <div class="flow-node">
+        <div class="flow-node-box pending">
+          <div class="flow-node-num">6</div>
+          <div class="flow-node-label">Document Vault</div>
+          <div class="flow-node-sub">Upload + admin verify</div>
+        </div>
+      </div>
+      <div class="flow-connector">›</div>
+      <div class="flow-node">
+        <div class="flow-node-box locked">
+          <div class="flow-node-num">7</div>
+          <div class="flow-node-label">Employer Matching</div>
+          <div class="flow-node-sub">AI-scored vacancy matches</div>
+        </div>
+      </div>
+      <div class="flow-connector">›</div>
+      <div class="flow-node">
+        <div class="flow-node-box locked">
+          <div class="flow-node-num">8</div>
+          <div class="flow-node-label">Interview & Offer</div>
+          <div class="flow-node-sub">Scheduled + offer issued</div>
+        </div>
+      </div>
+      <div class="flow-connector">›</div>
+      <div class="flow-node">
+        <div class="flow-node-box locked">
+          <div class="flow-node-num">9</div>
+          <div class="flow-node-label">Visa Readiness</div>
+          <div class="flow-node-sub">National Visa / Chancenkarte</div>
+        </div>
+      </div>
+      <div class="flow-connector">›</div>
+      <div class="flow-node">
+        <div class="flow-node-box locked">
+          <div class="flow-node-num">10</div>
+          <div class="flow-node-label">Post-Arrival</div>
+          <div class="flow-node-sub">Welfare + integration support</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="flow-legend">
+    <div class="flow-legend-item"><div class="legend-dot" style="background:var(--emerald)"></div> Completed</div>
+    <div class="flow-legend-item"><div class="legend-dot" style="background:var(--gold)"></div> Currently Active</div>
+    <div class="flow-legend-item"><div class="legend-dot" style="background:var(--slate-300)"></div> Pending (prerequisite in progress)</div>
+    <div class="flow-legend-item"><div class="legend-dot" style="background:var(--slate-200)"></div> Locked (prerequisites not met)</div>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- ── STAKEHOLDERS ── -->
+<div class="section" id="stakeholders">
+  <div class="section-header center">
+    <div class="section-tag">6 Portals</div>
+    <h2 class="section-title">Stakeholders & Their Portals</h2>
+    <p class="section-sub">Each role gets a completely isolated navigation, dashboard, and feature set. Role is enforced at login and on every protected route.</p>
+  </div>
+  <div class="stakeholder-grid">
+
+    <div class="stakeholder-card">
+      <div class="scard-header">
+        <div class="scard-icon" style="background:#FEF3C7;color:#B45309;">🇮🇳</div>
+        <div class="scard-meta"><h3>Candidate</h3><p>Indian skilled worker seeking Germany employment</p></div>
+      </div>
+      <div class="scard-body">
+        <div class="scard-pages">
+          <span class="scard-page">Dashboard</span><span class="scard-page">AI Roadmap</span><span class="scard-page">AI Resume</span>
+          <span class="scard-page">Journey</span><span class="scard-page">Readiness Score</span><span class="scard-page">Documents</span>
+          <span class="scard-page">Certifications</span><span class="scard-page">Training</span><span class="scard-page">Recognition</span>
+          <span class="scard-page">Applications</span><span class="scard-page">Visa</span><span class="scard-page">Welfare</span><span class="scard-page">Profile</span>
+        </div>
+        <div class="scard-cred">
+          <div class="scard-cred-label">3 Demo Accounts</div>
+          <div class="scard-cred-row"><span class="scard-cred-badge" style="background:#FEF3C7;color:#B45309;">Score 78</span><span class="scard-cred-email">arjun.sharma@gmail.com</span></div>
+          <div class="scard-cred-row"><span class="scard-cred-badge" style="background:#D1FAE5;color:#059669;">Score 91</span><span class="scard-cred-email">priya.nair@gmail.com</span></div>
+          <div class="scard-cred-row"><span class="scard-cred-badge" style="background:#FEE2E2;color:#DC2626;">Score 52</span><span class="scard-cred-email">ravi.kumar@gmail.com</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stakeholder-card">
+      <div class="scard-header">
+        <div class="scard-icon" style="background:#DBEAFE;color:#1D4ED8;">🏭</div>
+        <div class="scard-meta"><h3>Employer</h3><p>German company hiring skilled Indian workers</p></div>
+      </div>
+      <div class="scard-body">
+        <div class="scard-pages">
+          <span class="scard-page">Dashboard</span><span class="scard-page">Vacancies</span><span class="scard-page">Candidate Matches</span>
+          <span class="scard-page">Applications</span><span class="scard-page">Interviews</span><span class="scard-page">Offers</span><span class="scard-page">Company Profile</span>
+        </div>
+        <div class="scard-cred">
+          <div class="scard-cred-label">2 Demo Accounts</div>
+          <div class="scard-cred-row"><span class="scard-cred-badge" style="background:#DBEAFE;color:#1D4ED8;">Bosch</span><span class="scard-cred-email">hr@bosch-germany.de</span></div>
+          <div class="scard-cred-row"><span class="scard-cred-badge" style="background:#DBEAFE;color:#1D4ED8;">Care</span><span class="scard-cred-email">jobs@carehome-berlin.de</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stakeholder-card">
+      <div class="scard-header">
+        <div class="scard-icon" style="background:#CCFBF1;color:#0F766E;">🎓</div>
+        <div class="scard-meta"><h3>Trainer / Institute</h3><p>Language & skills training providers</p></div>
+      </div>
+      <div class="scard-body">
+        <div class="scard-pages">
+          <span class="scard-page">Dashboard</span><span class="scard-page">Courses</span><span class="scard-page">Batches</span><span class="scard-page">Students</span>
+        </div>
+        <div class="scard-cred">
+          <div class="scard-cred-label">Demo Account</div>
+          <div class="scard-cred-row"><span class="scard-cred-badge" style="background:#CCFBF1;color:#0F766E;">Trainer</span><span class="scard-cred-email">admin@goethe-pune.in</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stakeholder-card">
+      <div class="scard-header">
+        <div class="scard-icon" style="background:#EDE9FE;color:#7C3AED;">🤝</div>
+        <div class="scard-meta"><h3>Facilitator</h3><p>Migration support agency / case manager</p></div>
+      </div>
+      <div class="scard-body">
+        <div class="scard-pages">
+          <span class="scard-page">Dashboard</span><span class="scard-page">All Candidates</span><span class="scard-page">Recognition Cases</span>
+          <span class="scard-page">Visa Cases</span><span class="scard-page">Welfare Tickets</span>
+        </div>
+        <div class="scard-cred">
+          <div class="scard-cred-label">Demo Account</div>
+          <div class="scard-cred-row"><span class="scard-cred-badge" style="background:#EDE9FE;color:#7C3AED;">Facilitator</span><span class="scard-cred-email">ops@indiagermanyjobs.in</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stakeholder-card">
+      <div class="scard-header">
+        <div class="scard-icon" style="background:#FEE2E2;color:#DC2626;">🏛️</div>
+        <div class="scard-meta"><h3>Government</h3><p>MSDE / Ministry oversight of the national pipeline</p></div>
+      </div>
+      <div class="scard-body">
+        <div class="scard-pages">
+          <span class="scard-page">Dashboard (Aggregate KPIs)</span><span class="scard-page">Full Pipeline View</span>
+        </div>
+        <div class="scard-cred">
+          <div class="scard-cred-label">Demo Account</div>
+          <div class="scard-cred-row"><span class="scard-cred-badge" style="background:#FEE2E2;color:#DC2626;">MSDE</span><span class="scard-cred-email">official@msde.gov.in</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stakeholder-card">
+      <div class="scard-header">
+        <div class="scard-icon" style="background:#F1F5F9;color:#475569;">⚙️</div>
+        <div class="scard-meta"><h3>Platform Admin</h3><p>Full system administrator with unrestricted access</p></div>
+      </div>
+      <div class="scard-body">
+        <div class="scard-pages">
+          <span class="scard-page">Admin Dashboard</span><span class="scard-page">All Candidates</span>
+          <span class="scard-page">All Employers</span><span class="scard-page">Document Review</span>
+        </div>
+        <div class="scard-cred">
+          <div class="scard-cred-label">Demo Account</div>
+          <div class="scard-cred-row"><span class="scard-cred-badge" style="background:#F1F5F9;color:#475569;">Admin</span><span class="scard-cred-email">admin@mobicorridor.in</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- ── USER JOURNEY DIAGRAMS ── -->
+<div class="section" id="user-journeys">
+  <div class="section-header center">
+    <div class="section-tag">Deep User Journeys</div>
+    <h2 class="section-title">What Every User Does — Step by Step</h2>
+    <p class="section-sub">Detailed, diagrammatic flows for each stakeholder — from login to goal completion, with every screen and decision point shown.</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="journey-tabs">
+    <div class="journey-tab active" onclick="switchTab('candidate')">🇮🇳 Candidate</div>
+    <div class="journey-tab" onclick="switchTab('employer')">🏭 Employer</div>
+    <div class="journey-tab" onclick="switchTab('trainer')">🎓 Trainer</div>
+    <div class="journey-tab" onclick="switchTab('facilitator')">🤝 Facilitator</div>
+    <div class="journey-tab" onclick="switchTab('government')">🏛️ Government</div>
+    <div class="journey-tab" onclick="switchTab('admin')">⚙️ Admin</div>
+  </div>
+
+  <!-- CANDIDATE PANEL -->
+  <div class="journey-panel active" id="panel-candidate">
+    <div class="journey-diagram">
+      <div class="journey-left">
+        <div class="journey-left-title">Portal</div>
+        <div class="journey-left-name">Candidate</div>
+        <div class="journey-left-sub">Indian skilled worker seeking employment in Germany</div>
+        <div class="journey-cred">
+          <div class="journey-cred-label">Demo Accounts</div>
+          <div class="journey-cred-value">arjun.sharma@gmail.com</div>
+          <div class="journey-cred-value">priya.nair@gmail.com</div>
+          <div class="journey-cred-value">ravi.kumar@gmail.com</div>
+        </div>
+        <div class="journey-cred"><div class="journey-cred-label">Password</div><div class="journey-cred-value">Demo@1234</div></div>
+        <div class="journey-pages-list">
+          <div class="journey-pages-title">13 Pages</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Dashboard</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>AI Roadmap</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>AI Resume</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Journey Map</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Readiness Score</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Documents</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Certifications</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Training</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Recognition</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Applications</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Visa</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Welfare</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Profile</div>
+        </div>
+      </div>
+      <div class="journey-right">
+        <div class="journey-steps-title">Complete Journey — 10 Stages</div>
+        <div class="journey-step-flow">
+
+          <div class="jstep done">
+            <div class="jstep-icon-col"><div class="jstep-circle">1</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header">
+                <span class="jstep-num">STAGE 1</span>
+                <span class="jstep-title">Register & Build Profile</span>
+                <div class="jstep-badges"><span class="jbadge green">Done</span></div>
+              </div>
+              <div class="jstep-desc">Signs up with name, email, occupation, education level, work experience years, German language level (A1–B2), Indian state & district, and passport availability. Profile completeness contributes directly to Readiness Score.</div>
+              <div class="jstep-details">
+                <span class="jdetail">Registration form</span>
+                <span class="jdetail">Occupation selection (20+ trades)</span>
+                <span class="jdetail">State/district geo-picker</span>
+                <span class="jdetail">Language self-assessment</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="jstep done">
+            <div class="jstep-icon-col"><div class="jstep-circle">2</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header">
+                <span class="jstep-num">STAGE 2</span>
+                <span class="jstep-title">View AI Roadmap</span>
+                <div class="jstep-badges"><span class="jbadge">AI Feature</span><span class="jbadge green">Done</span></div>
+              </div>
+              <div class="jstep-desc">The AI Roadmap page generates a personalized, phased migration plan based on occupation, language level, and location. Divided into 3–5 phases with a realistic timeline, costs in INR and EUR, and specific next actions per phase.</div>
+              <div class="jstep-details">
+                <span class="jdetail">Phase-wise breakdown</span>
+                <span class="jdetail">Costs: INR + EUR</span>
+                <span class="jdetail">Timeline: weeks per phase</span>
+                <span class="jdetail">Government scheme links</span>
+                <span class="jdetail">POST /api/ai/roadmap</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="jstep active">
+            <div class="jstep-icon-col"><div class="jstep-circle">3</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header">
+                <span class="jstep-num">STAGE 3</span>
+                <span class="jstep-title">Check Readiness Score</span>
+                <div class="jstep-badges"><span class="jbadge">Active</span></div>
+              </div>
+              <div class="jstep-desc">The Readiness Score page shows a weighted 8-factor eligibility score (0–100). Each factor has a weight and the candidate sees their gap areas. Score gates stage unlocking — below threshold, later stages stay locked.</div>
+              <div class="jstep-details">
+                <span class="jdetail">Profile completeness 10%</span>
+                <span class="jdetail">Identity documents 15%</span>
+                <span class="jdetail">Passport validity 10%</span>
+                <span class="jdetail">Language level 20%</span>
+                <span class="jdetail">Qualification recognition 15%</span>
+                <span class="jdetail">Work experience 10%</span>
+                <span class="jdetail">Job match 5%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="jstep active">
+            <div class="jstep-icon-col"><div class="jstep-circle">4</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header">
+                <span class="jstep-num">STAGE 4</span>
+                <span class="jstep-title">Upload Documents to Vault</span>
+                <div class="jstep-badges"><span class="jbadge">Active</span></div>
+              </div>
+              <div class="jstep-desc">Candidate uploads passport copy, educational certificates, work experience letters, and language certificates to the Document Vault. Each document goes through admin verification. Expiry dates are tracked. Unverified critical documents block visa stage.</div>
+              <div class="jstep-details">
+                <span class="jdetail">Category-wise upload</span>
+                <span class="jdetail">Verification status badge</span>
+                <span class="jdetail">Expiry date alert</span>
+                <span class="jdetail">Admin review workflow</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="jstep neutral">
+            <div class="jstep-icon-col"><div class="jstep-circle">5</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header">
+                <span class="jstep-num">STAGE 5</span>
+                <span class="jstep-title">Enroll in Language Training</span>
+                <div class="jstep-badges"><span class="jbadge navy">Pending</span></div>
+              </div>
+              <div class="jstep-desc">Browses the Training page to find A1–B2 German courses from accredited institutes (Goethe-Institut, Max Mueller Bhavan, etc.). Enrolls in a batch — online, offline, or hybrid. Attendance and assessment scores are tracked. Certificate issuance unlocks Stage 5.</div>
+              <div class="jstep-details">
+                <span class="jdetail">Course marketplace</span>
+                <span class="jdetail">Batch scheduling</span>
+                <span class="jdetail">Attendance tracking</span>
+                <span class="jdetail">Certificate issued flag</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="jstep neutral">
+            <div class="jstep-icon-col"><div class="jstep-circle">6</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header">
+                <span class="jstep-num">STAGE 6</span>
+                <span class="jstep-title">Open Recognition Case</span>
+                <div class="jstep-badges"><span class="jbadge navy">Pending</span></div>
+              </div>
+              <div class="jstep-desc">Creates a Qualification Recognition case on the Recognition page. Facilitator handles the Anerkennungsberatung (recognition advisory) and ZAB equivalency process. Candidate tracks decision status — full, partial, or not recognized. Full recognition is required for licensed professions (nursing, engineering).</div>
+              <div class="jstep-details">
+                <span class="jdetail">Case creation</span>
+                <span class="jdetail">Authority assignment</span>
+                <span class="jdetail">Document checklist</span>
+                <span class="jdetail">Decision: full/partial/not recognized</span>
+                <span class="jdetail">Appeal management</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="jstep neutral">
+            <div class="jstep-icon-col"><div class="jstep-circle">7</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header">
+                <span class="jstep-num">STAGE 7</span>
+                <span class="jstep-title">Browse Vacancies & Apply</span>
+                <div class="jstep-badges"><span class="jbadge navy">Unlocks after Stage 5+6</span></div>
+              </div>
+              <div class="jstep-desc">Once language and recognition milestones are achieved, the Applications page activates. Candidate sees matched vacancies ranked by platform match score (occupation, language, experience). One-click apply creates an application record visible to the employer.</div>
+              <div class="jstep-details">
+                <span class="jdetail">AI match score per vacancy</span>
+                <span class="jdetail">Salary range visible</span>
+                <span class="jdetail">Visa support indicator</span>
+                <span class="jdetail">Application status tracking</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="jstep neutral">
+            <div class="jstep-icon-col"><div class="jstep-circle">8</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header">
+                <span class="jstep-num">STAGE 8</span>
+                <span class="jstep-title">Interview & Receive Offer</span>
+                <div class="jstep-badges"><span class="jbadge navy">Pending</span></div>
+              </div>
+              <div class="jstep-desc">Employer schedules an interview (video or in-person). Candidate attends and receives outcome on the Applications page. On success, employer issues a formal job offer — salary, start date, visa support confirmation. Candidate accepts or declines digitally on-platform.</div>
+              <div class="jstep-details">
+                <span class="jdetail">Interview date & mode</span>
+                <span class="jdetail">Outcome recording</span>
+                <span class="jdetail">Offer letter details</span>
+                <span class="jdetail">Digital acceptance</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="jstep neutral">
+            <div class="jstep-icon-col"><div class="jstep-circle">9</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header">
+                <span class="jstep-num">STAGE 9</span>
+                <span class="jstep-title">Visa Application</span>
+                <div class="jstep-badges"><span class="jbadge navy">Locked — needs offer</span></div>
+              </div>
+              <div class="jstep-desc">After an accepted job offer, the Visa page activates. Candidate opens a National Visa (Type D) or Chancenkarte case. A 10-item checklist tracks: passport validity, signed offer letter, recognition result, language certificate, health insurance, embassy appointment, etc. Facilitator assists throughout.</div>
+              <div class="jstep-details">
+                <span class="jdetail">10-item visa checklist</span>
+                <span class="jdetail">Embassy appointment tracking</span>
+                <span class="jdetail">Document submission status</span>
+                <span class="jdetail">Visa granted / rejected outcome</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="jstep neutral">
+            <div class="jstep-icon-col"><div class="jstep-circle">10</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header">
+                <span class="jstep-num">STAGE 10</span>
+                <span class="jstep-title">Post-Arrival Welfare</span>
+                <div class="jstep-badges"><span class="jbadge green">Goal</span></div>
+              </div>
+              <div class="jstep-desc">After arrival in Germany, the Welfare page lets candidates raise support tickets for integration issues: housing, healthcare, legal advice, cultural adjustment, employer disputes, or financial assistance. Facilitators are assigned tickets and resolve them with documented notes. Priority levels control response time.</div>
+              <div class="jstep-details">
+                <span class="jdetail">Issue categories: housing/health/legal/financial</span>
+                <span class="jdetail">Priority: urgent / normal / low</span>
+                <span class="jdetail">Facilitator assignment</span>
+                <span class="jdetail">Resolution + closure notes</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div><!-- /candidate -->
+
+  <!-- EMPLOYER PANEL -->
+  <div class="journey-panel" id="panel-employer">
+    <div class="journey-diagram">
+      <div class="journey-left">
+        <div class="journey-left-title">Portal</div>
+        <div class="journey-left-name">Employer</div>
+        <div class="journey-left-sub">German company hiring skilled workers from India</div>
+        <div class="journey-cred">
+          <div class="journey-cred-label">Demo Accounts</div>
+          <div class="journey-cred-value">hr@bosch-germany.de</div>
+          <div class="journey-cred-value">jobs@carehome-berlin.de</div>
+        </div>
+        <div class="journey-cred"><div class="journey-cred-label">Password</div><div class="journey-cred-value">Demo@1234</div></div>
+        <div class="journey-pages-list">
+          <div class="journey-pages-title">7 Pages</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Dashboard</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Vacancies</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Candidate Matches</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Applications</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Interviews</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Offers</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Company Profile</div>
+        </div>
+      </div>
+      <div class="journey-right">
+        <div class="journey-steps-title">Employer Hiring Flow — 6 Steps</div>
+        <div class="journey-step-flow">
+
+          <div class="jstep info">
+            <div class="jstep-icon-col"><div class="jstep-circle">1</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">STEP 1</span><span class="jstep-title">Set Up Company Profile</span><div class="jstep-badges"><span class="jbadge navy">One-time</span></div></div>
+              <div class="jstep-desc">HR admin fills in company details: name, industry/sector, city, state (Germany), company size, visa sponsorship capability, accommodation support availability, and contact details. Profile is verified by Platform Admin before going live.</div>
+              <div class="jstep-details"><span class="jdetail">Sector + city</span><span class="jdetail">Visa sponsorship flag</span><span class="jdetail">Accommodation support flag</span><span class="jdetail">Admin verification</span></div>
+            </div>
+          </div>
+
+          <div class="jstep info">
+            <div class="jstep-icon-col"><div class="jstep-circle">2</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">STEP 2</span><span class="jstep-title">Post Vacancies</span></div>
+              <div class="jstep-desc">Creates job postings on the Vacancies page. Each vacancy specifies: occupation category, required language level (A1–B2), minimum work experience years, salary range (EUR), joining date, recognition required flag, visa support, and accommodation support. Posted vacancies immediately enter the matching algorithm.</div>
+              <div class="jstep-details"><span class="jdetail">Occupation + language requirement</span><span class="jdetail">Salary min/max</span><span class="jdetail">Joining date</span><span class="jdetail">Recognition required flag</span></div>
+            </div>
+          </div>
+
+          <div class="jstep active">
+            <div class="jstep-icon-col"><div class="jstep-circle">3</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">STEP 3</span><span class="jstep-title">Review Matched Candidates</span><div class="jstep-badges"><span class="jbadge">AI Matching</span></div></div>
+              <div class="jstep-desc">The Matches page shows candidates ranked by platform match score for each vacancy. Employer reviews candidate profiles via the global slide-out profile card — seeing occupation, language level, readiness score, journey stage, documents, and experience. Can shortlist or pass.</div>
+              <div class="jstep-details"><span class="jdetail">AI match score per candidate</span><span class="jdetail">Slide-out profile card</span><span class="jdetail">Readiness score visible</span><span class="jdetail">Journey stage visible</span></div>
+            </div>
+          </div>
+
+          <div class="jstep info">
+            <div class="jstep-icon-col"><div class="jstep-circle">4</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">STEP 4</span><span class="jstep-title">Process Applications</span></div>
+              <div class="jstep-desc">Applications page shows all inbound applications for the company's vacancies. HR can accept or reject applications with notes. Accepted applications move to interview scheduling. Candidates see application status updates on their side in real-time.</div>
+              <div class="jstep-details"><span class="jdetail">Status: pending → accepted / rejected</span><span class="jdetail">Notes per decision</span><span class="jdetail">Candidate notified automatically</span></div>
+            </div>
+          </div>
+
+          <div class="jstep info">
+            <div class="jstep-icon-col"><div class="jstep-circle">5</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">STEP 5</span><span class="jstep-title">Schedule Interviews</span></div>
+              <div class="jstep-desc">Interviews page allows scheduling with date/time, mode (video call or in-person), and notes. After the interview, HR records the outcome (pass/fail/hold). Passed interviews trigger offer creation flow.</div>
+              <div class="jstep-details"><span class="jdetail">Date, time, mode</span><span class="jdetail">Interviewer notes</span><span class="jdetail">Outcome: pass / fail / hold</span></div>
+            </div>
+          </div>
+
+          <div class="jstep done">
+            <div class="jstep-icon-col"><div class="jstep-circle">6</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">STEP 6</span><span class="jstep-title">Issue Job Offer</span><div class="jstep-badges"><span class="jbadge green">Hire Complete</span></div></div>
+              <div class="jstep-desc">Creates a formal job offer on the Offers page: salary (EUR/year), start date, visa support confirmation, and accommodation support. Candidate receives offer and accepts or declines on their platform. Accepted offer triggers Visa stage unlock on the candidate's side.</div>
+              <div class="jstep-details"><span class="jdetail">Salary + start date</span><span class="jdetail">Visa sponsorship confirmation</span><span class="jdetail">Candidate acceptance tracking</span><span class="jdetail">Triggers visa stage</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div><!-- /employer -->
+
+  <!-- TRAINER PANEL -->
+  <div class="journey-panel" id="panel-trainer">
+    <div class="journey-diagram">
+      <div class="journey-left">
+        <div class="journey-left-title">Portal</div>
+        <div class="journey-left-name">Trainer</div>
+        <div class="journey-left-sub">Language & skills training institute</div>
+        <div class="journey-cred">
+          <div class="journey-cred-label">Demo Account</div>
+          <div class="journey-cred-value">admin@goethe-pune.in</div>
+        </div>
+        <div class="journey-cred"><div class="journey-cred-label">Password</div><div class="journey-cred-value">Demo@1234</div></div>
+        <div class="journey-pages-list">
+          <div class="journey-pages-title">4 Pages</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Dashboard</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Courses</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Batches</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Students</div>
+        </div>
+      </div>
+      <div class="journey-right">
+        <div class="journey-steps-title">Trainer Operations Flow — 4 Steps</div>
+        <div class="journey-step-flow">
+
+          <div class="jstep info">
+            <div class="jstep-icon-col"><div class="jstep-circle">1</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">STEP 1</span><span class="jstep-title">Create Course Catalog</span></div>
+              <div class="jstep-desc">On the Courses page, the institute creates language courses: A1 Intensive, A2 Fast Track, B1 Professional, B2 Advanced — each with a course name, duration (weeks), fee (INR), mode (online/offline/hybrid), and city location. Courses form the catalog candidates browse.</div>
+              <div class="jstep-details"><span class="jdetail">Language level A1–B2</span><span class="jdetail">Duration in weeks</span><span class="jdetail">Fee in INR</span><span class="jdetail">Mode + city</span></div>
+            </div>
+          </div>
+
+          <div class="jstep active">
+            <div class="jstep-icon-col"><div class="jstep-circle">2</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">STEP 2</span><span class="jstep-title">Open Batches</span></div>
+              <div class="jstep-desc">On the Batches page, creates scheduled runs of each course: start date, end date, maximum student capacity. Open batches become available for candidate enrollment from the Training page. Once full, batch shows as closed.</div>
+              <div class="jstep-details"><span class="jdetail">Start + end dates</span><span class="jdetail">Max student capacity</span><span class="jdetail">Enrollment count live</span></div>
+            </div>
+          </div>
+
+          <div class="jstep info">
+            <div class="jstep-icon-col"><div class="jstep-circle">3</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">STEP 3</span><span class="jstep-title">Manage Students</span></div>
+              <div class="jstep-desc">The Students page shows a full roster of enrolled candidates across all batches. Trainer marks attendance percentage and records assessment scores. Can see overall batch performance at a glance.</div>
+              <div class="jstep-details"><span class="jdetail">Roster per batch</span><span class="jdetail">Attendance % entry</span><span class="jdetail">Assessment score entry</span></div>
+            </div>
+          </div>
+
+          <div class="jstep done">
+            <div class="jstep-icon-col"><div class="jstep-circle">4</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">STEP 4</span><span class="jstep-title">Issue Certificates</span><div class="jstep-badges"><span class="jbadge green">Completes Candidate Stage 5</span></div></div>
+              <div class="jstep-desc">After course completion, trainer marks certificateIssued = true for passing students. This flag appears on the candidate's Training page and Certifications page, and directly updates their Readiness Score (German Language Level component, 20% weight).</div>
+              <div class="jstep-details"><span class="jdetail">Certificate issued flag</span><span class="jdetail">Updates candidate readiness score</span><span class="jdetail">Triggers language stage completion</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div><!-- /trainer -->
+
+  <!-- FACILITATOR PANEL -->
+  <div class="journey-panel" id="panel-facilitator">
+    <div class="journey-diagram">
+      <div class="journey-left">
+        <div class="journey-left-title">Portal</div>
+        <div class="journey-left-name">Facilitator</div>
+        <div class="journey-left-sub">Migration support agency & case manager</div>
+        <div class="journey-cred">
+          <div class="journey-cred-label">Demo Account</div>
+          <div class="journey-cred-value">ops@indiagermanyjobs.in</div>
+        </div>
+        <div class="journey-cred"><div class="journey-cred-label">Password</div><div class="journey-cred-value">Demo@1234</div></div>
+        <div class="journey-pages-list">
+          <div class="journey-pages-title">5 Pages</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Dashboard</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>All Candidates</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Recognition Cases</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Visa Cases</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Welfare Tickets</div>
+        </div>
+      </div>
+      <div class="journey-right">
+        <div class="journey-steps-title">Facilitator Case Management Flow</div>
+        <div class="journey-step-flow">
+
+          <div class="jstep info">
+            <div class="jstep-icon-col"><div class="jstep-circle">1</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">TASK 1</span><span class="jstep-title">Monitor All Candidates</span></div>
+              <div class="jstep-desc">The Candidates page shows every registered candidate across the platform with name, occupation, current journey stage, readiness score, and any flags. Facilitator can click any candidate to see full profile via the universal profile slide-out card. Can filter by stage, state, occupation, or score range.</div>
+              <div class="jstep-details"><span class="jdetail">Full candidate roster</span><span class="jdetail">Filter by stage/score/state</span><span class="jdetail">Slide-out profile view</span><span class="jdetail">Stage flags visible</span></div>
+            </div>
+          </div>
+
+          <div class="jstep active">
+            <div class="jstep-icon-col"><div class="jstep-circle">2</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">TASK 2</span><span class="jstep-title">Handle Recognition Cases</span><div class="jstep-badges"><span class="jbadge">Critical Path</span></div></div>
+              <div class="jstep-desc">Facilitator manages all open recognition cases on the Recognition Cases page. For each case: assigns the competent recognition authority (ZAB, relevant state authority, or professional chamber), tracks document submission, monitors decision progress (submitted → under review → decision). Decision types: full equivalency, partial, adaptation measure required, or not recognized.</div>
+              <div class="jstep-details"><span class="jdetail">Authority assignment</span><span class="jdetail">Document checklist tracking</span><span class="jdetail">Status: submitted → review → decision</span><span class="jdetail">Decision type recording</span><span class="jdetail">Appeal option</span></div>
+            </div>
+          </div>
+
+          <div class="jstep active">
+            <div class="jstep-icon-col"><div class="jstep-circle">3</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">TASK 3</span><span class="jstep-title">Manage Visa Cases</span></div>
+              <div class="jstep-desc">Visa Cases page shows all open National Visa and Chancenkarte applications. Facilitator tracks consulate appointment dates, ensures all 10 checklist items are completed, uploads missing documents, adds embassy correspondence notes, and records the final visa decision. Critical blocker resolution is the facilitator's primary job here.</div>
+              <div class="jstep-details"><span class="jdetail">Visa type: National D / Chancenkarte</span><span class="jdetail">Appointment date tracking</span><span class="jdetail">10-item checklist status</span><span class="jdetail">Embassy notes log</span><span class="jdetail">Decision: granted / rejected</span></div>
+            </div>
+          </div>
+
+          <div class="jstep done">
+            <div class="jstep-icon-col"><div class="jstep-circle">4</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">TASK 4</span><span class="jstep-title">Resolve Welfare Tickets</span><div class="jstep-badges"><span class="jbadge green">Post-Arrival</span></div></div>
+              <div class="jstep-desc">Welfare Tickets page aggregates all open support tickets from candidates who have arrived in Germany. Facilitator assigns priority (urgent/normal/low), takes ownership, communicates resolution steps, and closes tickets with documented notes. Ticket categories: housing, healthcare, legal, cultural, employer dispute, financial.</div>
+              <div class="jstep-details"><span class="jdetail">Priority triage</span><span class="jdetail">Facilitator assignment</span><span class="jdetail">Category filtering</span><span class="jdetail">Resolution notes</span><span class="jdetail">Closure tracking</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div><!-- /facilitator -->
+
+  <!-- GOVERNMENT PANEL -->
+  <div class="journey-panel" id="panel-government">
+    <div class="journey-diagram">
+      <div class="journey-left">
+        <div class="journey-left-title">Portal</div>
+        <div class="journey-left-name">Government</div>
+        <div class="journey-left-sub">MSDE / Ministry oversight of national migration pipeline</div>
+        <div class="journey-cred">
+          <div class="journey-cred-label">Demo Account</div>
+          <div class="journey-cred-value">official@msde.gov.in</div>
+        </div>
+        <div class="journey-cred"><div class="journey-cred-label">Password</div><div class="journey-cred-value">Demo@1234</div></div>
+        <div class="journey-pages-list">
+          <div class="journey-pages-title">2 Pages</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Dashboard (Aggregate KPIs)</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Full Pipeline View</div>
+        </div>
+      </div>
+      <div class="journey-right">
+        <div class="journey-steps-title">Government Monitoring Flow</div>
+        <div class="journey-step-flow">
+
+          <div class="jstep info">
+            <div class="jstep-icon-col"><div class="jstep-circle">1</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">VIEW 1</span><span class="jstep-title">Dashboard — Aggregate KPIs</span></div>
+              <div class="jstep-desc">Ministry officials see a real-time national dashboard with aggregate metrics: total registered candidates, candidates by stage, average readiness scores, employer count, visa approval rate, training completion rate, and state-wise candidate distribution. Charts and graphs show monthly trends.</div>
+              <div class="jstep-details"><span class="jdetail">Total candidates registered</span><span class="jdetail">Pipeline stage breakdown</span><span class="jdetail">Visa approval rate</span><span class="jdetail">State-wise distribution map</span><span class="jdetail">Monthly trend charts</span></div>
+            </div>
+          </div>
+
+          <div class="jstep info">
+            <div class="jstep-icon-col"><div class="jstep-circle">2</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">VIEW 2</span><span class="jstep-title">Pipeline Deep View</span></div>
+              <div class="jstep-desc">The Pipeline page shows the full movement of candidates through all 10 stages — how many enter each stage per month, conversion rates, drop-off points, average time per stage, and blockages (e.g., recognition bottleneck). Officials can see which occupation categories are most active and which states are leading participation.</div>
+              <div class="jstep-details"><span class="jdetail">Stage-by-stage conversion rates</span><span class="jdetail">Average days per stage</span><span class="jdetail">Drop-off identification</span><span class="jdetail">Occupation breakdown</span><span class="jdetail">Monthly cohort tracking</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div><!-- /government -->
+
+  <!-- ADMIN PANEL -->
+  <div class="journey-panel" id="panel-admin">
+    <div class="journey-diagram">
+      <div class="journey-left">
+        <div class="journey-left-title">Portal</div>
+        <div class="journey-left-name">Admin</div>
+        <div class="journey-left-sub">Platform system administrator — full access</div>
+        <div class="journey-cred">
+          <div class="journey-cred-label">Demo Account</div>
+          <div class="journey-cred-value">admin@mobicorridor.in</div>
+        </div>
+        <div class="journey-cred"><div class="journey-cred-label">Password</div><div class="journey-cred-value">Demo@1234</div></div>
+        <div class="journey-pages-list">
+          <div class="journey-pages-title">4 Pages</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Admin Dashboard</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>All Candidates</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>All Employers</div>
+          <div class="journey-page-item"><div class="journey-page-dot"></div>Document Review</div>
+        </div>
+      </div>
+      <div class="journey-right">
+        <div class="journey-steps-title">Admin Operations Flow</div>
+        <div class="journey-step-flow">
+
+          <div class="jstep info">
+            <div class="jstep-icon-col"><div class="jstep-circle">1</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">TASK 1</span><span class="jstep-title">Platform Health Dashboard</span></div>
+              <div class="jstep-desc">Admin dashboard shows platform-wide metrics: total users by role, active sessions, new registrations this week, flagged documents pending review, open recognition cases, visa cases stuck, and welfare tickets unresolved. Acts as an operations command center.</div>
+              <div class="jstep-details"><span class="jdetail">Users by role</span><span class="jdetail">New registrations</span><span class="jdetail">Pending document reviews</span><span class="jdetail">Stuck cases flag</span></div>
+            </div>
+          </div>
+
+          <div class="jstep info">
+            <div class="jstep-icon-col"><div class="jstep-circle">2</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">TASK 2</span><span class="jstep-title">Candidate Management</span></div>
+              <div class="jstep-desc">Full candidate roster with search, filter by stage/occupation/state, and per-candidate profile access. Admin can manually advance a candidate's journey stage (exception handling), reset flags, and add admin notes to their record. Directly resolves edge cases that self-service can't handle.</div>
+              <div class="jstep-details"><span class="jdetail">Full roster with search</span><span class="jdetail">Manual stage advancement</span><span class="jdetail">Admin notes</span><span class="jdetail">Flag / unflag</span></div>
+            </div>
+          </div>
+
+          <div class="jstep info">
+            <div class="jstep-icon-col"><div class="jstep-circle">3</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">TASK 3</span><span class="jstep-title">Employer Verification</span></div>
+              <div class="jstep-desc">All Employers page shows every registered German company. Admin reviews company details, verifies legitimacy (trade register number, HMRC/BA registration), sets verification status (pending → verified → suspended). Only verified employers appear in candidate matching.</div>
+              <div class="jstep-details"><span class="jdetail">Company roster</span><span class="jdetail">Verification status control</span><span class="jdetail">Suspend / reactivate</span><span class="jdetail">Contact info audit</span></div>
+            </div>
+          </div>
+
+          <div class="jstep done">
+            <div class="jstep-icon-col"><div class="jstep-circle">4</div></div>
+            <div class="jstep-body">
+              <div class="jstep-header"><span class="jstep-num">TASK 4</span><span class="jstep-title">Document Review Queue</span><div class="jstep-badges"><span class="jbadge green">Core Admin Function</span></div></div>
+              <div class="jstep-desc">All uploaded candidate documents appear in the Document Review queue. Admin opens each document, inspects validity (passport authenticity, certificate issuer check, date validity), and marks as Verified or Rejected with a reason note. Verification directly updates the candidate's Readiness Score (Identity Documents, 15% weight).</div>
+              <div class="jstep-details"><span class="jdetail">All uploaded docs in queue</span><span class="jdetail">Approve / reject per document</span><span class="jdetail">Rejection reason note</span><span class="jdetail">Updates candidate readiness score</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div><!-- /admin -->
+
+</div><!-- /user-journeys section -->
+
+<!-- ── FEATURES DARK ── -->
+<div class="features-dark" id="features">
+  <div class="features-dark-inner">
+    <div class="section-header center">
+      <div class="section-tag">Feature Library</div>
+      <h2 class="section-title" style="color:white;">Every Feature, End to End</h2>
+      <p class="section-sub">16 major features powering the platform across all 6 stakeholder portals.</p>
+    </div>
+    <div class="feat-grid">
+
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(217,119,6,0.15);">🗺️</div>
+        <h4>AI Roadmap Generator</h4>
+        <p>Personalized migration plan from occupation + language + location. No API key needed — rule-based engine.</p>
+        <ul class="feat-list"><li>3–5 phased plan with timelines</li><li>Cost estimates in INR + EUR</li><li>Actionable steps per phase</li><li>Government scheme links</li></ul>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(217,119,6,0.15);">📄</div>
+        <h4>AI Resume Advisor</h4>
+        <p>Occupation-specific CV improvement with ATS scoring for German employer standards.</p>
+        <ul class="feat-list"><li>ATS compatibility score 0–100</li><li>Section-by-section improvements</li><li>European format guidance</li><li>Skills gap identification</li></ul>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(5,150,105,0.15);">📊</div>
+        <h4>Readiness Score Engine</h4>
+        <p>Weighted 8-factor eligibility score gating stage progression across the 10-stage pipeline.</p>
+        <ul class="feat-list"><li>8 weighted factors (10%–20%)</li><li>Visual progress breakdown</li><li>Next-action recommendations</li><li>Gates stage unlock</li></ul>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(99,102,241,0.15);">📁</div>
+        <h4>Document Vault</h4>
+        <p>Secure upload, categorization, and admin verification workflow for all migration documents.</p>
+        <ul class="feat-list"><li>Category-wise organization</li><li>Admin verification queue</li><li>Expiry date alerts</li><li>Rejection notes</li></ul>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(217,119,6,0.15);">🎓</div>
+        <h4>Language Training</h4>
+        <p>Browse, enroll, and track A1–B2 German language courses. Trainer-managed certificates update readiness score.</p>
+        <ul class="feat-list"><li>Course marketplace (online/offline/hybrid)</li><li>Batch enrollment</li><li>Attendance + assessment tracking</li><li>Certificate issuance</li></ul>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(5,150,105,0.15);">🏅</div>
+        <h4>Qualification Recognition</h4>
+        <p>Full lifecycle of the Anerkennungsberatung and ZAB equivalency case management.</p>
+        <ul class="feat-list"><li>Case creation + authority assignment</li><li>Document checklist</li><li>Full / partial / not recognized decision</li><li>Appeal handling</li></ul>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(99,102,241,0.15);">💼</div>
+        <h4>Employer Matching</h4>
+        <p>Score-based matching between employer vacancies and candidate profiles — occupation, language, experience, location.</p>
+        <ul class="feat-list"><li>AI match score</li><li>Ranked candidate list per vacancy</li><li>One-click application</li><li>Employer shortlisting</li></ul>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(220,38,38,0.15);">🛂</div>
+        <h4>Visa Case Manager</h4>
+        <p>Full lifecycle management of National Visa (Type D) and Chancenkarte applications with 10-item checklist.</p>
+        <ul class="feat-list"><li>Visa type selection</li><li>10-item checklist</li><li>Embassy appointment tracking</li><li>Granted / rejected outcome</li></ul>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(5,150,105,0.15);">🏥</div>
+        <h4>Welfare Support System</h4>
+        <p>Post-arrival welfare ticket system for raising and resolving integration issues.</p>
+        <ul class="feat-list"><li>6 issue categories</li><li>Priority triage</li><li>Facilitator assignment</li><li>Resolution documentation</li></ul>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(217,119,6,0.15);">🎤</div>
+        <h4>Interview & Offer Pipeline</h4>
+        <p>Employer-driven interview scheduling with digital offer issuance and candidate acceptance.</p>
+        <ul class="feat-list"><li>Date + mode scheduling</li><li>Outcome recording</li><li>Formal offer with salary + start date</li><li>Digital acceptance tracking</li></ul>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(99,102,241,0.15);">📋</div>
+        <h4>Trainer Management</h4>
+        <p>Full institute operations — course catalog, batch scheduling, student management, certificate issuance.</p>
+        <ul class="feat-list"><li>Course creation + editing</li><li>Batch open/close lifecycle</li><li>Student roster</li><li>Attendance + grading</li></ul>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(5,150,105,0.15);">📈</div>
+        <h4>Government Dashboard</h4>
+        <p>National-level pipeline KPIs for Ministry officials — aggregate, trend-based, policy-focused.</p>
+        <ul class="feat-list"><li>Total candidates by stage</li><li>Visa approval rates</li><li>State-wise distribution</li><li>Monthly cohort trends</li></ul>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(217,119,6,0.15);">🤖</div>
+        <h4>Global AI Chat Assistant</h4>
+        <p>Floating AI assistant on every page — keyword-matched responses, suggestion chips, navigable deep-links.</p>
+        <ul class="feat-list"><li>Contextual responses by keyword</li><li>Suggestion chips</li><li>Platform deep-link navigation</li><li>Streaming animation</li></ul>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(220,38,38,0.15);">🔐</div>
+        <h4>Role-Based Authentication</h4>
+        <p>JWT-based auth with strict role enforcement on every route — frontend and backend.</p>
+        <ul class="feat-list"><li>6 distinct portals</li><li>Token persistence</li><li>Automatic role redirect</li><li>Protected API routes</li></ul>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(99,102,241,0.15);">🪪</div>
+        <h4>Certification Tracker</h4>
+        <p>Track all certifications — language, trade, safety — with expiry dates, issuing bodies, and employer-visible badges.</p>
+        <ul class="feat-list"><li>Upload + metadata</li><li>Validity tracking</li><li>Linked to recognition cases</li><li>Employer-visible verified badges</li></ul>
+      </div>
+
+      <div class="feat-card">
+        <div class="feat-icon" style="background:rgba(5,150,105,0.15);">🗺️</div>
+        <h4>Indian Geo Reference Data</h4>
+        <p>20 Indian states with district-level granularity for precise candidate profiling and regional analytics.</p>
+        <ul class="feat-list"><li>20 states seeded</li><li>District-level data</li><li>GET /api/geo/states</li><li>Used in registration forms</li></ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── AI ENGINE ── -->
+<div class="ai-section" id="ai">
+  <div class="ai-inner">
+    <div class="section-header center">
+      <div class="section-tag" style="background:rgba(217,119,6,0.15);color:var(--gold);">AI Engine</div>
+      <h2 class="section-title">4 AI Endpoints — Zero API Keys Required</h2>
+      <p class="section-sub">All AI runs on rule-based logic in the Express backend. Smart enough to be useful, lightweight enough to deploy anywhere without external costs.</p>
+    </div>
+    <div class="ai-grid">
+      <div class="ai-card">
+        <div class="ai-icon">🤖</div>
+        <h4>AI Chat Assistant</h4>
+        <p>Floating assistant on every page. Responds to natural language queries with pre-scripted contextual answers matched by keyword trees. Returns suggestions and deep-links.</p>
+        <div class="ai-endpoint"><span class="method">POST</span>/api/ai/chat</div>
+        <div class="ai-io">Input: { message, context }<br>Output: { response, suggestions[], links[] }</div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-icon">🗺️</div>
+        <h4>Personalized Roadmap</h4>
+        <p>Generates occupation-specific, phased migration plans with realistic cost breakdowns in INR and EUR based on Indian city, occupation, and current language level.</p>
+        <div class="ai-endpoint"><span class="method">POST</span>/api/ai/roadmap</div>
+        <div class="ai-io">Input: { occupation, languageLevel, state }<br>Output: { phases[], totalMonths, costINR, costEUR }</div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-icon">📄</div>
+        <h4>Resume Advisor</h4>
+        <p>Occupation-specific CV improvement system. Matches resume sections against German standards and ATS requirements. Returns a numeric ATS compatibility score and prioritized improvements.</p>
+        <div class="ai-endpoint"><span class="method">POST</span>/api/ai/resume-suggest</div>
+        <div class="ai-io">Input: { occupation, resumeText }<br>Output: { atsScore, improvements[], tips[] }</div>
+      </div>
+      <div class="ai-card">
+        <div class="ai-icon">🗺️</div>
+        <h4>Geographic Reference</h4>
+        <p>Returns the complete list of 20 Indian states each with their districts for candidate registration forms, filtering, and regional analytics.</p>
+        <div class="ai-endpoint"><span class="method">GET</span>/api/geo/states</div>
+        <div class="ai-io">Output: { states: [{ name, districts[] }] }</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DATABASE ── -->
+<div class="section" id="database">
+  <div class="section-header center">
+    <div class="section-tag">Data Model</div>
+    <h2 class="section-title">16-Table PostgreSQL Schema</h2>
+    <p class="section-sub">A production-grade relational model covering the entire migration lifecycle — users through welfare.</p>
+  </div>
+  <div class="db-grid">
+    <div class="db-card"><div class="db-head" style="background:var(--navy);">👤 users</div><div class="db-body"><div class="db-field pk">id PK</div><div class="db-field">email</div><div class="db-field">role</div><div class="db-field">name</div><div class="db-field">password_hash</div><div class="db-field">phone</div><div class="db-field">organization</div></div></div>
+    <div class="db-card"><div class="db-head" style="background:#B45309;">🇮🇳 candidates</div><div class="db-body"><div class="db-field pk">id PK</div><div class="db-field fk">user_id FK</div><div class="db-field">occupation</div><div class="db-field">language_level</div><div class="db-field">state / district</div><div class="db-field">readiness_score</div><div class="db-field">stage</div><div class="db-field">profile_complete</div></div></div>
+    <div class="db-card"><div class="db-head" style="background:var(--blue);">🏭 employers</div><div class="db-body"><div class="db-field pk">id PK</div><div class="db-field fk">user_id FK</div><div class="db-field">company_name</div><div class="db-field">industry</div><div class="db-field">city / country</div><div class="db-field">verification_status</div></div></div>
+    <div class="db-card"><div class="db-head" style="background:var(--emerald);">💼 vacancies</div><div class="db-body"><div class="db-field pk">id PK</div><div class="db-field fk">employer_id FK</div><div class="db-field">title</div><div class="db-field">occupation</div><div class="db-field">language_level</div><div class="db-field">salary_min / max</div><div class="db-field">status</div></div></div>
+    <div class="db-card"><div class="db-head" style="background:var(--purple);">📋 applications</div><div class="db-body"><div class="db-field pk">id PK</div><div class="db-field fk">candidate_id FK</div><div class="db-field fk">vacancy_id FK</div><div class="db-field">status</div><div class="db-field">applied_at</div></div></div>
+    <div class="db-card"><div class="db-head" style="background:#B45309;">📁 documents</div><div class="db-body"><div class="db-field pk">id PK</div><div class="db-field fk">candidate_id FK</div><div class="db-field">type</div><div class="db-field">file_url</div><div class="db-field">verified</div><div class="db-field">expiry_date</div></div></div>
+    <div class="db-card"><div class="db-head" style="background:var(--red);">🏅 recognition_cases</div><div class="db-body"><div class="db-field pk">id PK</div><div class="db-field fk">candidate_id FK</div><div class="db-field">authority</div><div class="db-field">status</div><div class="db-field">decision</div></div></div>
+    <div class="db-card"><div class="db-head" style="background:var(--teal);">🎓 courses</div><div class="db-body"><div class="db-field pk">id PK</div><div class="db-field">name</div><div class="db-field">language_level</div><div class="db-field">provider_name</div><div class="db-field">duration_weeks</div><div class="db-field">mode</div></div></div>
+    <div class="db-card"><div class="db-head" style="background:#0369A1;">📅 batches</div><div class="db-body"><div class="db-field pk">id PK</div><div class="db-field fk">course_id FK</div><div class="db-field">start_date</div><div class="db-field">end_date</div><div class="db-field">max_students</div></div></div>
+    <div class="db-card"><div class="db-head" style="background:var(--purple);">📝 enrollments</div><div class="db-body"><div class="db-field pk">id PK</div><div class="db-field fk">candidate_id FK</div><div class="db-field fk">batch_id FK</div><div class="db-field">attendance_%</div><div class="db-field">assessment_score</div><div class="db-field">certificate_issued</div></div></div>
+    <div class="db-card"><div class="db-head" style="background:var(--red);">🛂 visa_cases</div><div class="db-body"><div class="db-field pk">id PK</div><div class="db-field fk">candidate_id FK</div><div class="db-field">visa_type</div><div class="db-field">appointment_date</div><div class="db-field">status</div></div></div>
+    <div class="db-card"><div class="db-head" style="background:var(--navy);">🎤 interviews</div><div class="db-body"><div class="db-field pk">id PK</div><div class="db-field fk">application_id FK</div><div class="db-field">scheduled_at</div><div class="db-field">mode</div><div class="db-field">outcome</div></div></div>
+    <div class="db-card"><div class="db-head" style="background:var(--emerald);">📜 offers</div><div class="db-body"><div class="db-field pk">id PK</div><div class="db-field fk">application_id FK</div><div class="db-field">salary</div><div class="db-field">start_date</div><div class="db-field">accepted</div></div></div>
+    <div class="db-card"><div class="db-head" style="background:#B45309;">🏥 welfare_tickets</div><div class="db-body"><div class="db-field pk">id PK</div><div class="db-field fk">candidate_id FK</div><div class="db-field">category</div><div class="db-field">priority</div><div class="db-field">status</div></div></div>
+    <div class="db-card"><div class="db-head" style="background:#4338CA;">🔔 notifications</div><div class="db-body"><div class="db-field pk">id PK</div><div class="db-field fk">user_id FK</div><div class="db-field">type</div><div class="db-field">message</div><div class="db-field">read</div></div></div>
+    <div class="db-card"><div class="db-head" style="background:var(--teal);">🪪 certifications</div><div class="db-body"><div class="db-field pk">id PK</div><div class="db-field fk">candidate_id FK</div><div class="db-field">type</div><div class="db-field">issuer</div><div class="db-field">issued_date</div><div class="db-field">expiry_date</div></div></div>
+  </div>
+  <div style="margin-top:20px;display:flex;gap:20px;flex-wrap:wrap;font-size:12px;">
+    <div style="display:flex;align-items:center;gap:6px;"><span style="color:var(--gold);font-weight:700;font-family:monospace;">PK</span><span style="color:var(--slate-500);">Primary Key</span></div>
+    <div style="display:flex;align-items:center;gap:6px;"><span style="color:var(--emerald);font-family:monospace;">FK</span><span style="color:var(--slate-500);">Foreign Key (relational link)</span></div>
+  </div>
+</div>
+
+<!-- ── TECH STACK ── -->
+<div class="tech-section" id="techstack">
+  <div style="max-width:1240px;margin:0 auto;">
+    <div class="section-header center">
+      <div class="section-tag">Technology</div>
+      <h2 class="section-title">12-Piece Tech Stack</h2>
+      <p class="section-sub">Production-ready choices with zero vendor lock-in and full TypeScript end-to-end.</p>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card"><div class="emoji">⚛️</div><h4>React 18</h4><p>Frontend UI with concurrent features</p></div>
+      <div class="tech-card"><div class="emoji">⚡</div><h4>Vite 7</h4><p>Instant dev server + optimized builds</p></div>
+      <div class="tech-card"><div class="emoji">🎨</div><h4>Tailwind CSS v4</h4><p>Utility-first, theme via @theme inline</p></div>
+      <div class="tech-card"><div class="emoji">🧩</div><h4>Radix UI</h4><p>Accessible headless component primitives</p></div>
+      <div class="tech-card"><div class="emoji">🔄</div><h4>TanStack Query v5</h4><p>Server state, caching, background sync</p></div>
+      <div class="tech-card"><div class="emoji">🔀</div><h4>Wouter v3</h4><p>1.5KB SPA routing with hooks</p></div>
+      <div class="tech-card"><div class="emoji">📊</div><h4>Recharts</h4><p>Composable SVG data visualization</p></div>
+      <div class="tech-card"><div class="emoji">✅</div><h4>Zod + React Hook Form</h4><p>Type-safe schema + form validation</p></div>
+      <div class="tech-card"><div class="emoji">🟢</div><h4>Node.js + Express</h4><p>REST API, TypeScript, ESM modules</p></div>
+      <div class="tech-card"><div class="emoji">🐘</div><h4>PostgreSQL + Drizzle</h4><p>Relational DB with type-safe ORM</p></div>
+      <div class="tech-card"><div class="emoji">🔷</div><h4>TypeScript (full stack)</h4><p>Shared types across frontend + backend</p></div>
+      <div class="tech-card"><div class="emoji">📦</div><h4>pnpm Workspaces</h4><p>Monorepo — 9 packages, shared libs</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DEMO SECTION ── -->
+<div class="demo-section" id="demo">
+  <div class="demo-inner">
+    <h2>Try It — 9 Demo Accounts</h2>
+    <p>All accounts use password: <strong style="color:var(--gold);font-family:monospace;">Demo@1234</strong> — one-click login on the platform.</p>
+    <div class="demo-grid">
+      <div class="demo-card"><div class="demo-role">🇮🇳 Candidate</div><div class="demo-name">Arjun Sharma</div><div class="demo-email">arjun.sharma@gmail.com</div><div class="demo-badge">Automotive Mechanic · Score 78 · Employer Matching stage</div></div>
+      <div class="demo-card"><div class="demo-role">🇮🇳 Candidate</div><div class="demo-name">Priya Nair</div><div class="demo-email">priya.nair@gmail.com</div><div class="demo-badge">Nurse · Score 91 · Visa Stage — offer received</div></div>
+      <div class="demo-card"><div class="demo-role">🇮🇳 Candidate</div><div class="demo-name">Ravi Kumar</div><div class="demo-email">ravi.kumar@gmail.com</div><div class="demo-badge">Electrician · Score 52 · Language Training stage</div></div>
+      <div class="demo-card"><div class="demo-role">🏭 Employer</div><div class="demo-name">Robert Bosch GmbH</div><div class="demo-email">hr@bosch-germany.de</div><div class="demo-badge">Automotive · Stuttgart · Active vacancies</div></div>
+      <div class="demo-card"><div class="demo-role">🏭 Employer</div><div class="demo-name">BerlinCare Altenpflege</div><div class="demo-email">jobs@carehome-berlin.de</div><div class="demo-badge">Healthcare · Berlin · Active vacancies</div></div>
+      <div class="demo-card"><div class="demo-role">🎓 Trainer</div><div class="demo-name">Goethe-Institut Pune</div><div class="demo-email">admin@goethe-pune.in</div><div class="demo-badge">Language Training · A1–B2 courses</div></div>
+      <div class="demo-card"><div class="demo-role">🤝 Facilitator</div><div class="demo-name">Indo-German Careers</div><div class="demo-email">ops@indiagermanyjobs.in</div><div class="demo-badge">Migration Support Agency · Case manager</div></div>
+      <div class="demo-card"><div class="demo-role">🏛️ Government</div><div class="demo-name">MSDE Official</div><div class="demo-email">official@msde.gov.in</div><div class="demo-badge">Ministry of Skill Development · Pipeline monitor</div></div>
+      <div class="demo-card"><div class="demo-role">⚙️ Admin</div><div class="demo-name">Platform Admin</div><div class="demo-email">admin@mobicorridor.in</div><div class="demo-badge">Full system access · Document review queue</div></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <strong>Indo German Mobility Corridor</strong> — Production-Grade Platform Overview<br/>
+  <span style="font-size:11px;margin-top:8px;display:block;opacity:0.6;">6 Roles · 30+ Pages · 16 DB Tables · 4 AI Endpoints · 10 Journey Stages · 9 Demo Accounts</span>
+  <span style="font-size:11px;opacity:0.4;">React 18 · Vite 7 · Tailwind CSS v4 · Express · PostgreSQL · Drizzle ORM · TypeScript · pnpm Workspaces</span>
+</footer>
+
+<script>
+function switchTab(role) {
+  document.querySelectorAll('.journey-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.journey-panel').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('panel-' + role).classList.add('active');
+}
+</script>
+</body>
+</html>

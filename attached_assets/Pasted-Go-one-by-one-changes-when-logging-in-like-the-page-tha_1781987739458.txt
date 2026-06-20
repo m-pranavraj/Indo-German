@@ -1,0 +1,133 @@
+Go one by one changes:
+
+when logging in like the page that contains 6 stakeholders 9 journeys isnt required , it can be
+Metric Display
+Verified German Employers 500+
+Active Job Openings 10,000+
+Successful Placements 3,500+
+Visa Success Rate 96%
+Average Salary Range €35K–€70K
+German States Hiring 16
+so change those
+
+Mainly whole ui colour palette of whole website all pages
+Choose best colours
+Option 1 — Premium German Corporate (Recommended)
+Think: Lufthansa × SAP × Stripe
+
+Colors
+Background: #07142B
+Secondary BG: #102544
+Card BG: #183256
+
+Primary Text: #FFFFFF
+Secondary Text: #A7B6D0
+
+Accent Orange: #FF9D00
+Accent Hover: #FFB938
+
+Success: #00C853
+Gradient
+background:
+linear-gradient(
+135deg,
+#07142B 0%,
+#102544 50%,
+#183256 100%
+);
+Why
+Feels trustworthy
+German engineering vibe
+Enterprise ready
+Works for students, workers, employers, embassies
+Option 2 — Ultra Premium Mobility Platform
+
+Think: Tesla × Linear × Notion
+
+Colors
+Background: #0B1020
+Cards: #151C31
+
+Primary: #FFFFFF
+Secondary: #98A2B3
+
+Accent Gold: #F5A623
+Accent Light: #FFD166
+
+Borders: #27314F
+Result
+
+Luxury immigration platform feel.
+
+Option 3 — Modern Startup Style
+
+Think: Deel × Remote × Rippling
+
+Colors
+Background: #0A0E1A
+Cards: #111827
+
+Primary: #FFFFFF
+Secondary: #94A3B8
+
+Accent Mint: #00FFA3
+Accent Blue: #3B82F6
+
+Trending heavily in SaaS dashboards right now.
+
+My choice for Indo German
+Main Colors
+--bg: #07142B;
+--card: #102544;
+--card-hover: #183256;
+
+--text-primary: #FFFFFF;
+--text-secondary: #B8C4D9;
+
+--accent: #FF9D00;
+--accent-hover: #FFB938;
+
+--success: #00C853
+
+Change whole ui and ux more better , if required u can use the purple also that to if u feel this is better as shown in image , or else u can choose modern colour combo as mentioned above trendy hihglight premium
+
+In starting when user comes to website , add a demo candidate profile with existing 3 , specifically mentioning fresh login , and when clicked on fresh user , ai should ask questions, based on questions and answers like qualifications and all , end to end profile , slowly adds to readiness score and afater all ai questions perfect profile ready - but the thing is , its important for u to generate a resume based on questions only , that to german resume , tailored for germany
+
+ill give groq api key llama 8b instant , u can take that into secret , now the thign is i want this feature in resume - this should be a real feature , when i upload my resume it should show some roobitc animation and the same resume should be converted into german language and should be downloadable
+
+resume gap analysis for role , what can be improved and all , u can use ai here
+
+ai popup which is there also can use groq api 4, 5,6 will obviously use ai , invcuding questions and all
+
+in candidate section there is no applying jobs or filter button like categoories like barber , automotive , plumber or etc anything , filter and apply feature
+
+when user completes ai survey in starting for a new user , it should recommend similar profiles accoding to same qualifications , not only user completing ai survey . any candidate can see similar profiles with similar qualification getting into germany should be shown so that people can connect to them through mail or reach out to them
+
+in employer dashboard u can add how many people rejected the offer
+
+in government dashboard or section
+i need below all statistics
+i mentioned in pasted content , like Total Govt Investment
+₹48 Crore
+
+Training Cost
+₹18 Crore
+
+Language Training Cost
+₹12 Crore
+these , all are mentioned in pasted contentTotal revenue , invoices cleared to recruitment agencies
+Total visa expenditure
+Jobs salaries offered net salaries offered CTC avg or net
+ensure almost there are alot metrics ensure u show them in dashboard
+
+visa section in candidates is not working ensure its working
+
+platform admin analystics and control should also be very deep, facilitaotr s naltyics and all reports can be also deep
+
+ensure ai asking questions user jounrey for candidate mock up is also ready with 3 other mockups , when clicked on this is ai asks questions , autofills ans , and then moves to two more important questions demo purpose qualifiction name , age , education , languages are enough automatically fill slowly not too speed , and then lwhen clcik onn next show readiness based on data ai answered , and roadmap genreated according and a german resume based on that ,
+
+ensure the resume feature which i told like upload a sample resume it gets robotic animation and coverted to german in same ui with pdf grids reader , is real time and perfect
+
+Ensure ui and whole all of these changes are end to end implemented
+
+

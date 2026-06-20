@@ -1,0 +1,375 @@
+Executive Dashboard (Top Level)
+KPI Cards
+Total Registered Candidates
+24,568
+
+Candidates in Active Pipeline
+18,342
+
+Successfully Migrated
+7,856
+
+German Employers Onboarded
+523
+
+Active Job Vacancies
+12,430
+
+Visa Success Rate
+96.2%
+
+Total Salary Generated
+€287 Million
+
+Government Investment
+₹48 Crore
+
+ROI on Investment
+5.8x
+
+Women Candidates
+8,432
+
+Rural Candidates
+13,578
+
+Average Placement Time
+84 Days
+
+Every card clickable.
+
+Candidate Pipeline Analytics
+
+Clicking:
+
+Active Pipeline
+
+Opens:
+
+Profile Creation
+24,568
+
+Document Verification
+22,340
+
+Language Training
+19,245
+
+Skill Assessment
+17,833
+
+Employer Matching
+11,456
+
+Interview Scheduled
+6,821
+
+Offer Letters Issued
+4,982
+
+Visa Processing
+3,775
+
+Migrated
+7,856
+
+Visual funnel chart.
+
+District Analytics
+
+Government loves district-level data.
+
+District
+Registered
+Trained
+Placed
+Migration %
+
+Visakhapatnam
+2,340
+1,870
+654
+35%
+
+Vijayawada
+1,985
+1,532
+580
+38%
+
+Tirupati
+1,642
+1,245
+398
+32%
+
+Click district.
+
+Open:
+
+District Officer
+
+Top Skills
+
+Active Candidates
+
+Migrated Candidates
+
+Placement Rate
+
+Women Participation
+
+Employer Demand
+Financial Dashboard
+
+Most important for ministries.
+
+Total Govt Investment
+₹48 Crore
+
+Training Cost
+₹18 Crore
+
+Language Training Cost
+₹12 Crore
+
+Assessment Cost
+₹4 Crore
+
+Visa Support Cost
+₹5 Crore
+
+Technology Platform Cost
+₹3 Crore
+
+Administrative Cost
+₹6 Crore
+
+Click any metric.
+
+Show detailed breakup.
+
+ROI Dashboard
+
+This will impress IAS officers.
+
+Total Investment
+₹48 Crore
+
+Salary Generated Abroad
+₹2,600 Crore
+
+Remittances Expected
+₹780 Crore
+
+Families Benefited
+7,856
+
+ROI
+54x
+Employment Dashboard
+Total Job Offers
+12,430
+
+Offers Accepted
+8,542
+
+Offers Rejected
+1,245
+
+Interviews Scheduled
+9,845
+
+Interviews Completed
+8,943
+
+Average Salary
+€42,000
+
+Clicking opens:
+
+Employer-wise analytics.
+
+Germany Demand Dashboard
+Nurses Required
+4,230
+
+Electricians Required
+2,432
+
+Plumbers Required
+1,342
+
+Caregivers Required
+5,320
+
+Hospitality Staff
+2,421
+
+Drivers
+1,980
+
+Click skill.
+
+Shows:
+
+Available Candidates
+
+Training Progress
+
+Shortage Gap
+
+Employers Hiring
+Visa Dashboard
+Applications Submitted
+7,845
+
+Approved
+7,542
+
+Rejected
+203
+
+Pending
+100
+
+Approval Rate
+96.1%
+
+Clicking shows embassy-wise analytics.
+
+Language Training Dashboard
+A1 Completed
+18,500
+
+A2 Completed
+14,230
+
+B1 Completed
+8,900
+
+B2 Completed
+4,540
+
+Training In Progress
+6,210
+Candidate Demographics
+Male
+15,600
+
+Female
+8,432
+
+Age 18-25
+11,230
+
+Age 26-35
+9,540
+
+Age 36-45
+3,798
+
+Rural
+13,578
+
+Urban
+10,990
+Success Dashboard
+Migrated This Month
+542
+
+Migrated This Year
+7,856
+
+Highest Salary
+€92,000
+
+Average Salary
+€42,000
+
+Success Stories
+2,145
+Stakeholder Dashboard
+
+Track all ecosystem actors.
+
+Candidates
+24,568
+
+Training Partners
+42
+
+German Employers
+523
+
+Language Institutes
+28
+
+Assessment Agencies
+14
+
+Visa Consultants
+18
+
+Government Officers
+152
+Alert Center
+
+IAS officers love exception reports.
+
+Districts Below Target
+
+Visa Delays > 30 Days
+
+Candidates Stuck In Pipeline
+
+Employer Requests Unfilled
+
+Training Centers Underperforming
+
+Document Verification Pending
+Global Map View
+
+Interactive Germany Map
+
+Berlin
+1,542 Workers
+
+Munich
+2,120 Workers
+
+Hamburg
+1,230 Workers
+
+Frankfurt
+1,875 Workers
+
+Stuttgart
+1,089 Workers
+
+Click city.
+
+See employers, workers, salaries.
+
+Best Dashboard Layout
+Row 1
+Registered
+Active Pipeline
+Migrated
+Job Offers
+Visa Success
+Investment
+Row 2
+Pipeline Funnel
+District Performance Map
+Row 3
+Financial Analytics
+Germany Demand Analytics
+Row 4
+Employer Analytics
+Salary Analytics
+Language Training Analytics
+Row 5
+Alerts
+Success Stories
+Top Performing Districts

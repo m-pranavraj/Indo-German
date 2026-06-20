@@ -1,0 +1,525 @@
+India candidate → eligibility → German language → qualification recognition → employer match → offer → visa readiness → departure → settlement/welfare in Germany.
+
+That is the core product.
+
+Germany is a good pilot because skilled-worker routes, qualification recognition, and employment pathways are formalized; Germany’s official portals provide recognition guidance and digital recognition application pathways for many occupations and authorities.
+
+Your existing PRD already correctly identifies the ecosystem: candidate, employer, recruiter, trainer, government, migration facilitator, LMS, readiness, payments, and welfare.
+
+1. Product positioning
+Product name internally
+
+Indo-German Mobility Corridor Platform
+
+One-line value proposition
+
+A verified digital pipeline that helps Indian skilled workers become Germany-ready while helping German employers hire compliant, trained, documented talent.
+
+Main problem solved
+
+Today the process is fragmented:
+
+candidates do not know whether they qualify
+language institutes operate separately
+documents are scattered
+recognition is confusing
+employers cannot trust candidate readiness
+agencies manually coordinate everything through Excel and WhatsApp
+government has no real-time pipeline visibility
+candidates face fraud and misinformation
+
+Your platform becomes the single source of truth.
+
+2. Start with one narrow pilot
+
+Do not launch for “all jobs in Germany.”
+
+Start with:
+
+Pilot component	Recommendation
+Country	Germany
+Candidate source	India
+Occupations	Nurses, electricians, welders, plumbers, industrial technicians
+Language	German A1 to B1/B2
+Geography	Andhra Pradesh / Telangana first
+Employers	3–10 verified German employers
+Training providers	2–5 German-language institutes
+Candidate cohort	100–500 candidates
+Outcome	Job offer + visa-ready candidate
+
+For regulated professions such as nursing, recognition is usually more critical; for many other occupations, requirements vary by profession and destination. Germany’s recognition portal is therefore a core reference point in your rules engine.
+
+3. The full candidate lifecycle
+Stage 0 — Discovery and awareness
+
+Candidate sees:
+
+Germany occupation demand
+expected salary range
+language requirement
+cost estimate
+duration estimate
+eligibility criteria
+“Is Germany right for me?” assessment
+fraud-awareness content
+success stories
+
+Output: lead captured.
+
+Stage 1 — Registration and identity
+
+Candidate enters:
+
+name
+phone OTP
+email
+district/state
+education
+ITI/diploma/degree
+work experience
+passport availability
+occupation
+preferred German state/city
+German language level
+
+Output: candidate profile and initial eligibility score.
+
+Stage 2 — Eligibility engine
+
+This is the most important module.
+
+The system evaluates:
+
+Occupation eligibility
++ Qualification eligibility
++ Experience eligibility
++ Passport status
++ Language level
++ Recognition requirement
++ Financial readiness
++ Document readiness
+= Germany pathway recommendation
+Example output
+
+“You are eligible for the Industrial Electrician pathway.
+Missing items: passport, German A2, experience letter, qualification documents.
+Estimated pathway: 8–12 months.”
+
+Output: personalized pathway plan.
+
+Stage 3 — Language and training
+
+Candidate can:
+
+compare training providers
+enroll in A1/A2/B1/B2
+attend classes
+complete lessons
+take mock tests
+track attendance
+upload certificates
+receive trainer feedback
+
+Output: language readiness status.
+
+The platform should support external institutes first; do not build a full Duolingo-like LMS in the first version.
+
+Stage 4 — Qualification mapping and recognition
+
+This module maps:
+
+Indian qualification
+→ occupation
+→ German reference profession
+→ regulated / non-regulated classification
+→ recognition authority
+→ required documents
+→ recognition status
+
+For university degrees, a Statement of Comparability may be relevant; Germany’s ZAB describes it as an official comparison of a foreign university degree with the German system.
+
+Recognition workflow statuses
+not required
+eligibility check pending
+documents pending
+application ready
+submitted
+authority review
+partial recognition
+full recognition
+rejected
+bridge course required
+
+Output: recognition readiness.
+
+Stage 5 — Document vault
+
+Every candidate needs a secure document locker.
+
+Documents
+passport
+Aadhaar / identity proof
+education certificates
+marksheets
+ITI / diploma certificates
+work experience letters
+resume
+language certificates
+police clearance certificate
+medical certificate
+offer letter
+recognition documents
+visa documents
+insurance documents
+Each document needs
+document type
+uploaded date
+expiry date
+verification status
+reviewer notes
+masked preview
+consent log
+download restrictions
+audit history
+
+Output: verified candidate document pack.
+
+Stage 6 — Employer matching
+
+Employer posts vacancy:
+
+Occupation
+German location
+Salary
+Shift type
+Language level
+Qualification
+Experience
+Recognition required?
+Visa support?
+Accommodation support?
+Joining date
+
+Matching engine ranks candidates based on:
+
+Skill match
++ language match
++ qualification match
++ recognition status
++ document readiness
++ location preference
++ availability
+= Candidate Fit Score
+
+Output: shortlist.
+
+Stage 7 — Interview and offer
+
+Platform supports:
+
+employer shortlist
+interview scheduling
+video meeting link
+interview feedback
+document sharing with consent
+offer-letter upload
+candidate acceptance
+joining timeline
+
+Output: conditional or final job offer.
+
+Stage 8 — Visa and migration readiness
+
+This is a checklist workflow, not a visa-approval engine.
+
+Visa checklist
+passport valid
+signed offer letter
+recognition result / applicable evidence
+language certificate
+insurance
+financial documents if required
+appointment status
+visa application submitted
+visa decision
+travel booking
+pre-departure orientation
+
+Germany’s Skilled Immigration Act and the Opportunity Card are relevant pathway context, but the exact route must be determined case-by-case based on the candidate and job.
+
+Output: migration-ready candidate.
+
+Stage 9 — Post-arrival welfare
+
+After reaching Germany, candidate can:
+
+report issue
+ask employer/agency support
+request accommodation support
+access embassy/consular information
+access community groups
+update joining status
+report exploitation/fraud
+submit welfare grievance
+
+Output: migrant welfare record.
+
+4. Dashboards
+Candidate dashboard
+My Germany Journey
+- Readiness score: 62%
+- Next action: Upload passport
+- German language: A2 in progress
+- Recognition: documents pending
+- Applications: 3 active
+- Interviews: 1 upcoming
+- Visa status: not started
+- Support tickets: 0 open
+Employer dashboard
+Hiring Dashboard
+- Active vacancies
+- Candidates matched
+- Shortlisted candidates
+- Interviews scheduled
+- Offers issued
+- Joining forecast
+- Candidate readiness distribution
+Training provider dashboard
+Institute Dashboard
+- Active batches
+- Students enrolled
+- Attendance %
+- A1/A2/B1/B2 completion
+- Assessment results
+- Certificate issuance
+- Candidate placement outcome
+Migration facilitator dashboard
+Pipeline Dashboard
+- Candidates by stage
+- Documents pending
+- Recognition pending
+- Visa checklist pending
+- Employer interviews
+- Offer-to-joining conversion
+- Welfare alerts
+Government dashboard
+Indo-German Corridor Dashboard
+- Total registrations
+- District-wise candidate pipeline
+- Occupation-wise demand
+- Language completion
+- Recognition outcomes
+- Placements
+- Migrated candidates
+- Welfare cases
+- Employer demand
+5. Technical architecture
+Web App / Mobile App
+        ↓
+API Gateway
+        ↓
+Identity & Role Service
+        ↓
+Core Platform Backend
+ ├── Candidate Lifecycle Module
+ ├── Employer & Vacancy Module
+ ├── Training / LMS Module
+ ├── Document Vault Module
+ ├── Recognition Workflow Module
+ ├── Matching Engine
+ ├── Application / Interview Module
+ ├── Visa Checklist Module
+ ├── Welfare & Grievance Module
+ ├── Payment / Subsidy Module
+ ├── Notification Module
+ └── Analytics Module
+        ↓
+PostgreSQL + Object Storage + Redis + Search
+        ↓
+External Integrations
+Recommended stack
+Layer	Suggested choice
+Frontend	Next.js / React
+Mobile later	Flutter
+Backend	Node.js NestJS or Python FastAPI
+Database	PostgreSQL
+File storage	AWS S3 / Cloudflare R2 / Azure Blob
+Queue	Redis + BullMQ
+Search	OpenSearch / Elasticsearch
+Authentication	Keycloak / Auth0 / Firebase Auth
+Video interviews	Google Meet / Zoom API
+Notifications	WhatsApp Business API, SMS, email
+Analytics	Metabase / Superset / Power BI
+Hosting	AWS / Azure / GCP
+AI	OpenAI-compatible LLM + rules engine
+6. APIs and integrations
+Must-have for MVP
+1. Phone OTP
+
+For login and account recovery.
+
+2. WhatsApp Business API
+
+For:
+
+document reminders
+class reminders
+interview reminders
+application status
+visa checklist alerts
+3. DigiLocker
+
+Use it for consent-based document access and verification, not as your full document system. DigiLocker is designed for secure storage, sharing, and verification of authentic digital documents; its requester API documentation is available through API Setu.
+
+4. Payment gateway
+
+For:
+
+training fees
+exam fees
+application fees
+subsidy vouchers
+invoices
+
+Use Indian payment rails such as Razorpay or Cashfree Payments after evaluating procurement and compliance needs.
+
+5. Video interview API
+
+Use Zoom / Google Meet links first, not a custom video product.
+
+6. Email and SMS
+
+For official communication and audit trails.
+
+Aadhaar: what you should do
+For prototype
+
+Do not build direct Aadhaar authentication.
+
+Use:
+
+mobile OTP
+DigiLocker
+manual identity review
+optional Aadhaar offline XML/QR upload only if your legal/compliance setup permits it
+
+Direct Aadhaar authentication/e-KYC is not an open API for any startup to use casually. UIDAI describes requesting entities as entities submitting Aadhaar and demographic/biometric information to CIDR, and its ecosystem specifies e-KYC authentication via OTP and/or biometric modes.
+
+For production
+
+Only consider Aadhaar after:
+
+legal review
+consent design
+data minimization
+approved AUA/KUA or authorized partner arrangement
+security audit
+government stakeholder approval
+7. Data model
+users
+roles
+candidate_profiles
+candidate_qualifications
+candidate_experience
+candidate_languages
+candidate_documents
+document_verifications
+employers
+employer_users
+vacancies
+vacancy_requirements
+applications
+interviews
+offers
+courses
+batches
+enrollments
+attendance
+assessments
+certificates
+recognition_cases
+recognition_requirements
+visa_cases
+visa_checklist_items
+payments
+subsidies
+notifications
+support_tickets
+audit_logs
+consent_records
+
+The two most important tables are:
+
+candidate_documents
+candidate_readiness_snapshot
+
+Every workflow should update them.
+
+8. Readiness score engine
+
+Do not use AI alone. Use transparent rules.
+
+Readiness Score =
+
+Profile completeness          10%
+Identity / documents          15%
+Passport validity             10%
+Qualification suitability     15%
+Recognition status            15%
+German language level         20%
+Work experience               10%
+Employer/job match            5%
+
+Example:
+
+82–100 = Germany-ready
+60–81  = pathway active
+40–59  = training / documents required
+0–39   = early-stage candidate
+
+AI can explain the score, but rules must calculate it.
+
+9. Build phases
+Phase 1 — 10 to 12 weeks
+candidate onboarding
+employer onboarding
+vacancy posting
+document vault
+basic LMS integration
+readiness score
+applications
+admin dashboard
+WhatsApp notifications
+Phase 2 — 3 to 4 months
+recognition workflow
+employer candidate search
+interview scheduling
+offer workflow
+payments/subsidies
+advanced analytics
+AI CV parsing and matching
+Phase 3 — 6 months+
+DigiLocker production integration
+formal government dashboard
+visa checklist integrations where permitted
+welfare system
+German employer partner portal
+multi-country expansion
+10. What to show in your prototype demo
+
+Your demo should tell one story:
+
+Indian electrician registers
+System checks eligibility
+Candidate sees missing passport and A2 German requirement
+Candidate joins language batch
+Trainer updates attendance and assessment
+Candidate uploads certificates
+Facilitator starts recognition checklist
+Employer posts electrician job in Germany
+System recommends candidate
+Employer interviews and issues offer
+Visa checklist starts
+Government dashboard sees the entire pipeline
+
+That is a powerful end-to-end demo.

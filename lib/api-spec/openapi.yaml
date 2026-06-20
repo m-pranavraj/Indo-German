@@ -1,0 +1,2189 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: Indo-German Mobility Corridor Platform API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+  - name: auth
+  - name: candidates
+  - name: employers
+  - name: vacancies
+  - name: applications
+  - name: documents
+  - name: training
+  - name: recognition
+  - name: visa
+  - name: welfare
+  - name: notifications
+  - name: analytics
+  - name: interviews
+  - name: offers
+
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  # ── AUTH ─────────────────────────────────────────────────────────────────────
+  /auth/login:
+    post:
+      operationId: login
+      tags: [auth]
+      summary: Login with email and password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginInput"
+      responses:
+        "200":
+          description: Logged in
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          description: Invalid credentials
+
+  /auth/register:
+    post:
+      operationId: register
+      tags: [auth]
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterInput"
+      responses:
+        "201":
+          description: Registered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+
+  /auth/me:
+    get:
+      operationId: getMe
+      tags: [auth]
+      summary: Get current user
+      responses:
+        "200":
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+  /auth/logout:
+    post:
+      operationId: logout
+      tags: [auth]
+      summary: Logout
+      responses:
+        "200":
+          description: Logged out
+
+  # ── CANDIDATES ───────────────────────────────────────────────────────────────
+  /candidates:
+    get:
+      operationId: listCandidates
+      tags: [candidates]
+      summary: List all candidates (admin/facilitator/employer/govt)
+      parameters:
+        - name: stage
+          in: query
+          schema:
+            type: string
+        - name: occupation
+          in: query
+          schema:
+            type: string
+        - name: district
+          in: query
+          schema:
+            type: string
+        - name: readinessMin
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Candidate list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Candidate"
+
+  /candidates/me:
+    get:
+      operationId: getMyCandidateProfile
+      tags: [candidates]
+      summary: Get my candidate profile
+      responses:
+        "200":
+          description: Candidate profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Candidate"
+    patch:
+      operationId: updateMyCandidateProfile
+      tags: [candidates]
+      summary: Update my candidate profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CandidateUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Candidate"
+
+  /candidates/me/readiness:
+    get:
+      operationId: getMyReadinessScore
+      tags: [candidates]
+      summary: Get my readiness score breakdown
+      responses:
+        "200":
+          description: Readiness score
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReadinessScore"
+
+  /candidates/me/journey:
+    get:
+      operationId: getMyJourney
+      tags: [candidates]
+      summary: Get full journey/stage status
+      responses:
+        "200":
+          description: Journey
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CandidateJourney"
+
+  /candidates/{id}:
+    get:
+      operationId: getCandidate
+      tags: [candidates]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Candidate
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Candidate"
+
+  # ── EMPLOYERS ────────────────────────────────────────────────────────────────
+  /employers:
+    get:
+      operationId: listEmployers
+      tags: [employers]
+      summary: List employers
+      responses:
+        "200":
+          description: Employers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Employer"
+
+  /employers/me:
+    get:
+      operationId: getMyEmployerProfile
+      tags: [employers]
+      summary: Get my employer profile
+      responses:
+        "200":
+          description: Employer profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employer"
+    patch:
+      operationId: updateMyEmployerProfile
+      tags: [employers]
+      summary: Update my employer profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmployerUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Employer"
+
+  /employers/me/dashboard:
+    get:
+      operationId: getEmployerDashboard
+      tags: [employers]
+      summary: Get employer hiring dashboard stats
+      responses:
+        "200":
+          description: Dashboard stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmployerDashboard"
+
+  # ── VACANCIES ────────────────────────────────────────────────────────────────
+  /vacancies:
+    get:
+      operationId: listVacancies
+      tags: [vacancies]
+      summary: List vacancies
+      parameters:
+        - name: occupation
+          in: query
+          schema:
+            type: string
+        - name: location
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Vacancies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Vacancy"
+    post:
+      operationId: createVacancy
+      tags: [vacancies]
+      summary: Create vacancy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VacancyInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vacancy"
+
+  /vacancies/{id}:
+    get:
+      operationId: getVacancy
+      tags: [vacancies]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Vacancy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vacancy"
+    patch:
+      operationId: updateVacancy
+      tags: [vacancies]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VacancyUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vacancy"
+
+  /vacancies/{id}/matches:
+    get:
+      operationId: getVacancyMatches
+      tags: [vacancies]
+      summary: Get matched candidates for a vacancy (ranked by fit score)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Matched candidates
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CandidateMatch"
+
+  # ── APPLICATIONS ─────────────────────────────────────────────────────────────
+  /applications:
+    get:
+      operationId: listApplications
+      tags: [applications]
+      summary: List applications
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+        - name: vacancyId
+          in: query
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Applications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Application"
+    post:
+      operationId: createApplication
+      tags: [applications]
+      summary: Apply to a vacancy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApplicationInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Application"
+
+  /applications/{id}:
+    get:
+      operationId: getApplication
+      tags: [applications]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Application
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Application"
+    patch:
+      operationId: updateApplication
+      tags: [applications]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApplicationUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Application"
+
+  # ── DOCUMENTS ────────────────────────────────────────────────────────────────
+  /documents:
+    get:
+      operationId: listDocuments
+      tags: [documents]
+      summary: List my documents
+      responses:
+        "200":
+          description: Documents
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Document"
+    post:
+      operationId: uploadDocument
+      tags: [documents]
+      summary: Upload a document
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DocumentInput"
+      responses:
+        "201":
+          description: Uploaded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Document"
+
+  /documents/{id}:
+    get:
+      operationId: getDocument
+      tags: [documents]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Document
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Document"
+    patch:
+      operationId: updateDocument
+      tags: [documents]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DocumentUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Document"
+
+  /documents/{id}/verify:
+    post:
+      operationId: verifyDocument
+      tags: [documents]
+      summary: Verify or reject a document (admin/facilitator)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DocumentVerification"
+      responses:
+        "200":
+          description: Verified
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Document"
+
+  # ── TRAINING ─────────────────────────────────────────────────────────────────
+  /courses:
+    get:
+      operationId: listCourses
+      tags: [training]
+      summary: List language/training courses
+      responses:
+        "200":
+          description: Courses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Course"
+    post:
+      operationId: createCourse
+      tags: [training]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CourseInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Course"
+
+  /batches:
+    get:
+      operationId: listBatches
+      tags: [training]
+      summary: List batches
+      responses:
+        "200":
+          description: Batches
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Batch"
+    post:
+      operationId: createBatch
+      tags: [training]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BatchInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Batch"
+
+  /batches/{id}/enroll:
+    post:
+      operationId: enrollInBatch
+      tags: [training]
+      summary: Enroll candidate in a batch
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EnrollmentInput"
+      responses:
+        "201":
+          description: Enrolled
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Enrollment"
+
+  /enrollments:
+    get:
+      operationId: listEnrollments
+      tags: [training]
+      summary: List enrollments
+      responses:
+        "200":
+          description: Enrollments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Enrollment"
+
+  /training/dashboard:
+    get:
+      operationId: getTrainingDashboard
+      tags: [training]
+      summary: Training provider dashboard stats
+      responses:
+        "200":
+          description: Dashboard
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrainingDashboard"
+
+  # ── RECOGNITION ──────────────────────────────────────────────────────────────
+  /recognition:
+    get:
+      operationId: listRecognitionCases
+      tags: [recognition]
+      summary: List recognition cases
+      responses:
+        "200":
+          description: Recognition cases
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RecognitionCase"
+    post:
+      operationId: createRecognitionCase
+      tags: [recognition]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecognitionCaseInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecognitionCase"
+
+  /recognition/{id}:
+    get:
+      operationId: getRecognitionCase
+      tags: [recognition]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Recognition case
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecognitionCase"
+    patch:
+      operationId: updateRecognitionCase
+      tags: [recognition]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecognitionCaseUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RecognitionCase"
+
+  # ── VISA ─────────────────────────────────────────────────────────────────────
+  /visa-cases:
+    get:
+      operationId: listVisaCases
+      tags: [visa]
+      summary: List visa cases
+      responses:
+        "200":
+          description: Visa cases
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VisaCase"
+    post:
+      operationId: createVisaCase
+      tags: [visa]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VisaCaseInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VisaCase"
+
+  /visa-cases/{id}:
+    get:
+      operationId: getVisaCase
+      tags: [visa]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Visa case
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VisaCase"
+    patch:
+      operationId: updateVisaCase
+      tags: [visa]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VisaCaseUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VisaCase"
+
+  /visa-cases/{id}/checklist:
+    get:
+      operationId: getVisaChecklist
+      tags: [visa]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Checklist items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/VisaChecklistItem"
+
+  /visa-cases/{id}/checklist/{itemId}:
+    patch:
+      operationId: updateVisaChecklistItem
+      tags: [visa]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: itemId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VisaChecklistItemUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VisaChecklistItem"
+
+  # ── INTERVIEWS ───────────────────────────────────────────────────────────────
+  /interviews:
+    get:
+      operationId: listInterviews
+      tags: [interviews]
+      summary: List interviews
+      responses:
+        "200":
+          description: Interviews
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Interview"
+    post:
+      operationId: scheduleInterview
+      tags: [interviews]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InterviewInput"
+      responses:
+        "201":
+          description: Scheduled
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Interview"
+
+  /interviews/{id}:
+    get:
+      operationId: getInterview
+      tags: [interviews]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Interview
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Interview"
+    patch:
+      operationId: updateInterview
+      tags: [interviews]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InterviewUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Interview"
+
+  # ── OFFERS ───────────────────────────────────────────────────────────────────
+  /offers:
+    get:
+      operationId: listOffers
+      tags: [offers]
+      summary: List job offers
+      responses:
+        "200":
+          description: Offers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Offer"
+    post:
+      operationId: createOffer
+      tags: [offers]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OfferInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Offer"
+
+  /offers/{id}:
+    get:
+      operationId: getOffer
+      tags: [offers]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Offer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Offer"
+    patch:
+      operationId: updateOffer
+      tags: [offers]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OfferUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Offer"
+
+  # ── WELFARE / GRIEVANCE ───────────────────────────────────────────────────────
+  /welfare-tickets:
+    get:
+      operationId: listWelfareTickets
+      tags: [welfare]
+      summary: List welfare/grievance tickets
+      responses:
+        "200":
+          description: Tickets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/WelfareTicket"
+    post:
+      operationId: createWelfareTicket
+      tags: [welfare]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WelfareTicketInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WelfareTicket"
+
+  /welfare-tickets/{id}:
+    get:
+      operationId: getWelfareTicket
+      tags: [welfare]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Ticket
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WelfareTicket"
+    patch:
+      operationId: updateWelfareTicket
+      tags: [welfare]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WelfareTicketUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WelfareTicket"
+
+  # ── NOTIFICATIONS ─────────────────────────────────────────────────────────────
+  /notifications:
+    get:
+      operationId: listNotifications
+      tags: [notifications]
+      summary: List notifications for current user
+      responses:
+        "200":
+          description: Notifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Notification"
+
+  /notifications/{id}/read:
+    patch:
+      operationId: markNotificationRead
+      tags: [notifications]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Marked read
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Notification"
+
+  # ── ANALYTICS ────────────────────────────────────────────────────────────────
+  /analytics/government:
+    get:
+      operationId: getGovernmentAnalytics
+      tags: [analytics]
+      summary: Government corridor analytics
+      responses:
+        "200":
+          description: Analytics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GovernmentAnalytics"
+
+  /analytics/facilitator:
+    get:
+      operationId: getFacilitatorAnalytics
+      tags: [analytics]
+      summary: Migration facilitator pipeline analytics
+      responses:
+        "200":
+          description: Analytics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FacilitatorAnalytics"
+
+  /analytics/pipeline:
+    get:
+      operationId: getPipelineStats
+      tags: [analytics]
+      summary: Overall pipeline stage distribution
+      responses:
+        "200":
+          description: Pipeline stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PipelineStats"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required: [status]
+
+    # ── AUTH ──
+    LoginInput:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+
+    RegisterInput:
+      type: object
+      required: [email, password, name, role]
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        name:
+          type: string
+        role:
+          type: string
+          enum: [candidate, employer, trainer, facilitator, government, admin]
+        phone:
+          type: string
+        organization:
+          type: ["string", "null"]
+
+    AuthResponse:
+      type: object
+      required: [user, token]
+      properties:
+        user:
+          $ref: "#/components/schemas/User"
+        token:
+          type: string
+
+    User:
+      type: object
+      required: [id, email, name, role, createdAt]
+      properties:
+        id:
+          type: integer
+        email:
+          type: string
+        name:
+          type: string
+        role:
+          type: string
+        phone:
+          type: ["string", "null"]
+        organization:
+          type: ["string", "null"]
+        avatarUrl:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    # ── CANDIDATE ──
+    Candidate:
+      type: object
+      required: [id, userId, name, stage, readinessScore, createdAt]
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: ["string", "null"]
+        district:
+          type: ["string", "null"]
+        state:
+          type: ["string", "null"]
+        occupation:
+          type: ["string", "null"]
+        educationLevel:
+          type: ["string", "null"]
+        experienceYears:
+          type: ["integer", "null"]
+        germanLanguageLevel:
+          type: ["string", "null"]
+        passportAvailable:
+          type: boolean
+        preferredGermanCity:
+          type: ["string", "null"]
+        stage:
+          type: string
+          enum: [discovery, registration, eligibility, language_training, qualification_recognition, document_vault, employer_matching, interview_offer, visa_readiness, post_arrival]
+        readinessScore:
+          type: integer
+        profileComplete:
+          type: boolean
+        createdAt:
+          type: string
+
+    CandidateUpdate:
+      type: object
+      properties:
+        district:
+          type: string
+        state:
+          type: string
+        occupation:
+          type: string
+        educationLevel:
+          type: string
+        experienceYears:
+          type: integer
+        germanLanguageLevel:
+          type: string
+        passportAvailable:
+          type: boolean
+        preferredGermanCity:
+          type: string
+
+    ReadinessScore:
+      type: object
+      required: [total, label, components]
+      properties:
+        total:
+          type: integer
+        label:
+          type: string
+        components:
+          type: object
+          properties:
+            profileCompleteness:
+              type: integer
+            identityDocuments:
+              type: integer
+            passportValidity:
+              type: integer
+            qualificationSuitability:
+              type: integer
+            recognitionStatus:
+              type: integer
+            germanLanguageLevel:
+              type: integer
+            workExperience:
+              type: integer
+            employerJobMatch:
+              type: integer
+        nextActions:
+          type: array
+          items:
+            type: string
+
+    CandidateJourney:
+      type: object
+      required: [candidateId, currentStage, stages]
+      properties:
+        candidateId:
+          type: integer
+        currentStage:
+          type: string
+        stages:
+          type: array
+          items:
+            $ref: "#/components/schemas/JourneyStage"
+
+    JourneyStage:
+      type: object
+      required: [id, name, status, order]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+          enum: [completed, active, pending, locked]
+        order:
+          type: integer
+        completedAt:
+          type: ["string", "null"]
+        details:
+          type: ["string", "null"]
+
+    CandidateMatch:
+      type: object
+      required: [candidateId, name, fitScore, stage, readinessScore]
+      properties:
+        candidateId:
+          type: integer
+        name:
+          type: string
+        occupation:
+          type: ["string", "null"]
+        germanLanguageLevel:
+          type: ["string", "null"]
+        fitScore:
+          type: integer
+        stage:
+          type: string
+        readinessScore:
+          type: integer
+        district:
+          type: ["string", "null"]
+        experienceYears:
+          type: ["integer", "null"]
+
+    # ── EMPLOYER ──
+    Employer:
+      type: object
+      required: [id, userId, companyName, country, createdAt]
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        companyName:
+          type: string
+        country:
+          type: string
+        city:
+          type: ["string", "null"]
+        industry:
+          type: ["string", "null"]
+        contactName:
+          type: string
+        contactEmail:
+          type: string
+        verificationStatus:
+          type: string
+          enum: [pending, verified, rejected]
+        createdAt:
+          type: string
+
+    EmployerUpdate:
+      type: object
+      properties:
+        companyName:
+          type: string
+        city:
+          type: string
+        industry:
+          type: string
+        contactName:
+          type: string
+
+    EmployerDashboard:
+      type: object
+      required: [activeVacancies, candidatesMatched, shortlisted, interviewsScheduled, offersIssued, joiningForecast]
+      properties:
+        activeVacancies:
+          type: integer
+        candidatesMatched:
+          type: integer
+        shortlisted:
+          type: integer
+        interviewsScheduled:
+          type: integer
+        offersIssued:
+          type: integer
+        joiningForecast:
+          type: integer
+        readinessDistribution:
+          type: array
+          items:
+            type: object
+            properties:
+              label:
+                type: string
+              count:
+                type: integer
+
+    # ── VACANCY ──
+    Vacancy:
+      type: object
+      required: [id, employerId, title, occupation, location, status, createdAt]
+      properties:
+        id:
+          type: integer
+        employerId:
+          type: integer
+        employerName:
+          type: ["string", "null"]
+        title:
+          type: string
+        occupation:
+          type: string
+        location:
+          type: string
+        salaryMin:
+          type: ["integer", "null"]
+        salaryMax:
+          type: ["integer", "null"]
+        languageLevel:
+          type: ["string", "null"]
+        shiftType:
+          type: ["string", "null"]
+        experienceYears:
+          type: ["integer", "null"]
+        recognitionRequired:
+          type: boolean
+        visaSupport:
+          type: boolean
+        accommodationSupport:
+          type: boolean
+        joiningDate:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [active, filled, paused, closed]
+        applicantsCount:
+          type: integer
+        createdAt:
+          type: string
+
+    VacancyInput:
+      type: object
+      required: [title, occupation, location]
+      properties:
+        title:
+          type: string
+        occupation:
+          type: string
+        location:
+          type: string
+        salaryMin:
+          type: integer
+        salaryMax:
+          type: integer
+        languageLevel:
+          type: string
+        shiftType:
+          type: string
+        experienceYears:
+          type: integer
+        recognitionRequired:
+          type: boolean
+        visaSupport:
+          type: boolean
+        accommodationSupport:
+          type: boolean
+        joiningDate:
+          type: string
+
+    VacancyUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+        salaryMin:
+          type: integer
+        salaryMax:
+          type: integer
+        status:
+          type: string
+        languageLevel:
+          type: string
+
+    # ── APPLICATION ──
+    Application:
+      type: object
+      required: [id, candidateId, vacancyId, status, createdAt]
+      properties:
+        id:
+          type: integer
+        candidateId:
+          type: integer
+        vacancyId:
+          type: integer
+        candidateName:
+          type: ["string", "null"]
+        vacancyTitle:
+          type: ["string", "null"]
+        employerName:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [applied, shortlisted, interview_scheduled, interview_done, offer_issued, offer_accepted, offer_rejected, withdrawn]
+        appliedAt:
+          type: string
+        createdAt:
+          type: string
+
+    ApplicationInput:
+      type: object
+      required: [vacancyId]
+      properties:
+        vacancyId:
+          type: integer
+        coverNote:
+          type: string
+
+    ApplicationUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+
+    # ── DOCUMENT ──
+    Document:
+      type: object
+      required: [id, candidateId, type, name, verificationStatus, uploadedAt]
+      properties:
+        id:
+          type: integer
+        candidateId:
+          type: integer
+        type:
+          type: string
+          enum: [passport, aadhaar, education_certificate, marksheet, iti_diploma, experience_letter, resume, language_certificate, police_clearance, medical_certificate, offer_letter, recognition_document, visa_document, insurance]
+        name:
+          type: string
+        fileUrl:
+          type: ["string", "null"]
+        verificationStatus:
+          type: string
+          enum: [pending, under_review, verified, rejected, expired]
+        expiryDate:
+          type: ["string", "null"]
+        reviewerNotes:
+          type: ["string", "null"]
+        uploadedAt:
+          type: string
+
+    DocumentInput:
+      type: object
+      required: [type, name]
+      properties:
+        type:
+          type: string
+        name:
+          type: string
+        fileUrl:
+          type: string
+        expiryDate:
+          type: string
+
+    DocumentUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        fileUrl:
+          type: string
+        expiryDate:
+          type: string
+
+    DocumentVerification:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          enum: [verified, rejected]
+        reviewerNotes:
+          type: string
+
+    # ── TRAINING ──
+    Course:
+      type: object
+      required: [id, name, languageLevel, providerId, providerName, createdAt]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        languageLevel:
+          type: string
+          enum: [A1, A2, B1, B2, C1]
+        providerId:
+          type: integer
+        providerName:
+          type: string
+        durationWeeks:
+          type: ["integer", "null"]
+        feeAmount:
+          type: ["integer", "null"]
+        mode:
+          type: string
+          enum: [online, offline, hybrid]
+        city:
+          type: ["string", "null"]
+        enrolledCount:
+          type: integer
+        createdAt:
+          type: string
+
+    CourseInput:
+      type: object
+      required: [name, languageLevel, mode]
+      properties:
+        name:
+          type: string
+        languageLevel:
+          type: string
+        durationWeeks:
+          type: integer
+        feeAmount:
+          type: integer
+        mode:
+          type: string
+        city:
+          type: string
+
+    Batch:
+      type: object
+      required: [id, courseId, courseName, startDate, status, capacity, enrolledCount]
+      properties:
+        id:
+          type: integer
+        courseId:
+          type: integer
+        courseName:
+          type: string
+        trainerName:
+          type: ["string", "null"]
+        startDate:
+          type: string
+        endDate:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [upcoming, active, completed, cancelled]
+        capacity:
+          type: integer
+        enrolledCount:
+          type: integer
+        attendancePercent:
+          type: ["integer", "null"]
+
+    BatchInput:
+      type: object
+      required: [courseId, startDate, capacity]
+      properties:
+        courseId:
+          type: integer
+        startDate:
+          type: string
+        endDate:
+          type: string
+        capacity:
+          type: integer
+        trainerName:
+          type: string
+
+    Enrollment:
+      type: object
+      required: [id, candidateId, batchId, status, enrolledAt]
+      properties:
+        id:
+          type: integer
+        candidateId:
+          type: integer
+        candidateName:
+          type: ["string", "null"]
+        batchId:
+          type: integer
+        batchName:
+          type: ["string", "null"]
+        languageLevel:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [enrolled, attending, passed, failed, dropped]
+        attendancePercent:
+          type: ["integer", "null"]
+        assessmentScore:
+          type: ["integer", "null"]
+        certificateIssued:
+          type: boolean
+        enrolledAt:
+          type: string
+
+    EnrollmentInput:
+      type: object
+      required: [candidateId]
+      properties:
+        candidateId:
+          type: integer
+
+    TrainingDashboard:
+      type: object
+      required: [activeBatches, studentsEnrolled, avgAttendance, completionByLevel, certificatesIssued]
+      properties:
+        activeBatches:
+          type: integer
+        studentsEnrolled:
+          type: integer
+        avgAttendance:
+          type: integer
+        completionByLevel:
+          type: array
+          items:
+            type: object
+            properties:
+              level:
+                type: string
+              completed:
+                type: integer
+              total:
+                type: integer
+        certificatesIssued:
+          type: integer
+        placementOutcomes:
+          type: integer
+
+    # ── RECOGNITION ──
+    RecognitionCase:
+      type: object
+      required: [id, candidateId, indianQualification, germanProfession, status, createdAt]
+      properties:
+        id:
+          type: integer
+        candidateId:
+          type: integer
+        candidateName:
+          type: ["string", "null"]
+        indianQualification:
+          type: string
+        germanProfession:
+          type: string
+        regulatedStatus:
+          type: string
+          enum: [regulated, non_regulated, unknown]
+        recognitionAuthority:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [not_required, eligibility_check_pending, documents_pending, application_ready, submitted, authority_review, partial_recognition, full_recognition, rejected, bridge_course_required]
+        documentsRequired:
+          type: array
+          items:
+            type: string
+        notes:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    RecognitionCaseInput:
+      type: object
+      required: [indianQualification, germanProfession]
+      properties:
+        indianQualification:
+          type: string
+        germanProfession:
+          type: string
+        recognitionAuthority:
+          type: string
+
+    RecognitionCaseUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+        recognitionAuthority:
+          type: string
+        notes:
+          type: string
+        documentsRequired:
+          type: array
+          items:
+            type: string
+
+    # ── VISA ──
+    VisaCase:
+      type: object
+      required: [id, candidateId, status, createdAt]
+      properties:
+        id:
+          type: integer
+        candidateId:
+          type: integer
+        candidateName:
+          type: ["string", "null"]
+        pathwayType:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [not_started, checklist_in_progress, documents_ready, appointment_pending, submitted, decision_pending, approved, rejected]
+        checklistProgress:
+          type: integer
+        checklistTotal:
+          type: integer
+        travelDate:
+          type: ["string", "null"]
+        arrivalConfirmed:
+          type: boolean
+        createdAt:
+          type: string
+
+    VisaCaseInput:
+      type: object
+      required: [candidateId]
+      properties:
+        candidateId:
+          type: integer
+        pathwayType:
+          type: string
+
+    VisaCaseUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+        travelDate:
+          type: string
+        arrivalConfirmed:
+          type: boolean
+
+    VisaChecklistItem:
+      type: object
+      required: [id, visaCaseId, item, completed]
+      properties:
+        id:
+          type: integer
+        visaCaseId:
+          type: integer
+        item:
+          type: string
+        description:
+          type: ["string", "null"]
+        completed:
+          type: boolean
+        completedAt:
+          type: ["string", "null"]
+        required:
+          type: boolean
+
+    VisaChecklistItemUpdate:
+      type: object
+      properties:
+        completed:
+          type: boolean
+
+    # ── INTERVIEW ──
+    Interview:
+      type: object
+      required: [id, applicationId, candidateId, employerId, scheduledAt, status, createdAt]
+      properties:
+        id:
+          type: integer
+        applicationId:
+          type: integer
+        candidateId:
+          type: integer
+        candidateName:
+          type: ["string", "null"]
+        employerId:
+          type: integer
+        employerName:
+          type: ["string", "null"]
+        vacancyTitle:
+          type: ["string", "null"]
+        scheduledAt:
+          type: string
+        meetingLink:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [scheduled, completed, cancelled, no_show]
+        feedback:
+          type: ["string", "null"]
+        outcome:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    InterviewInput:
+      type: object
+      required: [applicationId, scheduledAt]
+      properties:
+        applicationId:
+          type: integer
+        scheduledAt:
+          type: string
+        meetingLink:
+          type: string
+
+    InterviewUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+        feedback:
+          type: string
+        outcome:
+          type: string
+        meetingLink:
+          type: string
+
+    # ── OFFER ──
+    Offer:
+      type: object
+      required: [id, applicationId, candidateId, employerId, status, createdAt]
+      properties:
+        id:
+          type: integer
+        applicationId:
+          type: integer
+        candidateId:
+          type: integer
+        candidateName:
+          type: ["string", "null"]
+        employerId:
+          type: integer
+        employerName:
+          type: ["string", "null"]
+        vacancyTitle:
+          type: ["string", "null"]
+        salaryOffered:
+          type: ["integer", "null"]
+        joiningDate:
+          type: ["string", "null"]
+        status:
+          type: string
+          enum: [issued, accepted, rejected, expired, withdrawn]
+        offerLetterUrl:
+          type: ["string", "null"]
+        expiresAt:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    OfferInput:
+      type: object
+      required: [applicationId, candidateId, employerId]
+      properties:
+        applicationId:
+          type: integer
+        candidateId:
+          type: integer
+        employerId:
+          type: integer
+        salaryOffered:
+          type: integer
+        joiningDate:
+          type: string
+        offerLetterUrl:
+          type: string
+
+    OfferUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+        joiningDate:
+          type: string
+
+    # ── WELFARE ──
+    WelfareTicket:
+      type: object
+      required: [id, candidateId, category, title, status, createdAt]
+      properties:
+        id:
+          type: integer
+        candidateId:
+          type: integer
+        candidateName:
+          type: ["string", "null"]
+        category:
+          type: string
+          enum: [accommodation, exploitation, fraud, health, legal, general, employer_grievance]
+        title:
+          type: string
+        description:
+          type: string
+        priority:
+          type: string
+          enum: [low, medium, high, urgent]
+        status:
+          type: string
+          enum: [open, in_progress, resolved, closed]
+        assignedTo:
+          type: ["string", "null"]
+        resolution:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    WelfareTicketInput:
+      type: object
+      required: [category, title, description]
+      properties:
+        category:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        priority:
+          type: string
+
+    WelfareTicketUpdate:
+      type: object
+      properties:
+        status:
+          type: string
+        assignedTo:
+          type: string
+        resolution:
+          type: string
+        priority:
+          type: string
+
+    # ── NOTIFICATION ──
+    Notification:
+      type: object
+      required: [id, userId, type, title, read, createdAt]
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        type:
+          type: string
+        title:
+          type: string
+        body:
+          type: ["string", "null"]
+        read:
+          type: boolean
+        link:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    # ── ANALYTICS ──
+    GovernmentAnalytics:
+      type: object
+      required: [totalRegistrations, districtBreakdown, occupationDemand, languageCompletion, recognitionOutcomes, placements, migratedCandidates, welfareCases]
+      properties:
+        totalRegistrations:
+          type: integer
+        districtBreakdown:
+          type: array
+          items:
+            type: object
+            properties:
+              district:
+                type: string
+              count:
+                type: integer
+        occupationDemand:
+          type: array
+          items:
+            type: object
+            properties:
+              occupation:
+                type: string
+              candidates:
+                type: integer
+              vacancies:
+                type: integer
+        languageCompletion:
+          type: array
+          items:
+            type: object
+            properties:
+              level:
+                type: string
+              completed:
+                type: integer
+        recognitionOutcomes:
+          type: object
+          properties:
+            fullRecognition:
+              type: integer
+            partialRecognition:
+              type: integer
+            pending:
+              type: integer
+            rejected:
+              type: integer
+        placements:
+          type: integer
+        migratedCandidates:
+          type: integer
+        welfareCases:
+          type: integer
+        employerDemand:
+          type: integer
+
+    FacilitatorAnalytics:
+      type: object
+      required: [candidatesByStage, documentsPending, recognitionPending, visaPending, interviewsThisWeek, offerConversionRate, welfareAlerts]
+      properties:
+        candidatesByStage:
+          type: array
+          items:
+            type: object
+            properties:
+              stage:
+                type: string
+              count:
+                type: integer
+        documentsPending:
+          type: integer
+        recognitionPending:
+          type: integer
+        visaPending:
+          type: integer
+        interviewsThisWeek:
+          type: integer
+        offerConversionRate:
+          type: number
+        welfareAlerts:
+          type: integer
+
+    PipelineStats:
+      type: object
+      required: [totalCandidates, byStage, avgReadiness, germanyReadyCount]
+      properties:
+        totalCandidates:
+          type: integer
+        byStage:
+          type: array
+          items:
+            type: object
+            properties:
+              stage:
+                type: string
+              count:
+                type: integer
+              label:
+                type: string
+        avgReadiness:
+          type: integer
+        germanyReadyCount:
+          type: integer

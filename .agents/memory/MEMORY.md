@@ -1,0 +1,1 @@
+- [Indo German Platform](indo-german-platform.md) — Full-stack workforce mobility platform; demo creds, auth pattern, AI routes, color system, all 20+ pages wired.
