@@ -19,6 +19,10 @@ import certificationsRouter from "./certifications";
 
 const router: IRouter = Router();
 
+router.get("/", (_req, res) => {
+  res.json({ status: "ok", service: "indo-german-mobility-api" });
+});
+
 router.use(healthRouter);
 router.use(authRouter);
 router.use(candidatesRouter);
