@@ -7,12 +7,12 @@ import { Progress } from '@/components/ui/progress';
 import { MapPin, Plane, ShieldCheck, FileText, Calendar, AlertCircle, CheckCircle2, ExternalLink, Clock, Euro } from 'lucide-react';
 import { format } from 'date-fns';
 
-const CARD = '#183256';
-const CARD2 = '#102544';
-const ACCENT = '#FF9D00';
+const CARD = '#1A0B3B';
+const CARD2 = '#130828';
+const ACCENT = '#A855F7';
 const SUCCESS = '#00C853';
-const BORDER = 'rgba(255,157,0,0.15)';
-const TEXT2 = '#B8C4D9';
+const BORDER = 'rgba(168,85,247,0.15)';
+const TEXT2 = '#C4B5FD';
 
 const mockVisaCase = {
   id: 1,
@@ -39,8 +39,8 @@ const initialChecklist = [
 
 const visaTypes = [
   { type: 'EU Blue Card', code: '§18b', desc: 'University degree + €43,992+ salary', color: ACCENT, months: '2–3' },
-  { type: 'Skilled Worker Visa', code: '§18a', desc: 'Recognised vocational qualification', color: '#3B82F6', months: '2–4' },
-  { type: 'Recognition Visa', code: '§17b', desc: 'For completing recognition process in DE', color: '#8B5CF6', months: '1–2' },
+  { type: 'Skilled Worker Visa', code: '§18a', desc: 'Recognised vocational qualification', color: '#818CF8', months: '2–4' },
+  { type: 'Recognition Visa', code: '§17b', desc: 'For completing recognition process in DE', color: '#C084FC', months: '1–2' },
   { type: 'Job Seeker Visa', code: '§20', desc: 'Look for work in Germany for 6 months', color: '#10B981', months: '1–2' },
 ];
 
@@ -70,7 +70,7 @@ export function CandidateVisa() {
 
   const statusMap: Record<string, { label: string; color: string }> = {
     checklist_in_progress: { label: 'Checklist In Progress', color: ACCENT },
-    submitted: { label: 'Application Submitted', color: '#3B82F6' },
+    submitted: { label: 'Application Submitted', color: '#818CF8' },
     approved: { label: 'Visa Approved ✅', color: SUCCESS },
     rejected: { label: 'Visa Rejected', color: '#EF4444' },
     pending: { label: 'Pending Review', color: '#F59E0B' },
@@ -85,7 +85,7 @@ export function CandidateVisa() {
   ] as const;
 
   return (
-    <div className="space-y-6 min-h-screen" style={{ background: '#07142B' }}>
+    <div className="space-y-6 min-h-screen" style={{ background: '#0F0520' }}>
       <div>
         <h1 className="text-3xl font-bold text-white tracking-tight">Visa Readiness Centre</h1>
         <p className="mt-1" style={{ color: TEXT2 }}>Complete your visa checklist, choose your pathway, and book your appointment.</p>
@@ -93,9 +93,9 @@ export function CandidateVisa() {
 
       {/* Status Banner */}
       <div className="rounded-2xl p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4"
-        style={{ background: 'linear-gradient(135deg,#102544,#183256)', border: `1px solid ${BORDER}` }}>
+        style={{ background: 'linear-gradient(135deg,#130828,#1A0B3B)', border: `1px solid ${BORDER}` }}>
         <div className="flex items-center gap-4">
-          <div className="p-3 rounded-xl" style={{ background: 'rgba(255,157,0,0.15)' }}>
+          <div className="p-3 rounded-xl" style={{ background: 'rgba(168,85,247,0.15)' }}>
             <ShieldCheck className="w-6 h-6" style={{ color: ACCENT }} />
           </div>
           <div>
@@ -120,7 +120,7 @@ export function CandidateVisa() {
             className="px-4 py-2 rounded-xl text-sm font-medium transition-all"
             style={{
               background: activeTab === tab.id ? ACCENT : CARD2,
-              color: activeTab === tab.id ? '#07142B' : TEXT2,
+              color: activeTab === tab.id ? '#0F0520' : TEXT2,
               border: `1px solid ${activeTab === tab.id ? ACCENT : BORDER}`,
             }}>
             {tab.label}
@@ -172,7 +172,7 @@ export function CandidateVisa() {
               <Button
                 className="font-semibold"
                 disabled={progressPercent < 100}
-                style={{ background: progressPercent === 100 ? SUCCESS : '#27314F', color: progressPercent === 100 ? '#07142B' : TEXT2 }}>
+                style={{ background: progressPercent === 100 ? SUCCESS : '#27314F', color: progressPercent === 100 ? '#0F0520' : TEXT2 }}>
                 {progressPercent === 100 ? '✅ Ready for Appointment' : `${checklist.length - completedCount} items remaining`}
               </Button>
             </div>
@@ -234,7 +234,7 @@ export function CandidateVisa() {
           {embassies.map((e, i) => (
             <div key={i} className="flex justify-between items-center p-4 rounded-xl" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm" style={{ background: 'rgba(255,157,0,0.15)', color: ACCENT }}>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm" style={{ background: 'rgba(168,85,247,0.15)', color: ACCENT }}>
                   {e.city.charAt(0)}
                 </div>
                 <div>
@@ -245,13 +245,13 @@ export function CandidateVisa() {
               </div>
               <div className="flex items-center gap-3">
                 <div className="text-xs px-2 py-1 rounded-full" style={{
-                  background: e.slots === 'Available' ? 'rgba(0,200,83,0.15)' : 'rgba(255,157,0,0.15)',
+                  background: e.slots === 'Available' ? 'rgba(0,200,83,0.15)' : 'rgba(168,85,247,0.15)',
                   color: e.slots === 'Available' ? SUCCESS : ACCENT
                 }}>
                   {e.slots}
                 </div>
                 <a href="https://www.vfsglobal.com/germany/india" target="_blank" rel="noopener noreferrer">
-                  <Button size="sm" className="text-xs" style={{ background: ACCENT, color: '#07142B' }}>
+                  <Button size="sm" className="text-xs" style={{ background: ACCENT, color: '#0F0520' }}>
                     Book Slot
                   </Button>
                 </a>
@@ -296,8 +296,8 @@ export function CandidateVisa() {
             <div className="space-y-4">
               {[
                 { stage: 'Gather all documents', duration: '2–4 weeks', color: ACCENT },
-                { stage: 'ZAB recognition process', duration: '8–12 weeks', color: '#3B82F6' },
-                { stage: 'VFS appointment wait', duration: '4–8 weeks', color: '#8B5CF6' },
+                { stage: 'ZAB recognition process', duration: '8–12 weeks', color: '#818CF8' },
+                { stage: 'VFS appointment wait', duration: '4–8 weeks', color: '#C084FC' },
                 { stage: 'Visa processing by embassy', duration: '4–8 weeks', color: '#10B981' },
                 { stage: 'Visa collection', duration: '1 week', color: SUCCESS },
               ].map((row, i) => (
@@ -312,7 +312,7 @@ export function CandidateVisa() {
                 </div>
               ))}
             </div>
-            <div className="mt-4 p-3 rounded-xl text-sm" style={{ background: 'rgba(255,157,0,0.1)', border: `1px solid rgba(255,157,0,0.2)` }}>
+            <div className="mt-4 p-3 rounded-xl text-sm" style={{ background: 'rgba(168,85,247,0.1)', border: `1px solid rgba(168,85,247,0.2)` }}>
               <strong style={{ color: ACCENT }}>Total timeline:</strong>
               <span className="text-white ml-2">Approximately 4–6 months from document start to visa stamp</span>
             </div>

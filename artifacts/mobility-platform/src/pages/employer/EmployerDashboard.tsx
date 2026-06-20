@@ -6,17 +6,17 @@ import { Briefcase, Users, CheckCircle, Calendar, Award, TrendingUp, XCircle, Th
 import { Badge } from '@/components/ui/badge';
 import { format } from 'date-fns';
 
-const BG = '#07142B';
-const CARD = '#183256';
-const CARD2 = '#102544';
-const ACCENT = '#FF9D00';
+const BG = '#0F0520';
+const CARD = '#1A0B3B';
+const CARD2 = '#130828';
+const ACCENT = '#A855F7';
 const SUCCESS = '#00C853';
 const DANGER = '#EF4444';
-const BLUE = '#3B82F6';
-const PURPLE = '#8B5CF6';
-const BORDER = 'rgba(255,157,0,0.15)';
+const BLUE = '#818CF8';
+const PURPLE = '#C084FC';
+const BORDER = 'rgba(168,85,247,0.15)';
 const TEXT = '#FFFFFF';
-const TEXT2 = '#B8C4D9';
+const TEXT2 = '#C4B5FD';
 
 const mockDashboard = {
   activeVacancies: 5,
@@ -112,7 +112,7 @@ export function EmployerDashboard() {
       </div>
 
       {/* Offer Stats — the KEY section */}
-      <div className="rounded-2xl p-6" style={{ background: 'linear-gradient(135deg, #102544, #183256)', border: `1px solid ${BORDER}` }}>
+      <div className="rounded-2xl p-6" style={{ background: 'linear-gradient(135deg, #130828, #1A0B3B)', border: `1px solid ${BORDER}` }}>
         <div className="flex items-center gap-2 mb-4">
           <Award className="w-5 h-5" style={{ color: ACCENT }} />
           <h2 className="text-lg font-bold text-white">Offer Intelligence</h2>

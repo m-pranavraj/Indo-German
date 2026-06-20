@@ -6,13 +6,13 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import axios from 'axios';
 
-const CARD = '#183256';
-const CARD2 = '#102544';
-const ACCENT = '#FF9D00';
+const CARD = '#1A0B3B';
+const CARD2 = '#130828';
+const ACCENT = '#A855F7';
 const SUCCESS = '#00C853';
-const PURPLE = '#8B5CF6';
-const BORDER = 'rgba(255,157,0,0.15)';
-const TEXT2 = '#B8C4D9';
+const PURPLE = '#C084FC';
+const BORDER = 'rgba(168,85,247,0.15)';
+const TEXT2 = '#C4B5FD';
 const DANGER = '#EF4444';
 
 const MOCK_ATS = {
@@ -90,7 +90,7 @@ function RoboticScanner({ progress }: { progress: number }) {
   }, []);
 
   return (
-    <div className="rounded-2xl overflow-hidden relative" style={{ background: '#020D1A', border: '1px solid rgba(255,157,0,0.4)', minHeight: 280 }}>
+    <div className="rounded-2xl overflow-hidden relative" style={{ background: '#020D1A', border: '1px solid rgba(168,85,247,0.4)', minHeight: 280 }}>
       {/* Matrix background */}
       <div className="absolute inset-0 grid grid-cols-12 gap-1 p-4 opacity-30 font-mono text-xs overflow-hidden">
         {matrixChars.map((c, i) => (
@@ -107,7 +107,7 @@ function RoboticScanner({ progress }: { progress: number }) {
       {/* Center content */}
       <div className="absolute inset-0 flex flex-col items-center justify-center z-20">
         <div className="w-16 h-16 rounded-full flex items-center justify-center mb-4 glow-orange"
-          style={{ background: 'rgba(255,157,0,0.15)', border: `2px solid ${ACCENT}` }}>
+          style={{ background: 'rgba(168,85,247,0.15)', border: `2px solid ${ACCENT}` }}>
           <Bot className="w-8 h-8" style={{ color: ACCENT }} />
         </div>
         <div className="font-mono text-sm font-bold mb-2" style={{ color: ACCENT }}>
@@ -251,7 +251,7 @@ export function CandidateResume() {
   ] as const;
 
   return (
-    <div className="space-y-6 min-h-screen" style={{ background: '#07142B' }}>
+    <div className="space-y-6 min-h-screen" style={{ background: '#0F0520' }}>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-white tracking-tight flex items-center gap-2">
@@ -269,12 +269,12 @@ export function CandidateResume() {
             className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all"
             style={{
               background: activeTab === tab.id ? (tab.id === 'advisor' ? ACCENT : PURPLE) : CARD2,
-              color: activeTab === tab.id ? '#07142B' : TEXT2,
+              color: activeTab === tab.id ? '#0F0520' : TEXT2,
               border: `1px solid ${activeTab === tab.id ? (tab.id === 'advisor' ? ACCENT : PURPLE) : BORDER}`,
             }}>
             {tab.label}
             {tab.badge && (
-              <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(255,255,255,0.2)', color: activeTab === tab.id ? '#07142B' : PURPLE }}>
+              <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(255,255,255,0.2)', color: activeTab === tab.id ? '#0F0520' : PURPLE }}>
                 {tab.badge}
               </span>
             )}
@@ -288,7 +288,7 @@ export function CandidateResume() {
           {/* ATS Score */}
           <div className="space-y-4">
             <div className="rounded-2xl overflow-hidden" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
-              <div className="p-6 text-center" style={{ background: 'linear-gradient(135deg,#07142B,#102544)' }}>
+              <div className="p-6 text-center" style={{ background: 'linear-gradient(135deg,#0F0520,#130828)' }}>
                 <div className="text-xs font-medium uppercase tracking-widest mb-3" style={{ color: TEXT2 }}>German ATS Score</div>
                 <div className="relative inline-flex items-center justify-center">
                   <svg className="w-32 h-32 transform -rotate-90">
@@ -330,7 +330,7 @@ export function CandidateResume() {
               <h3 className="text-sm font-bold text-white mb-3">German Keywords</h3>
               <div className="flex flex-wrap gap-2">
                 {MOCK_ATS.keywords.map((kw, i) => (
-                  <span key={i} className="text-xs px-2.5 py-1 rounded-full" style={{ background: 'rgba(255,157,0,0.12)', color: ACCENT }}>{kw}</span>
+                  <span key={i} className="text-xs px-2.5 py-1 rounded-full" style={{ background: 'rgba(168,85,247,0.12)', color: ACCENT }}>{kw}</span>
                 ))}
               </div>
             </div>
@@ -343,7 +343,7 @@ export function CandidateResume() {
               <div key={sug.id} className="rounded-2xl p-5" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
                 <div className="flex items-center gap-3 mb-3">
                   <span className="text-xs font-bold px-2 py-0.5 rounded-full"
-                    style={{ background: sug.priority === 'HIGH' ? 'rgba(239,68,68,0.2)' : 'rgba(255,157,0,0.2)', color: sug.priority === 'HIGH' ? '#EF4444' : ACCENT }}>
+                    style={{ background: sug.priority === 'HIGH' ? 'rgba(239,68,68,0.2)' : 'rgba(168,85,247,0.2)', color: sug.priority === 'HIGH' ? '#EF4444' : ACCENT }}>
                     {sug.priority}
                   </span>
                   <h3 className="font-bold text-white">{sug.section}</h3>
@@ -379,7 +379,7 @@ export function CandidateResume() {
               <div className="flex items-center gap-2 mb-4">
                 <Bot className="w-5 h-5" style={{ color: PURPLE }} />
                 <h2 className="text-lg font-bold text-white">Translate Resume to German Lebenslauf</h2>
-                <span className="text-xs px-2 py-0.5 rounded-full font-bold" style={{ background: 'rgba(139,92,246,0.2)', color: PURPLE }}>Groq LLaMA</span>
+                <span className="text-xs px-2 py-0.5 rounded-full font-bold" style={{ background: 'rgba(192,132,252,0.2)', color: PURPLE }}>Groq LLaMA</span>
               </div>
               <p className="text-sm mb-5" style={{ color: TEXT2 }}>
                 Paste your resume text below or upload a .txt file. Our AI will convert it to a professional German Lebenslauf following DIN 5008 standards.
@@ -387,7 +387,7 @@ export function CandidateResume() {
 
               {/* Upload area */}
               <div
-                className="rounded-xl border-2 border-dashed p-4 text-center mb-4 cursor-pointer transition-all hover:border-[#FF9D00]"
+                className="rounded-xl border-2 border-dashed p-4 text-center mb-4 cursor-pointer transition-all hover:border-[#A855F7]"
                 style={{ borderColor: 'rgba(255,255,255,0.1)', background: CARD2 }}
                 onClick={() => fileInputRef.current?.click()}
               >
@@ -449,7 +449,7 @@ export function CandidateResume() {
                   </button>
                   <button onClick={handleDownload}
                     className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold"
-                    style={{ background: SUCCESS, color: '#07142B' }}>
+                    style={{ background: SUCCESS, color: '#0F0520' }}>
                     <Download className="w-3.5 h-3.5" /> Download Lebenslauf
                   </button>
                 </div>
@@ -480,7 +480,7 @@ export function CandidateResume() {
               <div className="flex items-center gap-2 mb-4">
                 <BarChart3 className="w-5 h-5" style={{ color: PURPLE }} />
                 <h2 className="text-lg font-bold text-white">Resume Gap Analysis</h2>
-                <span className="text-xs px-2 py-0.5 rounded-full font-bold" style={{ background: 'rgba(139,92,246,0.2)', color: PURPLE }}>Groq AI</span>
+                <span className="text-xs px-2 py-0.5 rounded-full font-bold" style={{ background: 'rgba(192,132,252,0.2)', color: PURPLE }}>Groq AI</span>
               </div>
               <p className="text-sm mb-5" style={{ color: TEXT2 }}>
                 Select your target German role and provide your resume. AI will identify gaps and recommend actions to boost your match score.
@@ -525,7 +525,7 @@ export function CandidateResume() {
 
           {isAnalysing && (
             <div className="rounded-2xl p-12 text-center" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
-              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: 'rgba(139,92,246,0.2)' }}>
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: 'rgba(192,132,252,0.2)' }}>
                 <Bot className="w-8 h-8 animate-pulse" style={{ color: PURPLE }} />
               </div>
               <div className="text-lg font-bold text-white mb-2">Analysing Your Profile…</div>
@@ -553,7 +553,7 @@ export function CandidateResume() {
               </div>
 
               {/* Overall Score */}
-              <div className="rounded-2xl p-6" style={{ background: 'linear-gradient(135deg,#102544,#183256)', border: `1px solid ${BORDER}` }}>
+              <div className="rounded-2xl p-6" style={{ background: 'linear-gradient(135deg,#130828,#1A0B3B)', border: `1px solid ${BORDER}` }}>
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="text-sm" style={{ color: TEXT2 }}>Overall Match for</div>
@@ -617,7 +617,7 @@ export function CandidateResume() {
                 <div className="space-y-2">
                   {(gapResult.urgentActions || []).map((action: string, i: number) => (
                     <div key={i} className="flex items-center gap-2 text-sm">
-                      <div className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style={{ background: ACCENT, color: '#07142B' }}>{i + 1}</div>
+                      <div className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0" style={{ background: ACCENT, color: '#0F0520' }}>{i + 1}</div>
                       <span style={{ color: TEXT2 }}>{action}</span>
                     </div>
                   ))}
@@ -631,4 +631,4 @@ export function CandidateResume() {
   );
 }
 
-const BLUE = '#3B82F6';
+const BLUE = '#818CF8';

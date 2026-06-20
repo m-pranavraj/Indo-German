@@ -5,12 +5,12 @@ import { Input } from '@/components/ui/input';
 import { Building, MapPin, Calendar, Search, Briefcase, Euro, Clock, Star, CheckCircle, Filter } from 'lucide-react';
 import { format } from 'date-fns';
 
-const CARD = '#183256';
-const CARD2 = '#102544';
-const ACCENT = '#FF9D00';
+const CARD = '#1A0B3B';
+const CARD2 = '#130828';
+const ACCENT = '#A855F7';
 const SUCCESS = '#00C853';
-const BORDER = 'rgba(255,157,0,0.15)';
-const TEXT2 = '#B8C4D9';
+const BORDER = 'rgba(168,85,247,0.15)';
+const TEXT2 = '#C4B5FD';
 
 const CATEGORIES = [
   { id: 'all', label: 'All Jobs', emoji: '🌍' },
@@ -46,8 +46,8 @@ const MY_APPLICATIONS = [
 ];
 
 const statusConfig: Record<string, { label: string; color: string }> = {
-  applied: { label: 'Applied', color: '#3B82F6' },
-  shortlisted: { label: 'Shortlisted', color: '#8B5CF6' },
+  applied: { label: 'Applied', color: '#818CF8' },
+  shortlisted: { label: 'Shortlisted', color: '#C084FC' },
   interview_scheduled: { label: 'Interview Scheduled', color: ACCENT },
   offer_issued: { label: 'Offer Issued', color: SUCCESS },
   offer_rejected: { label: 'Offer Rejected', color: '#EF4444' },
@@ -78,7 +78,7 @@ export function CandidateApplications() {
   };
 
   return (
-    <div className="space-y-6 min-h-screen" style={{ background: '#07142B' }}>
+    <div className="space-y-6 min-h-screen" style={{ background: '#0F0520' }}>
       <div>
         <h1 className="text-3xl font-bold text-white tracking-tight">Job Marketplace</h1>
         <p className="mt-1" style={{ color: TEXT2 }}>Browse verified German job openings matched to your profile. Apply directly.</p>
@@ -94,7 +94,7 @@ export function CandidateApplications() {
             className="px-5 py-2 rounded-xl text-sm font-medium transition-all"
             style={{
               background: tab === t.id ? ACCENT : CARD2,
-              color: tab === t.id ? '#07142B' : TEXT2,
+              color: tab === t.id ? '#0F0520' : TEXT2,
               border: `1px solid ${tab === t.id ? ACCENT : BORDER}`,
             }}>
             {t.label}
@@ -123,7 +123,7 @@ export function CandidateApplications() {
                 <button key={cat.id} onClick={() => setCategory(cat.id)}
                   className="px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap"
                   style={{
-                    background: category === cat.id ? 'rgba(255,157,0,0.2)' : 'rgba(255,255,255,0.04)',
+                    background: category === cat.id ? 'rgba(168,85,247,0.2)' : 'rgba(255,255,255,0.04)',
                     color: category === cat.id ? ACCENT : TEXT2,
                     border: `1px solid ${category === cat.id ? ACCENT : 'rgba(255,255,255,0.08)'}`,
                   }}>
@@ -154,13 +154,13 @@ export function CandidateApplications() {
               const isSaved = savedJobs.has(job.id);
               return (
                 <div key={job.id}
-                  className="rounded-2xl p-5 transition-all hover:border-[#FF9D00]/40"
+                  className="rounded-2xl p-5 transition-all hover:border-[#A855F7]/40"
                   style={{ background: CARD, border: `1px solid ${BORDER}` }}>
                   <div className="flex flex-col lg:flex-row gap-4">
                     <div className="flex-1">
                       <div className="flex items-start gap-3 mb-2">
                         <div className="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm flex-shrink-0"
-                          style={{ background: 'rgba(255,157,0,0.15)', color: ACCENT }}>
+                          style={{ background: 'rgba(168,85,247,0.15)', color: ACCENT }}>
                           {job.company.charAt(0)}
                         </div>
                         <div className="min-w-0">
@@ -194,7 +194,7 @@ export function CandidateApplications() {
                       </div>
 
                       <button onClick={() => handleSave(job.id)} className="p-1.5 rounded-lg transition-all"
-                        style={{ color: isSaved ? ACCENT : TEXT2, background: isSaved ? 'rgba(255,157,0,0.1)' : 'transparent' }}>
+                        style={{ color: isSaved ? ACCENT : TEXT2, background: isSaved ? 'rgba(168,85,247,0.1)' : 'transparent' }}>
                         <Star className="w-4 h-4" fill={isSaved ? ACCENT : 'none'} />
                       </button>
 
@@ -207,7 +207,7 @@ export function CandidateApplications() {
                       ) : (
                         <button onClick={() => handleApply(job.id)}
                           className="px-5 py-2 rounded-xl text-sm font-bold transition-all hover:opacity-90 active:scale-95"
-                          style={{ background: ACCENT, color: '#07142B' }}>
+                          style={{ background: ACCENT, color: '#0F0520' }}>
                           Apply Now
                         </button>
                       )}
@@ -229,7 +229,7 @@ export function CandidateApplications() {
               <div key={app.id} className="flex justify-between items-center p-4 rounded-2xl" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center font-bold"
-                    style={{ background: 'rgba(255,157,0,0.15)', color: ACCENT }}>
+                    style={{ background: 'rgba(168,85,247,0.15)', color: ACCENT }}>
                     {app.company.charAt(0)}
                   </div>
                   <div>
@@ -246,7 +246,7 @@ export function CandidateApplications() {
                     {cfg.label}
                   </div>
                   {app.status === 'interview_scheduled' && (
-                    <Button size="sm" className="text-xs" style={{ background: ACCENT, color: '#07142B' }}>
+                    <Button size="sm" className="text-xs" style={{ background: ACCENT, color: '#0F0520' }}>
                       View Interview
                     </Button>
                   )}

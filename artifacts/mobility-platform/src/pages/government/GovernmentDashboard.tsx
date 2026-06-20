@@ -10,17 +10,17 @@ import {
   MapPin, Briefcase, GraduationCap, Activity, Heart, Award, Clock
 } from 'lucide-react';
 
-const BG = '#07142B';
-const CARD = '#183256';
-const CARD2 = '#102544';
-const ACCENT = '#FF9D00';
+const BG = '#0F0520';
+const CARD = '#1A0B3B';
+const CARD2 = '#130828';
+const ACCENT = '#A855F7';
 const SUCCESS = '#00C853';
 const DANGER = '#EF4444';
-const PURPLE = '#8B5CF6';
-const BLUE = '#3B82F6';
-const BORDER = 'rgba(255,157,0,0.15)';
+const PURPLE = '#C084FC';
+const BLUE = '#818CF8';
+const BORDER = 'rgba(168,85,247,0.15)';
 const TEXT = '#FFFFFF';
-const TEXT2 = '#B8C4D9';
+const TEXT2 = '#C4B5FD';
 
 const KPI_DATA = {
   totalRegistered: 24568,
@@ -39,7 +39,7 @@ const KPI_DATA = {
 
 const PIPELINE_DATA = [
   { stage: 'Profile Created', count: 24568, color: ACCENT },
-  { stage: 'Doc Verified', count: 22340, color: '#FFB938' },
+  { stage: 'Doc Verified', count: 22340, color: '#C084FC' },
   { stage: 'Lang Training', count: 19245, color: BLUE },
   { stage: 'Skill Assessment', count: 17833, color: PURPLE },
   { stage: 'Employer Match', count: 11456, color: '#06B6D4' },
@@ -51,7 +51,7 @@ const PIPELINE_DATA = [
 
 const FINANCIAL_DATA = [
   { label: 'Training Cost', value: 18, color: ACCENT },
-  { label: 'Language Training', value: 12, color: '#FFB938' },
+  { label: 'Language Training', value: 12, color: '#C084FC' },
   { label: 'Assessment', value: 4, color: PURPLE },
   { label: 'Visa Support', value: 5, color: BLUE },
   { label: 'Technology', value: 3, color: '#06B6D4' },
@@ -147,7 +147,7 @@ export function GovernmentDashboard() {
             className="px-4 py-2 rounded-xl text-sm font-medium capitalize transition-all"
             style={{
               background: activeTab === tab ? ACCENT : CARD2,
-              color: activeTab === tab ? '#07142B' : TEXT2,
+              color: activeTab === tab ? '#0F0520' : TEXT2,
               border: `1px solid ${activeTab === tab ? ACCENT : BORDER}`,
             }}
           >
@@ -231,7 +231,7 @@ export function GovernmentDashboard() {
         <div className="space-y-6">
           {/* Financial KPI Row */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="rounded-2xl p-5 col-span-2" style={{ background: 'linear-gradient(135deg, #102544, #183256)', border: `1px solid ${BORDER}` }}>
+            <div className="rounded-2xl p-5 col-span-2" style={{ background: 'linear-gradient(135deg, #130828, #1A0B3B)', border: `1px solid ${BORDER}` }}>
               <div className="text-sm font-medium mb-1" style={{ color: TEXT2 }}>Total Government Investment</div>
               <div className="text-5xl font-black mb-1" style={{ color: ACCENT }}>₹48 Cr</div>
               <div className="text-sm" style={{ color: TEXT2 }}>Across training, language, visa & technology</div>
@@ -477,7 +477,7 @@ export function GovernmentDashboard() {
                   <Tooltip contentStyle={{ background: CARD2, border: `1px solid ${BORDER}`, borderRadius: 12, color: TEXT }} />
                   <Bar dataKey="completed" name="Completed" fill={ACCENT} radius={[6, 6, 0, 0]}>
                     {LANGUAGE_DATA.map((_, i) => (
-                      <Cell key={i} fill={[ACCENT, '#FFB938', BLUE, SUCCESS, PURPLE][i]} />
+                      <Cell key={i} fill={[ACCENT, '#C084FC', BLUE, SUCCESS, PURPLE][i]} />
                     ))}
                   </Bar>
                 </BarChart>

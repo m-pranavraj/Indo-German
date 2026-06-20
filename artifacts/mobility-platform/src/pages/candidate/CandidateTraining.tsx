@@ -6,13 +6,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Progress } from '@/components/ui/progress';
 import { ExternalLink, CheckCircle2, Clock, Play, Award, BookOpen, Scissors, Globe, Wrench } from 'lucide-react';
 
-const CARD = '#183256';
-const CARD2 = '#102544';
-const ACCENT = '#FF9D00';
+const CARD = '#1A0B3B';
+const CARD2 = '#130828';
+const ACCENT = '#A855F7';
 const SUCCESS = '#00C853';
-const PURPLE = '#8B5CF6';
-const BORDER = 'rgba(255,157,0,0.15)';
-const TEXT2 = '#B8C4D9';
+const PURPLE = '#C084FC';
+const BORDER = 'rgba(168,85,247,0.15)';
+const TEXT2 = '#C4B5FD';
 
 const ACADEMY_URL = 'https://academy.koutuhal.in/account/login';
 
@@ -83,12 +83,12 @@ const FEATURED_COURSES = [
           ))}
         </div>
         <div className="relative z-10 flex flex-col items-center gap-2">
-          <div className="w-20 h-20 rounded-full flex items-center justify-center" style={{ background: 'rgba(255,157,0,0.2)', border: '2px solid rgba(255,157,0,0.5)' }}>
+          <div className="w-20 h-20 rounded-full flex items-center justify-center" style={{ background: 'rgba(168,85,247,0.2)', border: '2px solid rgba(168,85,247,0.5)' }}>
             <Globe className="w-10 h-10" style={{ color: ACCENT }} />
           </div>
           <div className="flex gap-1">
             {['A1', 'A2', 'B1', 'B2'].map((l, i) => (
-              <span key={l} className="text-[10px] font-black px-1.5 py-0.5 rounded" style={{ background: i < 2 ? ACCENT : 'rgba(255,157,0,0.3)', color: '#07142B' }}>{l}</span>
+              <span key={l} className="text-[10px] font-black px-1.5 py-0.5 rounded" style={{ background: i < 2 ? ACCENT : 'rgba(168,85,247,0.3)', color: '#0F0520' }}>{l}</span>
             ))}
           </div>
         </div>
@@ -148,7 +148,7 @@ export function CandidateTraining() {
   };
 
   return (
-    <div className="space-y-8 min-h-screen" style={{ background: '#07142B' }}>
+    <div className="space-y-8 min-h-screen" style={{ background: '#0F0520' }}>
       <div>
         <h1 className="text-3xl font-bold text-white tracking-tight">Training & Courses</h1>
         <p className="mt-1" style={{ color: TEXT2 }}>Skill up for Germany — certified courses designed for the Indo-German corridor.</p>
@@ -156,7 +156,7 @@ export function CandidateTraining() {
 
       <Tabs defaultValue="featured" className="w-full">
         <TabsList className="mb-6 gap-1" style={{ background: CARD2, border: `1px solid ${BORDER}` }}>
-          <TabsTrigger value="featured" className="data-[state=active]:text-[#07142B]" style={{ '--tw-bg-opacity': 1 } as any}>🎓 Featured Courses</TabsTrigger>
+          <TabsTrigger value="featured" className="data-[state=active]:text-[#0F0520]" style={{ '--tw-bg-opacity': 1 } as any}>🎓 Featured Courses</TabsTrigger>
           <TabsTrigger value="my-learning">📚 My Learning</TabsTrigger>
         </TabsList>
 
@@ -232,7 +232,7 @@ export function CandidateTraining() {
                     </div>
 
                     {/* Certificate */}
-                    <div className="text-xs mb-4 px-3 py-2 rounded-lg" style={{ background: 'rgba(255,157,0,0.07)', border: '1px solid rgba(255,157,0,0.15)', color: ACCENT }}>
+                    <div className="text-xs mb-4 px-3 py-2 rounded-lg" style={{ background: 'rgba(168,85,247,0.07)', border: '1px solid rgba(168,85,247,0.15)', color: ACCENT }}>
                       🏆 {course.certificate}
                     </div>
 
@@ -243,7 +243,7 @@ export function CandidateTraining() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-bold transition-all hover:opacity-90 active:scale-95"
-                        style={{ background: course.color === ACCENT ? ACCENT : course.color, color: '#07142B' }}
+                        style={{ background: course.color === ACCENT ? ACCENT : course.color, color: '#0F0520' }}
                       >
                         <ExternalLink className="w-4 h-4" />
                         Go to Course
@@ -269,7 +269,7 @@ export function CandidateTraining() {
           </div>
 
           {/* Browse more on Academy */}
-          <div className="rounded-2xl p-6 text-center" style={{ background: 'linear-gradient(135deg,#102544,#183256)', border: `1px solid ${BORDER}` }}>
+          <div className="rounded-2xl p-6 text-center" style={{ background: 'linear-gradient(135deg,#130828,#1A0B3B)', border: `1px solid ${BORDER}` }}>
             <div className="text-lg font-bold text-white mb-2">Explore 50+ More Courses</div>
             <p className="text-sm mb-4" style={{ color: TEXT2 }}>Full catalog of Germany-ready skill courses on Koutuhal Academy — carpentry, plumbing, nursing assistants, IT, hospitality & more.</p>
             <a
@@ -277,7 +277,7 @@ export function CandidateTraining() {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold transition-all hover:opacity-90"
-              style={{ background: ACCENT, color: '#07142B' }}
+              style={{ background: ACCENT, color: '#0F0520' }}
             >
               <Play className="w-4 h-4" />
               Browse All Courses on Koutuhal Academy
@@ -295,7 +295,7 @@ export function CandidateTraining() {
               <div className="text-sm mb-4" style={{ color: TEXT2 }}>Enrol in a featured course to start your learning journey</div>
               <a href={ACADEMY_URL} target="_blank" rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold"
-                style={{ background: ACCENT, color: '#07142B' }}>
+                style={{ background: ACCENT, color: '#0F0520' }}>
                 Browse Courses <ExternalLink className="w-4 h-4" />
               </a>
             </div>
@@ -304,10 +304,10 @@ export function CandidateTraining() {
             <div key={enrollment.id} className="rounded-2xl overflow-hidden" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
               <div className="flex flex-col md:flex-row">
                 <div className="text-white p-6 flex flex-col justify-center items-center min-w-[160px]"
-                  style={{ background: 'linear-gradient(135deg,#07142B,#102544)' }}>
+                  style={{ background: 'linear-gradient(135deg,#0F0520,#130828)' }}>
                   <span className="text-4xl font-black mb-2" style={{ color: ACCENT }}>{enrollment.languageLevel}</span>
                   <div className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
-                    style={{ background: enrollment.status === 'passed' ? 'rgba(0,200,83,0.2)' : 'rgba(255,157,0,0.2)', color: enrollment.status === 'passed' ? SUCCESS : ACCENT }}>
+                    style={{ background: enrollment.status === 'passed' ? 'rgba(0,200,83,0.2)' : 'rgba(168,85,247,0.2)', color: enrollment.status === 'passed' ? SUCCESS : ACCENT }}>
                     {enrollment.status === 'passed' ? 'COMPLETED' : 'IN PROGRESS'}
                   </div>
                 </div>
@@ -347,7 +347,7 @@ export function CandidateTraining() {
                       <div className="ml-auto">
                         <a href={ACADEMY_URL} target="_blank" rel="noopener noreferrer"
                           className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold"
-                          style={{ background: SUCCESS, color: '#07142B' }}>
+                          style={{ background: SUCCESS, color: '#0F0520' }}>
                           <Award className="w-4 h-4" /> View Certificate
                         </a>
                       </div>

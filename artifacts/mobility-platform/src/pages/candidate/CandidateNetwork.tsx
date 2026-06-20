@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { Network, Users, MapPin, Star, MessageCircle, TrendingUp, Filter, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
-const CARD = '#183256';
-const CARD2 = '#102544';
-const ACCENT = '#FF9D00';
+const CARD = '#1A0B3B';
+const CARD2 = '#130828';
+const ACCENT = '#A855F7';
 const SUCCESS = '#00C853';
-const PURPLE = '#8B5CF6';
-const BLUE = '#3B82F6';
-const BORDER = 'rgba(255,157,0,0.15)';
-const TEXT2 = '#B8C4D9';
+const PURPLE = '#C084FC';
+const BLUE = '#818CF8';
+const BORDER = 'rgba(168,85,247,0.15)';
+const TEXT2 = '#C4B5FD';
 
 const SIMILAR_PROFILES = [
   {
@@ -92,7 +92,7 @@ export function CandidateNetwork() {
   };
 
   return (
-    <div className="space-y-6 min-h-screen" style={{ background: '#07142B' }}>
+    <div className="space-y-6 min-h-screen" style={{ background: '#0F0520' }}>
       <div>
         <h1 className="text-3xl font-bold text-white tracking-tight flex items-center gap-2">
           <Network className="w-7 h-7" style={{ color: ACCENT }} />
@@ -125,12 +125,12 @@ export function CandidateNetwork() {
       <div className="flex gap-2">
         <button onClick={() => setActiveTab('similar')}
           className="px-4 py-2 rounded-xl text-sm font-medium transition-all"
-          style={{ background: activeTab === 'similar' ? ACCENT : CARD2, color: activeTab === 'similar' ? '#07142B' : TEXT2, border: `1px solid ${activeTab === 'similar' ? ACCENT : BORDER}` }}>
+          style={{ background: activeTab === 'similar' ? ACCENT : CARD2, color: activeTab === 'similar' ? '#0F0520' : TEXT2, border: `1px solid ${activeTab === 'similar' ? ACCENT : BORDER}` }}>
           👥 Similar Profiles
         </button>
         <button onClick={() => setActiveTab('community')}
           className="px-4 py-2 rounded-xl text-sm font-medium transition-all"
-          style={{ background: activeTab === 'community' ? ACCENT : CARD2, color: activeTab === 'community' ? '#07142B' : TEXT2, border: `1px solid ${activeTab === 'community' ? ACCENT : BORDER}` }}>
+          style={{ background: activeTab === 'community' ? ACCENT : CARD2, color: activeTab === 'community' ? '#0F0520' : TEXT2, border: `1px solid ${activeTab === 'community' ? ACCENT : BORDER}` }}>
           💬 Community Posts
         </button>
       </div>
@@ -155,7 +155,7 @@ export function CandidateNetwork() {
               ].map(f => (
                 <button key={f.id} onClick={() => setFilter(f.id as any)}
                   className="px-3 py-2 rounded-xl text-xs font-medium whitespace-nowrap transition-all"
-                  style={{ background: filter === f.id ? 'rgba(255,157,0,0.2)' : CARD2, color: filter === f.id ? ACCENT : TEXT2, border: `1px solid ${filter === f.id ? ACCENT : BORDER}` }}>
+                  style={{ background: filter === f.id ? 'rgba(168,85,247,0.2)' : CARD2, color: filter === f.id ? ACCENT : TEXT2, border: `1px solid ${filter === f.id ? ACCENT : BORDER}` }}>
                   {f.label}
                 </button>
               ))}
@@ -167,7 +167,7 @@ export function CandidateNetwork() {
             {filteredProfiles.map(profile => {
               const isConnected = connected.has(profile.id);
               return (
-                <div key={profile.id} className="rounded-2xl p-5 transition-all hover:border-[#FF9D00]/40"
+                <div key={profile.id} className="rounded-2xl p-5 transition-all hover:border-[#A855F7]/40"
                   style={{ background: CARD, border: `1px solid ${BORDER}` }}>
                   {/* Header */}
                   <div className="flex items-start justify-between mb-3">
@@ -243,13 +243,13 @@ export function CandidateNetwork() {
               <div key={post.id} className="rounded-2xl p-5" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
                 <div className="flex items-start gap-3 mb-3">
                   <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold flex-shrink-0"
-                    style={{ background: 'rgba(255,157,0,0.2)', color: ACCENT }}>
+                    style={{ background: 'rgba(168,85,247,0.2)', color: ACCENT }}>
                     {post.avatar}
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-bold text-white text-sm">{post.author}</span>
-                      <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'rgba(255,157,0,0.1)', color: ACCENT }}>{post.role}</span>
+                      <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'rgba(168,85,247,0.1)', color: ACCENT }}>{post.role}</span>
                       <span className="text-xs" style={{ color: TEXT2 }}>{post.time}</span>
                     </div>
                   </div>

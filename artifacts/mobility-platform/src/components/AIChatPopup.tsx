@@ -6,12 +6,12 @@ import { useAuth } from '@/contexts/AuthContext';
 import axios from 'axios';
 import { useLocation } from 'wouter';
 
-const ACCENT = '#FF9D00';
-const NAVY = '#07142B';
-const CARD = '#183256';
-const CARD2 = '#102544';
-const BORDER = 'rgba(255,157,0,0.2)';
-const TEXT2 = '#B8C4D9';
+const ACCENT = '#A855F7';
+const NAVY = '#0F0520';
+const CARD = '#1A0B3B';
+const CARD2 = '#130828';
+const BORDER = 'rgba(168,85,247,0.2)';
+const TEXT2 = '#C4B5FD';
 
 interface Message {
   role: 'user' | 'ai';
@@ -160,7 +160,7 @@ export function AIChatPopup() {
                     <div className="flex flex-wrap gap-1.5">
                       {msg.suggestions.map((s, j) => (
                         <button key={j} onClick={() => handleSend(s)}
-                          className="text-xs px-2.5 py-1 rounded-full border transition-all hover:border-[#FF9D00]/50"
+                          className="text-xs px-2.5 py-1 rounded-full border transition-all hover:border-[#A855F7]/50"
                           style={{ background: 'rgba(255,255,255,0.04)', borderColor: 'rgba(255,255,255,0.12)', color: TEXT2 }}>
                           {s}
                         </button>
@@ -199,7 +199,7 @@ export function AIChatPopup() {
               onChange={e => setMessage(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Ask about visa, language, salary…"
-              className="flex-1 text-sm text-white placeholder:text-slate-500 border focus:border-[#FF9D00]"
+              className="flex-1 text-sm text-white placeholder:text-slate-500 border focus:border-[#A855F7]"
               style={{ background: CARD2, borderColor: 'rgba(255,255,255,0.1)' }}
             />
             <Button size="sm" onClick={() => handleSend()} disabled={!message.trim() || isLoading}

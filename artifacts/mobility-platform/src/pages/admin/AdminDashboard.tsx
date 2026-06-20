@@ -5,17 +5,17 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { Activity, Users, FileCheck, Building2, ShieldCheck, TrendingUp, AlertTriangle, CheckCircle, Globe, Zap, Clock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
-const BG = '#07142B';
-const CARD = '#183256';
-const CARD2 = '#102544';
-const ACCENT = '#FF9D00';
+const BG = '#0F0520';
+const CARD = '#1A0B3B';
+const CARD2 = '#130828';
+const ACCENT = '#A855F7';
 const SUCCESS = '#00C853';
 const DANGER = '#EF4444';
-const BLUE = '#3B82F6';
-const PURPLE = '#8B5CF6';
-const BORDER = 'rgba(255,157,0,0.15)';
+const BLUE = '#818CF8';
+const PURPLE = '#C084FC';
+const BORDER = 'rgba(168,85,247,0.15)';
 const TEXT = '#FFFFFF';
-const TEXT2 = '#B8C4D9';
+const TEXT2 = '#C4B5FD';
 
 const mockStats = {
   totalCandidates: 24568,
@@ -98,7 +98,7 @@ export function AdminDashboard() {
             className="px-4 py-2 rounded-xl text-sm font-medium capitalize transition-all"
             style={{
               background: activeTab === tab ? ACCENT : CARD2,
-              color: activeTab === tab ? '#07142B' : TEXT2,
+              color: activeTab === tab ? '#0F0520' : TEXT2,
               border: `1px solid ${activeTab === tab ? ACCENT : BORDER}`,
             }}
           >

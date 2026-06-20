@@ -3,14 +3,14 @@ import { useLocation } from 'wouter';
 import { Bot, Sparkles, ArrowRight, CheckCircle2, Download, RotateCcw, Loader2, Euro, Clock, ChevronRight, Plane } from 'lucide-react';
 import axios from 'axios';
 
-const BG = '#07142B';
-const CARD = '#183256';
-const CARD2 = '#102544';
-const ACCENT = '#FF9D00';
+const BG = '#0F0520';
+const CARD = '#1A0B3B';
+const CARD2 = '#130828';
+const ACCENT = '#A855F7';
 const SUCCESS = '#00C853';
-const PURPLE = '#8B5CF6';
-const BORDER = 'rgba(255,157,0,0.15)';
-const TEXT2 = '#B8C4D9';
+const PURPLE = '#C084FC';
+const BORDER = 'rgba(168,85,247,0.15)';
+const TEXT2 = '#C4B5FD';
 
 type Gender = 'male' | 'female' | 'other';
 
@@ -59,14 +59,14 @@ function FlightCountdownBanner({ timeline, name }: { timeline?: string; name?: s
     return () => cancelAnimationFrame(frame);
   }, [visible]);
 
-  const getColor = () => months <= 8 ? '#00C853' : months <= 14 ? '#FF9D00' : '#8B5CF6';
+  const getColor = () => months <= 8 ? '#00C853' : months <= 14 ? '#A855F7' : '#C084FC';
   const getMessage = () => months <= 6 ? 'Almost there! 🚀' : months <= 12 ? 'Great progress — keep going!' : 'Your journey is mapped out!';
 
   return (
     <div
       className="rounded-2xl overflow-hidden transition-all duration-700"
       style={{
-        background: 'linear-gradient(135deg, #030E1E 0%, #07142B 40%, #0D1F3C 100%)',
+        background: 'linear-gradient(135deg, #030E1E 0%, #0F0520 40%, #0D1F3C 100%)',
         border: `1px solid ${getColor()}40`,
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(20px)',
@@ -359,7 +359,7 @@ export function AIOnboarding() {
       <div className="min-h-screen flex items-center justify-center p-6" style={{ background: BG }}>
         <div className="max-w-lg w-full text-center">
           <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 glow-orange"
-            style={{ background: 'rgba(255,157,0,0.15)', border: `2px solid ${ACCENT}` }}>
+            style={{ background: 'rgba(168,85,247,0.15)', border: `2px solid ${ACCENT}` }}>
             <Bot className="w-10 h-10" style={{ color: ACCENT }} />
           </div>
 
@@ -393,7 +393,7 @@ export function AIOnboarding() {
           <button
             onClick={() => setStep('questions')}
             className="w-full py-4 rounded-2xl text-base font-bold transition-all hover:opacity-90 active:scale-95 flex items-center justify-center gap-2"
-            style={{ background: ACCENT, color: '#07142B' }}
+            style={{ background: ACCENT, color: '#0F0520' }}
           >
             Start AI Journey <ArrowRight className="w-5 h-5" />
           </button>
@@ -448,7 +448,7 @@ export function AIOnboarding() {
               return (
                 <div key={key} className="flex justify-end">
                   <div className="rounded-2xl rounded-tr-sm px-4 py-2.5 text-sm max-w-xs"
-                    style={{ background: 'rgba(255,157,0,0.15)', color: ACCENT, border: `1px solid rgba(255,157,0,0.25)` }}>
+                    style={{ background: 'rgba(168,85,247,0.15)', color: ACCENT, border: `1px solid rgba(168,85,247,0.25)` }}>
                     {val}
                   </div>
                 </div>
@@ -485,7 +485,7 @@ export function AIOnboarding() {
                 </div>
                 <button onClick={handleNext} disabled={!inputValue.trim()}
                   className="px-4 py-3 rounded-xl font-bold text-sm disabled:opacity-40 transition-all"
-                  style={{ background: ACCENT, color: '#07142B' }}>
+                  style={{ background: ACCENT, color: '#0F0520' }}>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
@@ -495,7 +495,7 @@ export function AIOnboarding() {
             {questionDone && !isAutoFilling && !inputValue && (
               <button onClick={startAutoFill}
                 className="text-xs flex items-center gap-1.5 px-3 py-1.5 rounded-full"
-                style={{ background: 'rgba(139,92,246,0.1)', color: PURPLE, border: `1px solid rgba(139,92,246,0.2)` }}>
+                style={{ background: 'rgba(192,132,252,0.1)', color: PURPLE, border: `1px solid rgba(192,132,252,0.2)` }}>
                 🤖 Auto-fill demo answer
               </button>
             )}
@@ -553,7 +553,7 @@ export function AIOnboarding() {
             </button>
             <button onClick={() => setLocation('/')}
               className="px-3 py-1.5 rounded-lg text-xs font-semibold"
-              style={{ background: ACCENT, color: '#07142B' }}>
+              style={{ background: ACCENT, color: '#0F0520' }}>
               Create Account →
             </button>
           </div>
@@ -581,7 +581,7 @@ export function AIOnboarding() {
               <FlightCountdownBanner timeline={aiResult.estimatedTimeline} name={answers.name} />
 
               {/* Hero readiness */}
-              <div className="rounded-2xl p-6" style={{ background: 'linear-gradient(135deg,#102544,#183256)', border: `1px solid ${BORDER}` }}>
+              <div className="rounded-2xl p-6" style={{ background: 'linear-gradient(135deg,#130828,#1A0B3B)', border: `1px solid ${BORDER}` }}>
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                   <div>
                     <div className="text-sm mb-1" style={{ color: TEXT2 }}>Hello, {answers.name || 'Candidate'}! Here's your profile:</div>
@@ -609,8 +609,8 @@ export function AIOnboarding() {
                     {(aiResult.roadmap || []).map((phase: any, i: number) => (
                       <div key={i} className="flex gap-3">
                         <div className="flex-shrink-0">
-                          <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: ACCENT, color: '#07142B' }}>{phase.phase}</div>
-                          {i < aiResult.roadmap.length - 1 && <div className="w-0.5 h-full mx-auto mt-1" style={{ background: 'rgba(255,157,0,0.2)' }} />}
+                          <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold" style={{ background: ACCENT, color: '#0F0520' }}>{phase.phase}</div>
+                          {i < aiResult.roadmap.length - 1 && <div className="w-0.5 h-full mx-auto mt-1" style={{ background: 'rgba(168,85,247,0.2)' }} />}
                         </div>
                         <div className="pb-4">
                           <div className="flex items-center gap-2 mb-1">
@@ -640,7 +640,7 @@ export function AIOnboarding() {
                       </div>
                       <button onClick={handleDownloadResume}
                         className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold"
-                        style={{ background: SUCCESS, color: '#07142B' }}>
+                        style={{ background: SUCCESS, color: '#0F0520' }}>
                         <Download className="w-3 h-3" /> Download
                       </button>
                     </div>
@@ -662,7 +662,7 @@ export function AIOnboarding() {
                     <div className="space-y-1.5">
                       {(aiResult.nextSteps || []).map((s: string, i: number) => (
                         <div key={i} className="flex items-center gap-2 text-xs">
-                          <div className="w-5 h-5 rounded-full flex items-center justify-center font-bold flex-shrink-0" style={{ background: ACCENT, color: '#07142B' }}>{i + 1}</div>
+                          <div className="w-5 h-5 rounded-full flex items-center justify-center font-bold flex-shrink-0" style={{ background: ACCENT, color: '#0F0520' }}>{i + 1}</div>
                           <span style={{ color: TEXT2 }}>{s}</span>
                         </div>
                       ))}
@@ -672,13 +672,13 @@ export function AIOnboarding() {
               </div>
 
               {/* CTA */}
-              <div className="rounded-2xl p-6 text-center" style={{ background: 'linear-gradient(135deg,rgba(255,157,0,0.1),rgba(139,92,246,0.1))', border: `1px solid ${BORDER}` }}>
+              <div className="rounded-2xl p-6 text-center" style={{ background: 'linear-gradient(135deg,rgba(168,85,247,0.1),rgba(192,132,252,0.1))', border: `1px solid ${BORDER}` }}>
                 <Sparkles className="w-8 h-8 mx-auto mb-3" style={{ color: ACCENT }} />
                 <h3 className="text-xl font-bold text-white mb-2">Ready to begin your Germany journey?</h3>
                 <p className="text-sm mb-4" style={{ color: TEXT2 }}>Create your free account to access the full platform — language training, recognition support, employer matching, and visa assistance.</p>
                 <button onClick={() => setLocation('/')}
                   className="px-8 py-3 rounded-xl font-bold text-base"
-                  style={{ background: ACCENT, color: '#07142B' }}>
+                  style={{ background: ACCENT, color: '#0F0520' }}>
                   Create Free Account →
                 </button>
               </div>
