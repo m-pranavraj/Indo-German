@@ -41,9 +41,9 @@ export function CandidateRoadmap() {
             <Sparkles className="w-8 h-8 text-gold" />
             AI Journey Roadmap
           </h1>
-          <p className="text-slate-500 mt-1">Your personalized path to working in Germany as a {roadmap.occupation}</p>
+          <p className="text-purple-300 mt-1">Your personalized path to working in Germany as a {roadmap.occupation}</p>
         </div>
-        <Button onClick={handleDownload} variant="outline" className="border-navy text-navy hover:bg-slate-100">
+        <Button onClick={handleDownload} variant="outline" className="border-navy text-navy hover:bg-purple-900/30">
           <Download className="w-4 h-4 mr-2" />
           Download PDF
         </Button>
@@ -59,26 +59,26 @@ export function CandidateRoadmap() {
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-white border-slate-200 shadow-sm">
+        <Card className="bg-white border-purple-900 shadow-sm">
           <CardContent className="p-6">
-            <div className="text-slate-500 text-sm font-medium mb-1">Estimated Arrival</div>
+            <div className="text-purple-300 text-sm font-medium mb-1">Estimated Arrival</div>
             <div className="text-2xl font-bold text-navy">{roadmap.estimatedArrival}</div>
           </CardContent>
         </Card>
-        <Card className="bg-white border-slate-200 shadow-sm">
+        <Card className="bg-white border-purple-900 shadow-sm">
           <CardContent className="p-6">
-            <div className="text-slate-500 text-sm font-medium mb-1">Total Cost (INR)</div>
+            <div className="text-purple-300 text-sm font-medium mb-1">Total Cost (INR)</div>
             <div className="text-2xl font-bold text-navy flex items-center gap-1">
-              <IndianRupee className="w-5 h-5 text-slate-400" />
+              <IndianRupee className="w-5 h-5 text-purple-400" />
               {roadmap.costINR.toLocaleString('en-IN')}
             </div>
           </CardContent>
         </Card>
-        <Card className="bg-white border-slate-200 shadow-sm">
+        <Card className="bg-white border-purple-900 shadow-sm">
           <CardContent className="p-6">
-            <div className="text-slate-500 text-sm font-medium mb-1">Total Cost (EUR)</div>
+            <div className="text-purple-300 text-sm font-medium mb-1">Total Cost (EUR)</div>
             <div className="text-2xl font-bold text-navy flex items-center gap-1">
-              <Euro className="w-5 h-5 text-slate-400" />
+              <Euro className="w-5 h-5 text-purple-400" />
               {roadmap.costEUR.toLocaleString()}
             </div>
           </CardContent>
@@ -90,14 +90,14 @@ export function CandidateRoadmap() {
           <h2 className="text-xl font-bold text-navy">Phase Timeline</h2>
           <div className="space-y-4">
             {roadmap.phases.map((phase) => (
-              <Card key={phase.id} className={`border-l-4 shadow-sm ${phase.status === 'completed' ? 'border-l-emerald-500 bg-emerald-50/30' : phase.status === 'active' ? 'border-l-gold bg-amber-50/30' : 'border-l-slate-300'}`}>
+              <Card key={phase.id} className={`border-l-4 shadow-sm ${phase.status === 'completed' ? 'border-l-emerald-500 bg-emerald-50/30' : phase.status === 'active' ? 'border-l-gold bg-purple-900/20/30' : 'border-l-slate-300'}`}>
                 <CardContent className="p-5">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                     <div className="flex items-center gap-3">
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${phase.status === 'completed' ? 'bg-emerald-100 text-emerald-600' : phase.status === 'active' ? 'bg-gold text-navy' : 'bg-slate-100 text-slate-500'}`}>
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${phase.status === 'completed' ? 'bg-emerald-100 text-emerald-600' : phase.status === 'active' ? 'bg-gold text-navy' : 'bg-purple-900/30 text-purple-300'}`}>
                         {phase.status === 'completed' ? <CheckCircle2 className="w-5 h-5" /> : phase.status === 'active' ? <Activity className="w-4 h-4" /> : phase.id}
                       </div>
-                      <h3 className={`font-bold text-lg ${phase.status === 'pending' ? 'text-slate-600' : 'text-navy'}`}>
+                      <h3 className={`font-bold text-lg ${phase.status === 'pending' ? 'text-purple-300' : 'text-navy'}`}>
                         {phase.title}
                       </h3>
                     </div>
@@ -114,8 +114,8 @@ export function CandidateRoadmap() {
                   <div className="ml-11">
                     <ul className="space-y-2">
                       {phase.actionItems.map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-sm text-slate-600">
-                          <ChevronRight className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
+                        <li key={idx} className="flex items-start gap-2 text-sm text-purple-300">
+                          <ChevronRight className="w-4 h-4 text-purple-400 shrink-0 mt-0.5" />
                           {item}
                         </li>
                       ))}
@@ -129,32 +129,32 @@ export function CandidateRoadmap() {
 
         <div className="space-y-6">
           <h2 className="text-xl font-bold text-navy">Financing Options</h2>
-          <Card className="border border-slate-200 shadow-sm bg-white">
-            <CardHeader className="pb-3 border-b border-slate-100">
+          <Card className="border border-purple-900 shadow-sm bg-white">
+            <CardHeader className="pb-3 border-b border-purple-900/50">
               <CardTitle className="text-md">NSFDC Skill Loan</CardTitle>
             </CardHeader>
             <CardContent className="p-4 pt-3">
-              <p className="text-sm text-slate-500 mb-3">Concessional loan for eligible candidates covering training and certification costs.</p>
-              <Button variant="outline" size="sm" className="w-full text-navy border-slate-200">Check Eligibility</Button>
+              <p className="text-sm text-purple-300 mb-3">Concessional loan for eligible candidates covering training and certification costs.</p>
+              <Button variant="outline" size="sm" className="w-full text-navy border-purple-900">Check Eligibility</Button>
             </CardContent>
           </Card>
           
-          <Card className="border border-slate-200 shadow-sm bg-white">
-            <CardHeader className="pb-3 border-b border-slate-100">
+          <Card className="border border-purple-900 shadow-sm bg-white">
+            <CardHeader className="pb-3 border-b border-purple-900/50">
               <CardTitle className="text-md">NIESBUD Grant</CardTitle>
             </CardHeader>
             <CardContent className="p-4 pt-3">
-              <p className="text-sm text-slate-500 mb-3">Partial reimbursement for German language B1 certification upon passing.</p>
-              <Button variant="outline" size="sm" className="w-full text-navy border-slate-200">Apply for Grant</Button>
+              <p className="text-sm text-purple-300 mb-3">Partial reimbursement for German language B1 certification upon passing.</p>
+              <Button variant="outline" size="sm" className="w-full text-navy border-purple-900">Apply for Grant</Button>
             </CardContent>
           </Card>
 
-          <Card className="border border-slate-200 shadow-sm bg-white">
-            <CardHeader className="pb-3 border-b border-slate-100">
+          <Card className="border border-purple-900 shadow-sm bg-white">
+            <CardHeader className="pb-3 border-b border-purple-900/50">
               <CardTitle className="text-md">Employer Advance</CardTitle>
             </CardHeader>
             <CardContent className="p-4 pt-3">
-              <p className="text-sm text-slate-500 mb-3">Many employers cover recognition and visa costs after making a job offer.</p>
+              <p className="text-sm text-purple-300 mb-3">Many employers cover recognition and visa costs after making a job offer.</p>
               <div className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-1 rounded inline-block">Available post-match</div>
             </CardContent>
           </Card>

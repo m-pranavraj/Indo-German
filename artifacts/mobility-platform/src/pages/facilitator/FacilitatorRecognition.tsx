@@ -19,7 +19,7 @@ export function FacilitatorRecognition() {
 
   const getStatusBadge = (status: string) => {
     switch(status) {
-      case 'documents_pending': return <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">Awaiting Docs</Badge>;
+      case 'documents_pending': return <Badge variant="outline" className="bg-purple-900/20 text-purple-400 border-purple-600/40">Awaiting Docs</Badge>;
       case 'application_ready': return <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">Ready to Submit</Badge>;
       case 'authority_review': return <Badge variant="outline" className="bg-purple-50 text-purple-700 border-purple-200">Under Review</Badge>;
       case 'full_recognition': return <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">Full Recognition</Badge>;
@@ -31,21 +31,21 @@ export function FacilitatorRecognition() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Qualification Recognition</h1>
-        <p className="text-slate-500 mt-1">Manage equivalence assessment procedures for candidates.</p>
+        <h1 className="text-3xl font-bold text-white tracking-tight">Qualification Recognition</h1>
+        <p className="text-purple-300 mt-1">Manage equivalence assessment procedures for candidates.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-        <Card className="border-slate-200 shadow-sm bg-amber-50/50">
+        <Card className="border-purple-900 shadow-sm bg-purple-900/20/50">
           <CardContent className="p-4 flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-amber-800">Awaiting Documents</p>
-              <p className="text-2xl font-bold text-amber-900">{cases.filter(c => c.status === 'documents_pending').length}</p>
+              <p className="text-sm font-medium text-purple-200">Awaiting Documents</p>
+              <p className="text-2xl font-bold text-purple-200">{cases.filter(c => c.status === 'documents_pending').length}</p>
             </div>
             <FileText className="w-8 h-8 text-amber-200" />
           </CardContent>
         </Card>
-        <Card className="border-slate-200 shadow-sm bg-purple-50/50">
+        <Card className="border-purple-900 shadow-sm bg-purple-50/50">
           <CardContent className="p-4 flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-purple-800">Under Review</p>
@@ -54,7 +54,7 @@ export function FacilitatorRecognition() {
             <FileText className="w-8 h-8 text-purple-200" />
           </CardContent>
         </Card>
-        <Card className="border-slate-200 shadow-sm bg-green-50/50">
+        <Card className="border-purple-900 shadow-sm bg-green-50/50">
           <CardContent className="p-4 flex items-center justify-between">
             <div>
               <p className="text-sm font-medium text-green-800">Recognized</p>
@@ -65,10 +65,10 @@ export function FacilitatorRecognition() {
         </Card>
       </div>
 
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="border-purple-900 shadow-sm">
         <CardContent className="p-0">
           <Table>
-            <TableHeader className="bg-slate-50">
+            <TableHeader className="bg-purple-950/60">
               <TableRow>
                 <TableHead>Candidate</TableHead>
                 <TableHead>Indian Qualification</TableHead>
@@ -82,15 +82,15 @@ export function FacilitatorRecognition() {
               {cases.map((c) => (
                 <TableRow key={c.id}>
                   <TableCell>
-                    <div className="font-medium text-slate-900">{c.candidateName}</div>
-                    <div className="text-xs text-slate-500">ID: {c.candidateId}</div>
+                    <div className="font-medium text-white">{c.candidateName}</div>
+                    <div className="text-xs text-purple-300">ID: {c.candidateId}</div>
                   </TableCell>
-                  <TableCell className="text-sm text-slate-700">{c.indianQualification}</TableCell>
+                  <TableCell className="text-sm text-purple-200">{c.indianQualification}</TableCell>
                   <TableCell>
-                    <div className="text-sm font-medium text-slate-900">{c.germanProfession}</div>
-                    <div className="text-xs text-slate-500 capitalize">{c.regulatedStatus?.replace('_', ' ')}</div>
+                    <div className="text-sm font-medium text-white">{c.germanProfession}</div>
+                    <div className="text-xs text-purple-300 capitalize">{c.regulatedStatus?.replace('_', ' ')}</div>
                   </TableCell>
-                  <TableCell className="text-sm text-slate-600">{c.recognitionAuthority || '-'}</TableCell>
+                  <TableCell className="text-sm text-purple-300">{c.recognitionAuthority || '-'}</TableCell>
                   <TableCell>{getStatusBadge(c.status)}</TableCell>
                   <TableCell className="text-right">
                     <Button variant="outline" size="sm">Manage Case</Button>

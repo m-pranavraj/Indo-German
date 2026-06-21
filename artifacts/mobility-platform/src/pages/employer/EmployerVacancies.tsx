@@ -51,8 +51,8 @@ export function EmployerVacancies() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Manage Vacancies</h1>
-          <p className="text-slate-500 mt-1">Create and manage your open positions to find qualified Indian talent.</p>
+          <h1 className="text-3xl font-bold text-white tracking-tight">Manage Vacancies</h1>
+          <p className="text-purple-300 mt-1">Create and manage your open positions to find qualified Indian talent.</p>
         </div>
         
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -121,10 +121,10 @@ export function EmployerVacancies() {
         </Dialog>
       </div>
 
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="border-purple-900 shadow-sm">
         <CardContent className="p-0">
           <Table>
-            <TableHeader className="bg-slate-50">
+            <TableHeader className="bg-purple-950/60">
               <TableRow>
                 <TableHead>Job Title</TableHead>
                 <TableHead>Location</TableHead>
@@ -138,25 +138,25 @@ export function EmployerVacancies() {
               {vacancies.map((vacancy) => (
                 <TableRow key={vacancy.id}>
                   <TableCell>
-                    <div className="font-medium text-slate-900">{vacancy.title}</div>
-                    <div className="text-xs text-slate-500">{vacancy.occupation}</div>
+                    <div className="font-medium text-white">{vacancy.title}</div>
+                    <div className="text-xs text-purple-300">{vacancy.occupation}</div>
                   </TableCell>
                   <TableCell>
-                    <div className="flex items-center gap-1 text-sm text-slate-600">
+                    <div className="flex items-center gap-1 text-sm text-purple-300">
                       <MapPin className="w-3.5 h-3.5" />
                       {vacancy.location}
                     </div>
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-2">
-                      <Badge variant="outline" className="bg-slate-100 text-slate-600 text-xs py-0">{vacancy.languageLevel} German</Badge>
+                      <Badge variant="outline" className="bg-purple-900/30 text-purple-300 text-xs py-0">{vacancy.languageLevel} German</Badge>
                     </div>
                   </TableCell>
                   <TableCell>
                     <Badge variant="outline" className={
                       vacancy.status === 'active' ? 'bg-green-50 text-green-700 border-green-200' :
-                      vacancy.status === 'paused' ? 'bg-amber-50 text-amber-700 border-amber-200' :
-                      'bg-slate-100 text-slate-600 border-slate-200'
+                      vacancy.status === 'paused' ? 'bg-purple-900/20 text-purple-400 border-purple-600/40' :
+                      'bg-purple-900/30 text-purple-300 border-purple-900'
                     }>
                       <span className="capitalize">{vacancy.status}</span>
                     </Badge>
@@ -178,7 +178,7 @@ export function EmployerVacancies() {
               ))}
               {vacancies.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={6} className="h-24 text-center text-slate-500">
+                  <TableCell colSpan={6} className="h-24 text-center text-purple-300">
                     No vacancies posted yet.
                   </TableCell>
                 </TableRow>

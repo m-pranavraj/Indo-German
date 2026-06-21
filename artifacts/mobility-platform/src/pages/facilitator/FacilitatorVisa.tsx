@@ -18,7 +18,7 @@ export function FacilitatorVisa() {
 
   const getStatusBadge = (status: string) => {
     switch(status) {
-      case 'checklist_in_progress': return <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">Preparing Docs</Badge>;
+      case 'checklist_in_progress': return <Badge variant="outline" className="bg-purple-900/20 text-purple-400 border-purple-600/40">Preparing Docs</Badge>;
       case 'documents_ready': return <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">Ready for Appt</Badge>;
       case 'appointment_pending': return <Badge variant="outline" className="bg-purple-50 text-purple-700 border-purple-200">Appt Scheduled</Badge>;
       case 'decision_pending': return <Badge variant="outline" className="bg-indigo-50 text-indigo-700 border-indigo-200">Under Review</Badge>;
@@ -30,14 +30,14 @@ export function FacilitatorVisa() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Visa Case Management</h1>
-        <p className="text-slate-500 mt-1">Track visa application readiness and consulate decisions.</p>
+        <h1 className="text-3xl font-bold text-white tracking-tight">Visa Case Management</h1>
+        <p className="text-purple-300 mt-1">Track visa application readiness and consulate decisions.</p>
       </div>
 
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="border-purple-900 shadow-sm">
         <CardContent className="p-0">
           <Table>
-            <TableHeader className="bg-slate-50">
+            <TableHeader className="bg-purple-950/60">
               <TableRow>
                 <TableHead>Candidate</TableHead>
                 <TableHead>Visa Type</TableHead>
@@ -52,19 +52,19 @@ export function FacilitatorVisa() {
                 return (
                   <TableRow key={c.id}>
                     <TableCell>
-                      <div className="font-medium text-slate-900">{c.candidateName}</div>
-                      <div className="text-xs text-slate-500">ID: {c.candidateId}</div>
+                      <div className="font-medium text-white">{c.candidateName}</div>
+                      <div className="text-xs text-purple-300">ID: {c.candidateId}</div>
                     </TableCell>
                     <TableCell>
-                      <span className="text-sm font-medium text-slate-700">{c.pathwayType || 'Not Set'}</span>
+                      <span className="text-sm font-medium text-purple-200">{c.pathwayType || 'Not Set'}</span>
                     </TableCell>
                     <TableCell className="w-1/4">
                       <div className="space-y-1.5 pr-8">
                         <div className="flex justify-between text-xs">
-                          <span className="text-slate-500">{c.checklistProgress}/{c.checklistTotal} Docs</span>
-                          <span className="font-medium text-slate-700">{percent}%</span>
+                          <span className="text-purple-300">{c.checklistProgress}/{c.checklistTotal} Docs</span>
+                          <span className="font-medium text-purple-200">{percent}%</span>
                         </div>
-                        <Progress value={percent} className="h-1.5" indicatorClassName={percent === 100 ? "bg-green-500" : "bg-amber-500"} />
+                        <Progress value={percent} className="h-1.5" indicatorClassName={percent === 100 ? "bg-green-500" : "bg-purple-500"} />
                       </div>
                     </TableCell>
                     <TableCell>{getStatusBadge(c.status)}</TableCell>

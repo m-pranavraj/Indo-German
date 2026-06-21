@@ -61,11 +61,11 @@ export function CandidateProfile() {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">My Profile</h1>
-        <p className="text-slate-500 mt-1">Manage your personal and professional details.</p>
+        <h1 className="text-3xl font-bold text-white tracking-tight">My Profile</h1>
+        <p className="text-purple-300 mt-1">Manage your personal and professional details.</p>
       </div>
 
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="border-purple-900 shadow-sm">
         <CardHeader>
           <CardTitle>Personal Information</CardTitle>
           <CardDescription>Basic details used for identification.</CardDescription>
@@ -74,17 +74,17 @@ export function CandidateProfile() {
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <FormLabel>Full Name</FormLabel>
-              <Input value={user?.name || ''} disabled className="bg-slate-50" />
+              <Input value={user?.name || ''} disabled className="bg-purple-950/60" />
             </div>
             <div className="space-y-2">
               <FormLabel>Email</FormLabel>
-              <Input value={user?.email || ''} disabled className="bg-slate-50" />
+              <Input value={user?.email || ''} disabled className="bg-purple-950/60" />
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="border-purple-900 shadow-sm">
         <CardHeader>
           <CardTitle>Professional Profile</CardTitle>
           <CardDescription>This information determines your Germany readiness score.</CardDescription>
@@ -216,7 +216,7 @@ export function CandidateProfile() {
                       <FormLabel>
                         I have a valid passport
                       </FormLabel>
-                      <p className="text-sm text-slate-500">
+                      <p className="text-sm text-purple-300">
                         Check this if your passport is valid for at least the next 2 years.
                       </p>
                     </div>
@@ -225,7 +225,7 @@ export function CandidateProfile() {
               />
 
               <div className="flex justify-end">
-                <Button type="submit" disabled={updateProfile.isPending} className="bg-amber-500 hover:bg-amber-600 text-slate-900 font-medium px-8">
+                <Button type="submit" disabled={updateProfile.isPending} className="bg-purple-500 hover:bg-purple-600 text-white font-medium px-8">
                   {updateProfile.isPending ? 'Saving...' : 'Save Profile'}
                 </Button>
               </div>

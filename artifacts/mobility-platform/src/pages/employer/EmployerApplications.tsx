@@ -29,29 +29,29 @@ export function EmployerApplications() {
     const statusMap: Record<string, { label: string, color: string }> = {
       'applied': { label: 'New', color: 'bg-blue-50 text-blue-700 border-blue-200' },
       'shortlisted': { label: 'Shortlisted', color: 'bg-purple-50 text-purple-700 border-purple-200' },
-      'interview_scheduled': { label: 'Interviewing', color: 'bg-amber-50 text-amber-700 border-amber-200' },
-      'interview_done': { label: 'Interview Done', color: 'bg-slate-100 text-slate-700 border-slate-200' },
+      'interview_scheduled': { label: 'Interviewing', color: 'bg-purple-900/20 text-purple-400 border-purple-600/40' },
+      'interview_done': { label: 'Interview Done', color: 'bg-purple-900/30 text-purple-200 border-purple-900' },
       'offer_issued': { label: 'Offer Issued', color: 'bg-green-50 text-green-700 border-green-200' },
       'offer_accepted': { label: 'Hired', color: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
       'offer_rejected': { label: 'Declined Offer', color: 'bg-red-50 text-red-700 border-red-200' },
-      'withdrawn': { label: 'Withdrawn', color: 'bg-slate-100 text-slate-500 border-slate-200' },
+      'withdrawn': { label: 'Withdrawn', color: 'bg-purple-900/30 text-purple-300 border-purple-900' },
     };
 
-    const config = statusMap[status] || { label: status, color: 'bg-slate-100 text-slate-700 border-slate-200' };
+    const config = statusMap[status] || { label: status, color: 'bg-purple-900/30 text-purple-200 border-purple-900' };
     return <Badge variant="outline" className={config.color}>{config.label}</Badge>;
   };
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Applications</h1>
-        <p className="text-slate-500 mt-1">Review and manage candidates who have applied to your vacancies.</p>
+        <h1 className="text-3xl font-bold text-white tracking-tight">Applications</h1>
+        <p className="text-purple-300 mt-1">Review and manage candidates who have applied to your vacancies.</p>
       </div>
 
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="border-purple-900 shadow-sm">
         <CardContent className="p-0">
           <Table>
-            <TableHeader className="bg-slate-50">
+            <TableHeader className="bg-purple-950/60">
               <TableRow>
                 <TableHead>Candidate</TableHead>
                 <TableHead>Vacancy</TableHead>
@@ -64,14 +64,14 @@ export function EmployerApplications() {
               {applications.map((app) => (
                 <TableRow key={app.id}>
                   <TableCell>
-                    <div className="font-medium text-slate-900">{app.candidateName}</div>
+                    <div className="font-medium text-white">{app.candidateName}</div>
                     <div className="text-xs text-blue-600 hover:underline cursor-pointer">View Profile</div>
                   </TableCell>
                   <TableCell>
-                    <div className="text-sm text-slate-700">{app.vacancyTitle}</div>
+                    <div className="text-sm text-purple-200">{app.vacancyTitle}</div>
                   </TableCell>
                   <TableCell>
-                    <div className="text-sm text-slate-600">
+                    <div className="text-sm text-purple-300">
                       {app.appliedAt ? format(new Date(app.appliedAt), 'MMM d, yyyy') : '-'}
                     </div>
                   </TableCell>
@@ -102,7 +102,7 @@ export function EmployerApplications() {
               ))}
               {applications.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={5} className="h-24 text-center text-slate-500">
+                  <TableCell colSpan={5} className="h-24 text-center text-purple-300">
                     No applications found.
                   </TableCell>
                 </TableRow>

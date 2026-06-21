@@ -58,27 +58,27 @@ export function CandidateDocuments() {
     switch(status) {
       case 'verified': return <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200"><CheckCircle2 className="w-3 h-3 mr-1" /> Verified</Badge>;
       case 'under_review': return <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200"><Clock className="w-3 h-3 mr-1" /> Reviewing</Badge>;
-      case 'pending': return <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200"><AlertCircle className="w-3 h-3 mr-1" /> Pending Check</Badge>;
+      case 'pending': return <Badge variant="outline" className="bg-purple-900/20 text-purple-400 border-purple-600/40"><AlertCircle className="w-3 h-3 mr-1" /> Pending Check</Badge>;
       case 'rejected': return <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200"><XCircle className="w-3 h-3 mr-1" /> Rejected</Badge>;
       default: return <Badge variant="outline">Unknown</Badge>;
     }
   };
 
   const getIcon = (type: string) => {
-    return <FileText className="w-8 h-8 text-slate-400" />;
+    return <FileText className="w-8 h-8 text-purple-400" />;
   };
 
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Document Vault</h1>
-          <p className="text-slate-500 mt-1">Securely store and verify your migration documents.</p>
+          <h1 className="text-3xl font-bold text-white tracking-tight">Document Vault</h1>
+          <p className="text-purple-300 mt-1">Securely store and verify your migration documents.</p>
         </div>
         
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-amber-500 hover:bg-amber-600 text-slate-900">
+            <Button className="bg-purple-500 hover:bg-purple-600 text-white">
               <UploadCloud className="w-4 h-4 mr-2" />
               Upload Document
             </Button>
@@ -120,22 +120,22 @@ export function CandidateDocuments() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {documents.map(doc => (
-          <Card key={doc.id} className="border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+          <Card key={doc.id} className="border-purple-900 shadow-sm hover:shadow-md transition-shadow">
             <CardContent className="p-5">
               <div className="flex justify-between items-start mb-4">
-                <div className="p-3 bg-slate-50 rounded-lg border border-slate-100">
+                <div className="p-3 bg-purple-950/60 rounded-lg border border-purple-900/50">
                   {getIcon(doc.type)}
                 </div>
                 {getStatusBadge(doc.verificationStatus)}
               </div>
               <div>
-                <h3 className="font-semibold text-slate-800 truncate" title={doc.name}>{doc.name}</h3>
-                <p className="text-xs text-slate-500 uppercase tracking-wider mt-1">{docTypes.find(t => t.value === doc.type)?.label || doc.type}</p>
+                <h3 className="font-semibold text-white truncate" title={doc.name}>{doc.name}</h3>
+                <p className="text-xs text-purple-300 uppercase tracking-wider mt-1">{docTypes.find(t => t.value === doc.type)?.label || doc.type}</p>
               </div>
-              <div className="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center text-xs text-slate-500">
+              <div className="mt-4 pt-4 border-t border-purple-900/50 flex justify-between items-center text-xs text-purple-300">
                 <span>{format(new Date(doc.uploadedAt), 'MMM d, yyyy')}</span>
                 {doc.expiryDate && (
-                  <span className="text-amber-600 bg-amber-50 px-2 py-0.5 rounded">Exp: {format(new Date(doc.expiryDate), 'MMM yyyy')}</span>
+                  <span className="text-purple-400 bg-purple-900/20 px-2 py-0.5 rounded">Exp: {format(new Date(doc.expiryDate), 'MMM yyyy')}</span>
                 )}
               </div>
             </CardContent>
@@ -143,10 +143,10 @@ export function CandidateDocuments() {
         ))}
 
         {/* Placeholder for missing highly required doc */}
-        <Card className="border-dashed border-2 border-slate-200 bg-slate-50 flex flex-col items-center justify-center p-6 text-center min-h-[200px]">
+        <Card className="border-dashed border-2 border-purple-900 bg-purple-950/60 flex flex-col items-center justify-center p-6 text-center min-h-[200px]">
           <File className="w-10 h-10 text-slate-300 mb-3" />
-          <h3 className="font-medium text-slate-600 mb-1">Police Clearance</h3>
-          <p className="text-xs text-slate-400 mb-4">Required for visa readiness</p>
+          <h3 className="font-medium text-purple-300 mb-1">Police Clearance</h3>
+          <p className="text-xs text-purple-400 mb-4">Required for visa readiness</p>
           <Button variant="outline" size="sm" className="bg-white" onClick={() => { setUploadType('police_clearance'); setIsOpen(true); }}>
             Upload Now
           </Button>

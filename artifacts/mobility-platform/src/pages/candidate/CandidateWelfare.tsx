@@ -45,7 +45,7 @@ export function CandidateWelfare() {
   const getStatusBadge = (status: string) => {
     switch(status) {
       case 'open': return <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">Open</Badge>;
-      case 'in_progress': return <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">In Progress</Badge>;
+      case 'in_progress': return <Badge variant="outline" className="bg-purple-900/20 text-purple-400 border-purple-600/40">In Progress</Badge>;
       case 'resolved': 
       case 'closed': return <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">Resolved</Badge>;
       default: return <Badge variant="outline">{status}</Badge>;
@@ -56,8 +56,8 @@ export function CandidateWelfare() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Support & Welfare</h1>
-          <p className="text-slate-500 mt-1">Get help with integration, housing, workplace issues, or general support.</p>
+          <h1 className="text-3xl font-bold text-white tracking-tight">Support & Welfare</h1>
+          <p className="text-purple-300 mt-1">Get help with integration, housing, workplace issues, or general support.</p>
         </div>
         
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -118,23 +118,23 @@ export function CandidateWelfare() {
 
       <div className="grid gap-4">
         {tickets.map(ticket => (
-          <Card key={ticket.id} className="border-slate-200 shadow-sm">
+          <Card key={ticket.id} className="border-purple-900 shadow-sm">
             <CardContent className="p-6">
               <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     {getStatusBadge(ticket.status)}
-                    <span className="text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded capitalize">
+                    <span className="text-xs text-purple-300 bg-purple-900/30 px-2 py-0.5 rounded capitalize">
                       {ticket.category.replace('_', ' ')}
                     </span>
                   </div>
-                  <h3 className="text-lg font-semibold text-slate-900">{ticket.title}</h3>
-                  <div className="flex items-center gap-4 text-sm text-slate-500">
+                  <h3 className="text-lg font-semibold text-white">{ticket.title}</h3>
+                  <div className="flex items-center gap-4 text-sm text-purple-300">
                     <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> Opened: {format(new Date(ticket.createdAt), 'MMM d, yyyy')}</span>
                     <span className="flex items-center gap-1 font-medium capitalize">
                       Priority: <span className={
                         ticket.priority === 'high' || ticket.priority === 'urgent' ? 'text-red-600' : 
-                        ticket.priority === 'medium' ? 'text-amber-600' : 'text-slate-600'
+                        ticket.priority === 'medium' ? 'text-purple-400' : 'text-purple-300'
                       }>{ticket.priority}</span>
                     </span>
                   </div>
@@ -145,10 +145,10 @@ export function CandidateWelfare() {
           </Card>
         ))}
         {tickets.length === 0 && (
-          <div className="text-center py-12 bg-slate-50 rounded-lg border border-dashed border-slate-200">
+          <div className="text-center py-12 bg-purple-950/60 rounded-lg border border-dashed border-purple-900">
             <CheckCircle2 className="w-12 h-12 text-green-500 mx-auto mb-3" />
-            <h3 className="text-lg font-medium text-slate-900">No active support tickets</h3>
-            <p className="text-slate-500 mt-1">If you need assistance during your journey, raise a ticket here.</p>
+            <h3 className="text-lg font-medium text-white">No active support tickets</h3>
+            <p className="text-purple-300 mt-1">If you need assistance during your journey, raise a ticket here.</p>
           </div>
         )}
       </div>

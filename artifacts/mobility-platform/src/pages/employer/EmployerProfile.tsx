@@ -22,11 +22,11 @@ export function EmployerProfile() {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Company Profile</h1>
-        <p className="text-slate-500 mt-1">Manage your employer details and verification status.</p>
+        <h1 className="text-3xl font-bold text-white tracking-tight">Company Profile</h1>
+        <p className="text-purple-300 mt-1">Manage your employer details and verification status.</p>
       </div>
 
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="border-purple-900 shadow-sm">
         <CardHeader>
           <div className="flex justify-between items-center">
             <div>
@@ -38,15 +38,15 @@ export function EmployerProfile() {
                 <span className="w-2 h-2 rounded-full bg-green-500"></span> Verified Employer
               </div>
             ) : (
-              <div className="bg-amber-50 text-amber-700 px-3 py-1 rounded-full text-sm font-medium border border-amber-200 flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span> Verification Pending
+              <div className="bg-purple-900/20 text-purple-400 px-3 py-1 rounded-full text-sm font-medium border border-purple-600/40 flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span> Verification Pending
               </div>
             )}
           </div>
         </CardHeader>
       </Card>
 
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="border-purple-900 shadow-sm">
         <CardHeader>
           <CardTitle>Company Details</CardTitle>
         </CardHeader>
@@ -62,7 +62,7 @@ export function EmployerProfile() {
             </div>
             <div className="space-y-2">
               <Label>Country</Label>
-              <Input defaultValue={employer.country} disabled className="bg-slate-50" />
+              <Input defaultValue={employer.country} disabled className="bg-purple-950/60" />
             </div>
             <div className="space-y-2">
               <Label>City</Label>
@@ -70,8 +70,8 @@ export function EmployerProfile() {
             </div>
           </div>
 
-          <div className="pt-4 mt-4 border-t border-slate-100">
-            <h3 className="text-sm font-medium text-slate-900 mb-4">Primary Contact</h3>
+          <div className="pt-4 mt-4 border-t border-purple-900/50">
+            <h3 className="text-sm font-medium text-white mb-4">Primary Contact</h3>
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label>Contact Name</Label>

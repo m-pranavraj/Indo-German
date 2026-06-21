@@ -112,7 +112,7 @@ export function CandidateApplications() {
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 placeholder="Search job title, company, or city…"
-                className="pl-10 text-white placeholder:text-slate-500 border"
+                className="pl-10 text-white placeholder:text-purple-300 border"
                 style={{ background: CARD, borderColor: 'rgba(255,255,255,0.1)', height: 44 }}
               />
             </div>

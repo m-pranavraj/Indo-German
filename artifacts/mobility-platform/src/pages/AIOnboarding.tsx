@@ -575,7 +575,7 @@ export function AIOnboarding() {
             </div>
           ) : aiResult ? (
             <>
-              {error && <div className="text-sm text-amber-400 bg-amber-400/10 border border-amber-400/20 rounded-lg p-3">{error}</div>}
+              {error && <div className="text-sm text-purple-300 bg-amber-400/10 border border-amber-400/20 rounded-lg p-3">{error}</div>}
 
               {/* ✈ "Months Away" Flight Animation Banner */}
               <FlightCountdownBanner timeline={aiResult.estimatedTimeline} name={answers.name} />

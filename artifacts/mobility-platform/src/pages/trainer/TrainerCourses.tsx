@@ -48,8 +48,8 @@ export function TrainerCourses() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Manage Courses</h1>
-          <p className="text-slate-500 mt-1">Define language courses offered by your institute.</p>
+          <h1 className="text-3xl font-bold text-white tracking-tight">Manage Courses</h1>
+          <p className="text-purple-300 mt-1">Define language courses offered by your institute.</p>
         </div>
         
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -119,10 +119,10 @@ export function TrainerCourses() {
         </Dialog>
       </div>
 
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="border-purple-900 shadow-sm">
         <CardContent className="p-0">
           <Table>
-            <TableHeader className="bg-slate-50">
+            <TableHeader className="bg-purple-950/60">
               <TableRow>
                 <TableHead>Course Name</TableHead>
                 <TableHead>Details</TableHead>
@@ -135,30 +135,30 @@ export function TrainerCourses() {
               {courses.map((course) => (
                 <TableRow key={course.id}>
                   <TableCell>
-                    <div className="font-medium text-slate-900">{course.name}</div>
-                    <div className="text-xs text-slate-500 mt-1">
-                      <Badge variant="outline" className="bg-amber-50 text-amber-700 border-none font-medium px-2 py-0">{course.languageLevel}</Badge>
+                    <div className="font-medium text-white">{course.name}</div>
+                    <div className="text-xs text-purple-300 mt-1">
+                      <Badge variant="outline" className="bg-purple-900/20 text-purple-400 border-none font-medium px-2 py-0">{course.languageLevel}</Badge>
                     </div>
                   </TableCell>
                   <TableCell>
-                    <div className="flex items-center gap-1.5 text-sm text-slate-600">
+                    <div className="flex items-center gap-1.5 text-sm text-purple-300">
                       <Clock className="w-3.5 h-3.5" />
                       {course.durationWeeks} Weeks
                     </div>
                   </TableCell>
                   <TableCell>
-                    <div className="text-sm font-medium capitalize text-slate-700">{course.mode}</div>
+                    <div className="text-sm font-medium capitalize text-purple-200">{course.mode}</div>
                     {course.city && (
-                      <div className="flex items-center gap-1 text-xs text-slate-500 mt-0.5">
+                      <div className="flex items-center gap-1 text-xs text-purple-300 mt-0.5">
                         <MapPin className="w-3 h-3" /> {course.city}
                       </div>
                     )}
                   </TableCell>
-                  <TableCell className="font-medium text-slate-900">
+                  <TableCell className="font-medium text-white">
                     {course.feeAmount ? `₹${course.feeAmount.toLocaleString('en-IN')}` : 'Free'}
                   </TableCell>
                   <TableCell className="text-right">
-                    <span className="inline-flex items-center justify-center bg-slate-100 text-slate-700 rounded-full px-2.5 py-1 text-sm font-medium">
+                    <span className="inline-flex items-center justify-center bg-purple-900/30 text-purple-200 rounded-full px-2.5 py-1 text-sm font-medium">
                       {course.enrolledCount || 0}
                     </span>
                   </TableCell>
@@ -166,7 +166,7 @@ export function TrainerCourses() {
               ))}
               {courses.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={5} className="h-24 text-center text-slate-500">
+                  <TableCell colSpan={5} className="h-24 text-center text-purple-300">
                     No courses available.
                   </TableCell>
                 </TableRow>

@@ -268,7 +268,7 @@ export function LandingPage() {
                     <FormLabel className="text-sm font-medium" style={{ color: TEXT2 }}>Email</FormLabel>
                     <FormControl>
                       <Input {...field} type="email" placeholder="you@example.com"
-                        className="text-white placeholder:text-slate-600 border transition-all focus:ring-2 focus:ring-purple-500/20"
+                        className="text-white placeholder:text-purple-300 border transition-all focus:ring-2 focus:ring-purple-500/20"
                         style={{ background: '#1A0B3B', borderColor: 'rgba(168,85,247,0.2)', color: '#fff' }} />
                     </FormControl>
                     <FormMessage />
@@ -280,7 +280,7 @@ export function LandingPage() {
                     <FormLabel className="text-sm font-medium" style={{ color: TEXT2 }}>Password</FormLabel>
                     <FormControl>
                       <Input {...field} type="password" placeholder="••••••••"
-                        className="text-white placeholder:text-slate-600 border transition-all focus:ring-2 focus:ring-purple-500/20"
+                        className="text-white placeholder:text-purple-300 border transition-all focus:ring-2 focus:ring-purple-500/20"
                         style={{ background: '#1A0B3B', borderColor: 'rgba(168,85,247,0.2)', color: '#fff' }} />
                     </FormControl>
                     <FormMessage />

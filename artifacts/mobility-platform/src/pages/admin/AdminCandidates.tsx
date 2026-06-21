@@ -18,14 +18,14 @@ export function AdminCandidates() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">System Candidates</h1>
-        <p className="text-slate-500 mt-1">Global view of all registered candidates.</p>
+        <h1 className="text-3xl font-bold text-white tracking-tight">System Candidates</h1>
+        <p className="text-purple-300 mt-1">Global view of all registered candidates.</p>
       </div>
 
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="border-purple-900 shadow-sm">
         <CardContent className="p-0">
           <Table>
-            <TableHeader className="bg-slate-50">
+            <TableHeader className="bg-purple-950/60">
               <TableRow>
                 <TableHead>ID</TableHead>
                 <TableHead>Name</TableHead>
@@ -38,21 +38,21 @@ export function AdminCandidates() {
             <TableBody>
               {candidates.map((c) => (
                 <TableRow key={c.id}>
-                  <TableCell className="text-xs text-slate-500 font-mono">{c.id}</TableCell>
-                  <TableCell className="font-medium text-slate-900">{c.name}</TableCell>
-                  <TableCell className="text-sm text-slate-600">{c.occupation || '-'}</TableCell>
+                  <TableCell className="text-xs text-purple-300 font-mono">{c.id}</TableCell>
+                  <TableCell className="font-medium text-white">{c.name}</TableCell>
+                  <TableCell className="text-sm text-purple-300">{c.occupation || '-'}</TableCell>
                   <TableCell>
-                    <Badge variant="outline" className="bg-slate-50 text-slate-700 capitalize font-normal border-slate-200">
+                    <Badge variant="outline" className="bg-purple-950/60 text-purple-200 capitalize font-normal border-purple-900">
                       {c.stage.replace(/_/g, ' ')}
                     </Badge>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
-                      <div className={`w-2 h-2 rounded-full ${c.readinessScore >= 80 ? 'bg-green-500' : c.readinessScore >= 50 ? 'bg-amber-500' : 'bg-red-500'}`}></div>
+                      <div className={`w-2 h-2 rounded-full ${c.readinessScore >= 80 ? 'bg-green-500' : c.readinessScore >= 50 ? 'bg-purple-500' : 'bg-red-500'}`}></div>
                       <span className="font-medium">{c.readinessScore}/100</span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-sm text-slate-500">
+                  <TableCell className="text-sm text-purple-300">
                     {format(new Date(c.createdAt), 'MMM d, yyyy')}
                   </TableCell>
                 </TableRow>

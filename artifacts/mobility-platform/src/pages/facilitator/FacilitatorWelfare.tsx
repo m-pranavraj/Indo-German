@@ -21,7 +21,7 @@ export function FacilitatorWelfare() {
     switch(priority) {
       case 'urgent': return <Badge className="bg-red-600 hover:bg-red-700 border-transparent text-white">Urgent</Badge>;
       case 'high': return <Badge className="bg-orange-500 hover:bg-orange-600 border-transparent text-white">High</Badge>;
-      case 'medium': return <Badge className="bg-amber-500 hover:bg-amber-600 border-transparent text-white">Medium</Badge>;
+      case 'medium': return <Badge className="bg-purple-500 hover:bg-purple-600 border-transparent text-white">Medium</Badge>;
       default: return <Badge className="bg-slate-500 hover:bg-slate-600 border-transparent text-white">Low</Badge>;
     }
   };
@@ -30,20 +30,20 @@ export function FacilitatorWelfare() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight flex items-center gap-3">
+          <h1 className="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
             Welfare Alerts
             <span className="bg-red-100 text-red-700 text-sm px-2.5 py-0.5 rounded-full font-bold">
               {tickets.filter(t => t.status === 'open' || t.status === 'in_progress').length} Active
             </span>
           </h1>
-          <p className="text-slate-500 mt-1">Manage support requests and emergency tickets from candidates.</p>
+          <p className="text-purple-300 mt-1">Manage support requests and emergency tickets from candidates.</p>
         </div>
       </div>
 
-      <Card className="border-slate-200 shadow-sm border-t-4 border-t-red-500">
+      <Card className="border-purple-900 shadow-sm border-t-4 border-t-red-500">
         <CardContent className="p-0">
           <Table>
-            <TableHeader className="bg-slate-50">
+            <TableHeader className="bg-purple-950/60">
               <TableRow>
                 <TableHead>Priority</TableHead>
                 <TableHead>Issue / Subject</TableHead>
@@ -58,27 +58,27 @@ export function FacilitatorWelfare() {
                 <TableRow key={ticket.id} className={ticket.priority === 'urgent' ? 'bg-red-50/30' : ''}>
                   <TableCell>{getPriorityBadge(ticket.priority!)}</TableCell>
                   <TableCell>
-                    <div className="font-medium text-slate-900 mb-1 flex items-center gap-2">
+                    <div className="font-medium text-white mb-1 flex items-center gap-2">
                       {ticket.priority === 'urgent' && <AlertTriangle className="w-4 h-4 text-red-600" />}
                       {ticket.title}
                     </div>
-                    <div className="text-xs text-slate-500 capitalize bg-slate-100 px-2 py-0.5 rounded inline-block">
+                    <div className="text-xs text-purple-300 capitalize bg-purple-900/30 px-2 py-0.5 rounded inline-block">
                       {ticket.category.replace('_', ' ')}
                     </div>
                   </TableCell>
                   <TableCell>
-                    <span className="text-sm font-medium text-slate-700">{ticket.candidateName}</span>
+                    <span className="text-sm font-medium text-purple-200">{ticket.candidateName}</span>
                   </TableCell>
                   <TableCell>
-                    <div className="flex items-center gap-1.5 text-sm text-slate-600">
-                      <Clock className="w-3.5 h-3.5 text-slate-400" />
+                    <div className="flex items-center gap-1.5 text-sm text-purple-300">
+                      <Clock className="w-3.5 h-3.5 text-purple-400" />
                       {format(new Date(ticket.createdAt), 'MMM d, HH:mm')}
                     </div>
                   </TableCell>
                   <TableCell>
                     <Badge variant="outline" className={
                       ticket.status === 'open' ? 'bg-red-50 text-red-700 border-red-200' :
-                      ticket.status === 'in_progress' ? 'bg-amber-50 text-amber-700 border-amber-200' :
+                      ticket.status === 'in_progress' ? 'bg-purple-900/20 text-purple-400 border-purple-600/40' :
                       'bg-green-50 text-green-700 border-green-200'
                     }>
                       <span className="capitalize">{ticket.status.replace('_', ' ')}</span>

@@ -54,7 +54,7 @@ export function TrainerBatches() {
     switch(status) {
       case 'active': return <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">Active</Badge>;
       case 'upcoming': return <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">Upcoming</Badge>;
-      case 'completed': return <Badge variant="outline" className="bg-slate-100 text-slate-700 border-slate-200">Completed</Badge>;
+      case 'completed': return <Badge variant="outline" className="bg-purple-900/30 text-purple-200 border-purple-900">Completed</Badge>;
       case 'cancelled': return <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">Cancelled</Badge>;
       default: return <Badge variant="outline">{status}</Badge>;
     }
@@ -64,8 +64,8 @@ export function TrainerBatches() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Manage Batches</h1>
-          <p className="text-slate-500 mt-1">Schedule and manage course batches.</p>
+          <h1 className="text-3xl font-bold text-white tracking-tight">Manage Batches</h1>
+          <p className="text-purple-300 mt-1">Schedule and manage course batches.</p>
         </div>
         
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -118,10 +118,10 @@ export function TrainerBatches() {
         </Dialog>
       </div>
 
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="border-purple-900 shadow-sm">
         <CardContent className="p-0">
           <Table>
-            <TableHeader className="bg-slate-50">
+            <TableHeader className="bg-purple-950/60">
               <TableRow>
                 <TableHead>Course & Trainer</TableHead>
                 <TableHead>Schedule</TableHead>
@@ -136,13 +136,13 @@ export function TrainerBatches() {
                 return (
                   <TableRow key={batch.id}>
                     <TableCell>
-                      <div className="font-medium text-slate-900">{batch.courseName}</div>
-                      <div className="text-xs text-slate-500 mt-1 flex items-center gap-1">
+                      <div className="font-medium text-white">{batch.courseName}</div>
+                      <div className="text-xs text-purple-300 mt-1 flex items-center gap-1">
                         <Users className="w-3 h-3" /> {batch.trainerName || 'Unassigned'}
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className="flex flex-col gap-1 text-sm text-slate-600">
+                      <div className="flex flex-col gap-1 text-sm text-purple-300">
                         <div className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" /> Start: {format(new Date(batch.startDate), 'MMM d, yyyy')}</div>
                         {batch.endDate && <div className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5 opacity-0" /> End: {format(new Date(batch.endDate), 'MMM d, yyyy')}</div>}
                       </div>
@@ -152,15 +152,15 @@ export function TrainerBatches() {
                     </TableCell>
                     <TableCell>
                       <div className="space-y-1">
-                        <div className="flex justify-between text-xs text-slate-600">
+                        <div className="flex justify-between text-xs text-purple-300">
                           <span>{batch.enrolledCount} / {batch.capacity}</span>
                           <span>{fillPercent}%</span>
                         </div>
-                        <Progress value={fillPercent} className="h-1.5 bg-slate-100" indicatorClassName={fillPercent >= 100 ? "bg-red-500" : "bg-teal-500"} />
+                        <Progress value={fillPercent} className="h-1.5 bg-purple-900/30" indicatorClassName={fillPercent >= 100 ? "bg-red-500" : "bg-teal-500"} />
                       </div>
                     </TableCell>
                     <TableCell className="text-right">
-                      <span className={`font-medium ${batch.attendancePercent && batch.attendancePercent < 75 ? 'text-amber-600' : 'text-slate-900'}`}>
+                      <span className={`font-medium ${batch.attendancePercent && batch.attendancePercent < 75 ? 'text-purple-400' : 'text-white'}`}>
                         {batch.attendancePercent ? `${batch.attendancePercent}%` : '-'}
                       </span>
                     </TableCell>
@@ -169,7 +169,7 @@ export function TrainerBatches() {
               })}
               {batches.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={5} className="h-24 text-center text-slate-500">
+                  <TableCell colSpan={5} className="h-24 text-center text-purple-300">
                     No batches found.
                   </TableCell>
                 </TableRow>

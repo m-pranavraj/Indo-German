@@ -29,16 +29,16 @@ export function EmployerOffers() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Employment Offers</h1>
-          <p className="text-slate-500 mt-1">Track binding job offers sent to candidates.</p>
+          <h1 className="text-3xl font-bold text-white tracking-tight">Employment Offers</h1>
+          <p className="text-purple-300 mt-1">Track binding job offers sent to candidates.</p>
         </div>
         <Button className="bg-blue-600 hover:bg-blue-700 text-white">Create Offer</Button>
       </div>
 
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="border-purple-900 shadow-sm">
         <CardContent className="p-0">
           <Table>
-            <TableHeader className="bg-slate-50">
+            <TableHeader className="bg-purple-950/60">
               <TableRow>
                 <TableHead>Candidate</TableHead>
                 <TableHead>Role</TableHead>
@@ -51,10 +51,10 @@ export function EmployerOffers() {
             <TableBody>
               {offers.map((offer) => (
                 <TableRow key={offer.id}>
-                  <TableCell className="font-medium text-slate-900">{offer.candidateName}</TableCell>
-                  <TableCell className="text-sm text-slate-600">{offer.vacancyTitle}</TableCell>
-                  <TableCell className="text-sm font-medium text-slate-900">€{offer.salaryOffered?.toLocaleString()}</TableCell>
-                  <TableCell className="text-sm text-slate-600">
+                  <TableCell className="font-medium text-white">{offer.candidateName}</TableCell>
+                  <TableCell className="text-sm text-purple-300">{offer.vacancyTitle}</TableCell>
+                  <TableCell className="text-sm font-medium text-white">€{offer.salaryOffered?.toLocaleString()}</TableCell>
+                  <TableCell className="text-sm text-purple-300">
                     {offer.joiningDate ? format(new Date(offer.joiningDate), 'MMM d, yyyy') : '-'}
                   </TableCell>
                   <TableCell>{getStatusBadge(offer.status)}</TableCell>
@@ -67,7 +67,7 @@ export function EmployerOffers() {
               ))}
               {offers.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={6} className="h-24 text-center text-slate-500">
+                  <TableCell colSpan={6} className="h-24 text-center text-purple-300">
                     No offers issued yet.
                   </TableCell>
                 </TableRow>

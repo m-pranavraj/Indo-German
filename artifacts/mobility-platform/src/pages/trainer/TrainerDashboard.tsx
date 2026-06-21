@@ -26,32 +26,32 @@ export function TrainerDashboard() {
     { title: 'Active Batches', value: dashboard.activeBatches, icon: <BookOpen className="w-5 h-5" />, color: 'bg-teal-50 text-teal-600' },
     { title: 'Students Enrolled', value: dashboard.studentsEnrolled, icon: <Users className="w-5 h-5" />, color: 'bg-blue-50 text-blue-600' },
     { title: 'Avg Attendance', value: `${dashboard.avgAttendance}%`, icon: <CheckCircle className="w-5 h-5" />, color: 'bg-indigo-50 text-indigo-600' },
-    { title: 'Certificates Issued', value: dashboard.certificatesIssued, icon: <Award className="w-5 h-5" />, color: 'bg-amber-50 text-amber-600' },
+    { title: 'Certificates Issued', value: dashboard.certificatesIssued, icon: <Award className="w-5 h-5" />, color: 'bg-purple-900/20 text-purple-400' },
     { title: 'Placement Rate', value: `${dashboard.placementOutcomes}%`, icon: <TrendingUp className="w-5 h-5" />, color: 'bg-emerald-50 text-emerald-600' }
   ];
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Institute Dashboard</h1>
-        <p className="text-slate-500 mt-1">Overview of your language training performance and candidate progress.</p>
+        <h1 className="text-3xl font-bold text-white tracking-tight">Institute Dashboard</h1>
+        <p className="text-purple-300 mt-1">Overview of your language training performance and candidate progress.</p>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         {statCards.map((stat, idx) => (
-          <Card key={idx} className="border-slate-200 shadow-sm">
+          <Card key={idx} className="border-purple-900 shadow-sm">
             <CardContent className="p-4 flex flex-col items-center text-center">
               <div className={`p-2 rounded-lg ${stat.color} mb-3`}>
                 {stat.icon}
               </div>
-              <span className="text-2xl font-bold text-slate-900">{stat.value}</span>
-              <span className="text-xs font-medium text-slate-500 mt-1">{stat.title}</span>
+              <span className="text-2xl font-bold text-white">{stat.value}</span>
+              <span className="text-xs font-medium text-purple-300 mt-1">{stat.title}</span>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="border-purple-900 shadow-sm">
         <CardHeader>
           <CardTitle>Completion by Language Level</CardTitle>
           <CardDescription>Number of students who successfully completed courses compared to total enrollments.</CardDescription>

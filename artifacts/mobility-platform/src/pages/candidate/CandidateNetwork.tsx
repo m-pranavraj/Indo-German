@@ -143,7 +143,7 @@ export function CandidateNetwork() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: TEXT2 }} />
               <Input value={search} onChange={e => setSearch(e.target.value)}
                 placeholder="Search by name, trade, or city…"
-                className="pl-10 text-white placeholder:text-slate-600 border"
+                className="pl-10 text-white placeholder:text-purple-300 border"
                 style={{ background: CARD, borderColor: 'rgba(255,255,255,0.1)' }} />
             </div>
             <div className="flex gap-2">

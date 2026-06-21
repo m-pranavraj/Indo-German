@@ -26,11 +26,11 @@ export function GovernmentPipeline() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Pipeline Funnel</h1>
-        <p className="text-slate-500 mt-1">Detailed view of candidate progression and drop-off rates.</p>
+        <h1 className="text-3xl font-bold text-white tracking-tight">Pipeline Funnel</h1>
+        <p className="text-purple-300 mt-1">Detailed view of candidate progression and drop-off rates.</p>
       </div>
 
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="border-purple-900 shadow-sm">
         <CardHeader>
           <CardTitle>End-to-End Migration Funnel</CardTitle>
           <CardDescription>Number of candidates at each stage of the Indo-German corridor process.</CardDescription>

@@ -349,7 +349,7 @@ export function CandidateResume() {
                   <h3 className="font-bold text-white">{sug.section}</h3>
                 </div>
                 <div className="flex gap-3 mb-3">
-                  <AlertCircle className={`w-4 h-4 shrink-0 mt-0.5 ${sug.priority === 'HIGH' ? 'text-red-400' : 'text-amber-400'}`} />
+                  <AlertCircle className={`w-4 h-4 shrink-0 mt-0.5 ${sug.priority === 'HIGH' ? 'text-red-400' : 'text-purple-300'}`} />
                   <p className="text-sm" style={{ color: TEXT2 }}>{sug.text}</p>
                 </div>
                 <Collapsible open={openStates[sug.id]} onOpenChange={() => toggleOpen(sug.id)}>

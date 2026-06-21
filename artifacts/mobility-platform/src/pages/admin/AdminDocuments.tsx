@@ -36,7 +36,7 @@ export function AdminDocuments() {
     switch(status) {
       case 'verified': return <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">Verified</Badge>;
       case 'under_review': return <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">Under Review</Badge>;
-      case 'pending': return <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200">Pending</Badge>;
+      case 'pending': return <Badge variant="outline" className="bg-purple-900/20 text-purple-400 border-purple-600/40">Pending</Badge>;
       case 'rejected': return <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200">Rejected</Badge>;
       default: return <Badge variant="outline">{status}</Badge>;
     }
@@ -45,14 +45,14 @@ export function AdminDocuments() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Document Verification</h1>
-        <p className="text-slate-500 mt-1">Review and authenticate candidate uploads.</p>
+        <h1 className="text-3xl font-bold text-white tracking-tight">Document Verification</h1>
+        <p className="text-purple-300 mt-1">Review and authenticate candidate uploads.</p>
       </div>
 
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="border-purple-900 shadow-sm">
         <CardContent className="p-0">
           <Table>
-            <TableHeader className="bg-slate-50">
+            <TableHeader className="bg-purple-950/60">
               <TableRow>
                 <TableHead>Candidate ID</TableHead>
                 <TableHead>Document Type</TableHead>
@@ -64,17 +64,17 @@ export function AdminDocuments() {
             </TableHeader>
             <TableBody>
               {documents.map((doc) => (
-                <TableRow key={doc.id} className={doc.verificationStatus === 'pending' ? 'bg-amber-50/10' : ''}>
-                  <TableCell className="font-mono text-xs text-slate-500">{doc.candidateId}</TableCell>
+                <TableRow key={doc.id} className={doc.verificationStatus === 'pending' ? 'bg-purple-900/20/10' : ''}>
+                  <TableCell className="font-mono text-xs text-purple-300">{doc.candidateId}</TableCell>
                   <TableCell>
-                    <span className="text-sm font-medium text-slate-900 capitalize">{doc.type.replace(/_/g, ' ')}</span>
+                    <span className="text-sm font-medium text-white capitalize">{doc.type.replace(/_/g, ' ')}</span>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2 text-sm text-blue-600 cursor-pointer hover:underline">
                       <FileText className="w-4 h-4" /> {doc.name}
                     </div>
                   </TableCell>
-                  <TableCell className="text-sm text-slate-500">
+                  <TableCell className="text-sm text-purple-300">
                     {format(new Date(doc.uploadedAt), 'MMM d, yyyy')}
                   </TableCell>
                   <TableCell>{getStatusBadge(doc.verificationStatus)}</TableCell>
@@ -89,7 +89,7 @@ export function AdminDocuments() {
                         </Button>
                       </div>
                     ) : (
-                      <Button variant="ghost" size="sm" className="text-slate-400">
+                      <Button variant="ghost" size="sm" className="text-purple-400">
                         <Download className="w-4 h-4 mr-1.5" /> DL
                       </Button>
                     )}

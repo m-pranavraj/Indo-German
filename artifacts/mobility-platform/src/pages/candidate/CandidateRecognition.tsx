@@ -39,29 +39,29 @@ export function CandidateRecognition() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Qualification Recognition</h1>
-        <p className="text-slate-500 mt-1">Track the equivalence assessment of your Indian qualifications in Germany.</p>
+        <h1 className="text-3xl font-bold text-white tracking-tight">Qualification Recognition</h1>
+        <p className="text-purple-300 mt-1">Track the equivalence assessment of your Indian qualifications in Germany.</p>
       </div>
 
       {cases.map(recognitionCase => {
         const currentStatusIndex = statusFlow.findIndex(s => s.id === recognitionCase.status);
         
         return (
-          <Card key={recognitionCase.id} className="border-slate-200 shadow-sm">
-            <CardHeader className="border-b border-slate-100 bg-slate-50">
+          <Card key={recognitionCase.id} className="border-purple-900 shadow-sm">
+            <CardHeader className="border-b border-purple-900/50 bg-purple-950/60">
               <div className="flex justify-between items-start">
                 <div>
-                  <CardDescription className="uppercase tracking-wider font-medium text-amber-600 mb-1">Recognition Case #{recognitionCase.id}</CardDescription>
+                  <CardDescription className="uppercase tracking-wider font-medium text-purple-400 mb-1">Recognition Case #{recognitionCase.id}</CardDescription>
                   <CardTitle className="text-xl">{recognitionCase.indianQualification}</CardTitle>
                   <div className="flex items-center gap-2 mt-2">
-                    <span className="text-sm text-slate-500">Target Profession:</span>
+                    <span className="text-sm text-purple-300">Target Profession:</span>
                     <Badge variant="outline" className="bg-white">{recognitionCase.germanProfession}</Badge>
                     <Badge variant="secondary" className="capitalize">{recognitionCase.regulatedStatus?.replace('_', ' ')}</Badge>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs text-slate-500 mb-1">Authority</p>
-                  <p className="text-sm font-medium text-slate-700">{recognitionCase.recognitionAuthority || 'Pending Assignment'}</p>
+                  <p className="text-xs text-purple-300 mb-1">Authority</p>
+                  <p className="text-sm font-medium text-purple-200">{recognitionCase.recognitionAuthority || 'Pending Assignment'}</p>
                 </div>
               </div>
             </CardHeader>
@@ -80,20 +80,20 @@ export function CandidateRecognition() {
                       <React.Fragment key={status.id}>
                         <div className="flex flex-col items-center w-32 relative">
                           <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 z-10 bg-white ${
-                            isCompleted ? 'border-amber-500 text-amber-500' :
-                            isActive ? 'border-amber-600 bg-amber-50 text-amber-600 ring-4 ring-amber-100' :
-                            'border-slate-200 text-slate-300'
+                            isCompleted ? 'border-purple-500 text-purple-400' :
+                            isActive ? 'border-amber-600 bg-purple-900/20 text-purple-400 ring-4 ring-amber-100' :
+                            'border-purple-900 text-slate-300'
                           }`}>
                             {isCompleted ? <CheckCircle2 className="w-5 h-5" /> : 
                              isActive ? <Clock className="w-4 h-4" /> : 
                              <Circle className="w-4 h-4" />}
                           </div>
-                          <span className={`text-[10px] mt-2 font-medium text-center ${isActive ? 'text-amber-700' : 'text-slate-500'}`}>
+                          <span className={`text-[10px] mt-2 font-medium text-center ${isActive ? 'text-purple-400' : 'text-purple-300'}`}>
                             {status.name}
                           </span>
                         </div>
                         {idx < statusFlow.length - 1 && (statusFlow[idx+1].id !== 'rejected' && statusFlow[idx+1].id !== 'bridge_course_required') && (
-                          <div className={`h-0.5 w-12 -ml-4 -mr-4 z-0 ${isCompleted ? 'bg-amber-500' : 'bg-slate-200'} mt-[-20px]`} />
+                          <div className={`h-0.5 w-12 -ml-4 -mr-4 z-0 ${isCompleted ? 'bg-purple-500' : 'bg-slate-200'} mt-[-20px]`} />
                         )}
                       </React.Fragment>
                     );
@@ -102,20 +102,20 @@ export function CandidateRecognition() {
               </div>
 
               {recognitionCase.documentsRequired && recognitionCase.documentsRequired.length > 0 && (
-                <div className="bg-amber-50 rounded-lg p-4 border border-amber-100">
-                  <h4 className="font-semibold text-amber-900 flex items-center gap-2 mb-3">
+                <div className="bg-purple-900/20 rounded-lg p-4 border border-amber-100">
+                  <h4 className="font-semibold text-purple-200 flex items-center gap-2 mb-3">
                     <FileText className="w-4 h-4" /> Documents Required for Next Step
                   </h4>
                   <ul className="space-y-2">
                     {recognitionCase.documentsRequired.map((doc, idx) => (
-                      <li key={idx} className="flex items-center gap-2 text-sm text-amber-800">
-                        <div className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+                      <li key={idx} className="flex items-center gap-2 text-sm text-purple-200">
+                        <div className="w-1.5 h-1.5 rounded-full bg-purple-500" />
                         {doc}
                       </li>
                     ))}
                   </ul>
                   <div className="mt-4">
-                    <Button size="sm" className="bg-amber-600 hover:bg-amber-700 text-white">Go to Document Vault</Button>
+                    <Button size="sm" className="bg-purple-600 hover:bg-amber-700 text-white">Go to Document Vault</Button>
                   </div>
                 </div>
               )}

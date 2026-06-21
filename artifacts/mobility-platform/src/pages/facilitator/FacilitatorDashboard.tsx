@@ -28,7 +28,7 @@ export function FacilitatorDashboard() {
   const alerts = [
     { title: 'Documents to Review', value: analytics.documentsPending, icon: <FileText className="w-5 h-5" />, color: 'text-blue-600 bg-blue-50 border-blue-100' },
     { title: 'Recognition Cases', value: analytics.recognitionPending, icon: <Award className="w-5 h-5" />, color: 'text-indigo-600 bg-indigo-50 border-indigo-100' },
-    { title: 'Visa Cases Pending', value: analytics.visaPending, icon: <MapPin className="w-5 h-5" />, color: 'text-amber-600 bg-amber-50 border-amber-100' },
+    { title: 'Visa Cases Pending', value: analytics.visaPending, icon: <MapPin className="w-5 h-5" />, color: 'text-purple-400 bg-purple-900/20 border-amber-100' },
     { title: 'Welfare Alerts', value: analytics.welfareAlerts, icon: <AlertCircle className="w-5 h-5" />, color: 'text-red-600 bg-red-50 border-red-100' },
     { title: 'Interviews This Week', value: analytics.interviewsThisWeek, icon: <Users className="w-5 h-5" />, color: 'text-purple-600 bg-purple-50 border-purple-100' },
     { title: 'Offer Conversion', value: `${analytics.offerConversionRate}%`, icon: <TrendingUp className="w-5 h-5" />, color: 'text-emerald-600 bg-emerald-50 border-emerald-100' },
@@ -37,8 +37,8 @@ export function FacilitatorDashboard() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Pipeline Dashboard</h1>
-        <p className="text-slate-500 mt-1">Monitor candidate progression and manage operational bottlenecks.</p>
+        <h1 className="text-3xl font-bold text-white tracking-tight">Pipeline Dashboard</h1>
+        <p className="text-purple-300 mt-1">Monitor candidate progression and manage operational bottlenecks.</p>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -55,7 +55,7 @@ export function FacilitatorDashboard() {
         ))}
       </div>
 
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="border-purple-900 shadow-sm">
         <CardHeader>
           <CardTitle>Candidates by Journey Stage</CardTitle>
           <CardDescription>Current snapshot of where candidates are in the migration pipeline.</CardDescription>
