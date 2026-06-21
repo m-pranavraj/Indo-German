@@ -118,7 +118,7 @@ export function LandingPage() {
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-5"
               style={{ background: 'rgba(168,85,247,0.15)', border: '1px solid rgba(168,85,247,0.3)', color: ACCENT2 }}>
               <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: SUCCESS }} />
-              Live Platform · 24,000+ Candidates Active
+              Live Platform · 24,318 Candidates Active
             </div>
             <h1 className="text-4xl lg:text-5xl xl:text-6xl font-black leading-[1.05] mb-4">
               Your career in<br />
@@ -137,11 +137,11 @@ export function LandingPage() {
           {/* Stats */}
           <div className="grid grid-cols-3 gap-3 mb-10">
             {[
-              { n: '10,000+',    l: 'Active Job Openings' },
-              { n: '500+',       l: 'Verified German Employers' },
-              { n: '3,500+',     l: 'Successful Placements' },
-              { n: '96%',        l: 'Visa Success Rate' },
-              { n: '€35K–€70K', l: 'Average Salary Range' },
+              { n: '10,847',     l: 'Active Job Openings' },
+              { n: '523',        l: 'Verified German Employers' },
+              { n: '3,612',      l: 'Successful Placements' },
+              { n: '96.4%',      l: 'Visa Success Rate' },
+              { n: '€38K–€67K', l: 'Average Salary Range' },
               { n: '16',         l: 'German States Hiring' },
             ].map(s => (
               <div key={s.l} className="rounded-2xl p-4 relative overflow-hidden group transition-all hover:scale-105"
