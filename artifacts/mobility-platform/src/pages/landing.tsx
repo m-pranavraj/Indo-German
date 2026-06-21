@@ -141,7 +141,7 @@ export function LandingPage() {
               { n: '523',        l: 'Verified German Employers' },
               { n: '3,612',      l: 'Successful Placements' },
               { n: '96.4%',      l: 'Visa Success Rate' },
-              { n: '€38K–€67K', l: 'Average Salary Range' },
+              { n: '€52,400',    l: 'Average Annual Salary' },
               { n: '16',         l: 'German States Hiring' },
             ].map(s => (
               <div key={s.l} className="rounded-2xl p-4 relative overflow-hidden group transition-all hover:scale-105"
