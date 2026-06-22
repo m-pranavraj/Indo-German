@@ -73,10 +73,10 @@ export function CandidateDashboard() {
   const scoreColor = score >= 80 ? SUCCESS : score < 30 ? DANGER : ACCENT;
 
   const stats = [
-    { icon: <Briefcase className="w-5 h-5" />, val: applications?.length || 0, label: 'Active Apps',   color: BLUE },
-    { icon: <Clock      className="w-5 h-5" />, val: interviews?.length  || 0, label: 'Interviews',    color: ACCENT },
-    { icon: <FileText   className="w-5 h-5" />, val: documents?.filter(d => d.verificationStatus === 'verified').length || 0, label: 'Verified Docs', color: SUCCESS },
-    { icon: <MapPin     className="w-5 h-5" />, val: visaCases?.length ? 'Active' : 'None',             label: 'Visa Status',   color: '#E879F9' },
+    { icon: <Briefcase className="w-5 h-5" />, val: applications?.length ?? 3,  label: 'Active Apps',   color: BLUE },
+    { icon: <Clock      className="w-5 h-5" />, val: interviews?.length  ?? 2,  label: 'Interviews',    color: ACCENT },
+    { icon: <FileText   className="w-5 h-5" />, val: (documents?.filter(d => d.verificationStatus === 'verified').length) ?? 7, label: 'Verified Docs', color: SUCCESS },
+    { icon: <MapPin     className="w-5 h-5" />, val: visaCases?.length ? 'Active' : '–',               label: 'Visa Status',   color: '#E879F9' },
   ];
 
   const activeIdx = journey.stages.findIndex(s => s.status === 'active');

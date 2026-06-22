@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  PieChart, Pie, Cell, Legend, AreaChart, Area, FunnelChart, Funnel, LabelList
+  AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
+  ResponsiveContainer, PieChart, Pie, Cell, Legend, RadialBarChart, RadialBar
 } from 'recharts';
 import {
   Users, Globe, Building, TrendingUp, IndianRupee, Euro, ShieldCheck,
-  MapPin, Briefcase, GraduationCap, Activity, Heart, Award, Clock
+  MapPin, Briefcase, GraduationCap, Activity, Heart, Award, Clock,
+  CheckCircle2, ArrowUpRight, ArrowDownRight, Plane, Star, Zap,
+  Database, Server, Cpu, Cloud, BarChart2, AlertCircle
 } from 'lucide-react';
 
 const BG = '#0F0520';
@@ -18,280 +18,681 @@ const SUCCESS = '#00C853';
 const DANGER = '#EF4444';
 const PURPLE = '#C084FC';
 const BLUE = '#818CF8';
+const ORANGE = '#F59E0B';
+const CYAN = '#06B6D4';
 const BORDER = 'rgba(168,85,247,0.15)';
 const TEXT = '#FFFFFF';
 const TEXT2 = '#C4B5FD';
 
-const KPI_DATA = {
-  totalRegistered: 24568,
-  activePipeline: 18342,
-  migrated: 7856,
-  employers: 523,
-  vacancies: 12430,
-  visaRate: 96.2,
-  salaryGenerated: 287,
-  govtInvestment: 48,
-  roi: 54,
-  women: 8432,
-  rural: 13578,
-  avgDays: 84,
+/* ─────────── DATA ─────────── */
+
+const MONTHLY = [
+  { month: 'Jan', migrated: 380, registered: 2100, visas: 310 },
+  { month: 'Feb', migrated: 420, registered: 2400, visas: 380 },
+  { month: 'Mar', migrated: 510, registered: 2800, visas: 450 },
+  { month: 'Apr', migrated: 680, registered: 3100, visas: 590 },
+  { month: 'May', migrated: 750, registered: 3400, visas: 680 },
+  { month: 'Jun', migrated: 820, registered: 3800, visas: 760 },
+  { month: 'Jul', migrated: 900, registered: 4200, visas: 840 },
+  { month: 'Aug', migrated: 1050, registered: 4600, visas: 980 },
+];
+
+const PIPELINE_STAGES = [
+  { stage: 'Profile Created',          icon: '👤', count: 24568, color: ACCENT,   pct: 100 },
+  { stage: 'Documents Verified',       icon: '📄', count: 22340, color: '#C084FC', pct: 91 },
+  { stage: 'Language Training',        icon: '🗣️', count: 19245, color: BLUE,     pct: 78 },
+  { stage: 'Skill Assessment',         icon: '📊', count: 17833, color: PURPLE,   pct: 73 },
+  { stage: 'Employer Matched',         icon: '🤝', count: 11456, color: CYAN,     pct: 47 },
+  { stage: 'Interview Done',           icon: '💼', count: 6821,  color: '#10B981', pct: 28 },
+  { stage: 'Offer Accepted',           icon: '✅', count: 4982,  color: SUCCESS,  pct: 20 },
+  { stage: 'Visa Approved',            icon: '🛂', count: 3775,  color: ORANGE,   pct: 15 },
+  { stage: 'Arrived in Germany ✈️',    icon: '🇩🇪', count: 7856,  color: '#34D399', pct: 32 },
+];
+
+const DEMAND_ROLES = [
+  { role: 'Caregivers',    required: 5320, matched: 3200, color: ACCENT },
+  { role: 'Nurses',        required: 4230, matched: 2890, color: BLUE },
+  { role: 'Electricians',  required: 2432, matched: 1845, color: SUCCESS },
+  { role: 'Hospitality',   required: 2421, matched: 1540, color: PURPLE },
+  { role: 'Drivers',       required: 1980, matched: 1120, color: ORANGE },
+  { role: 'Plumbers',      required: 1342, matched: 880,  color: CYAN },
+];
+
+const VISA_TYPES = [
+  { type: 'EU Blue Card',             count: 3245, pct: 41, color: BLUE },
+  { type: 'Skilled Worker (§18a)',    count: 2890, pct: 37, color: ACCENT },
+  { type: 'Recognition Visa (§17b)', count: 1120, pct: 14, color: PURPLE },
+  { type: 'Qualification (§17)',     count:  590, pct:  8, color: SUCCESS },
+];
+
+const LANG_LEVELS = [
+  { level: 'A1', done: 18500, color: ACCENT },
+  { level: 'A2', done: 14230, color: PURPLE },
+  { level: 'B1', done:  8900, color: BLUE },
+  { level: 'B2', done:  4540, color: SUCCESS },
+  { level: 'In Progress', done: 6210, color: ORANGE },
+];
+
+const RECOGNITION = [
+  { label: 'Full Recognition',    pct: 65, count: 12340, color: SUCCESS },
+  { label: 'Partial Recognition', pct: 25, count: 4743,  color: ACCENT },
+  { label: 'Pending Review',      pct:  8, count: 1517,  color: BLUE },
+  { label: 'Not Recognised',      pct:  2, count: 379,   color: DANGER },
+];
+
+/* ─── Maharashtra Districts (top 15) ─── */
+const DISTRICTS = [
+  { name: 'Pune',          candidates: 1245, placed: 312, rate: 72, lang: 'B1', sector: 'Automotive' },
+  { name: 'Mumbai City',   candidates:  892, placed: 198, rate: 68, lang: 'A2', sector: 'Healthcare' },
+  { name: 'Nashik',        candidates:  687, placed: 187, rate: 81, lang: 'B1', sector: 'Electricians' },
+  { name: 'Nagpur',        candidates:  623, placed: 154, rate: 74, lang: 'B1', sector: 'Automotive' },
+  { name: 'Thane',         candidates:  598, placed: 142, rate: 69, lang: 'A2', sector: 'IT Services' },
+  { name: 'Aurangabad',    candidates:  534, placed: 128, rate: 76, lang: 'A1', sector: 'Manufacturing' },
+  { name: 'Solapur',       candidates:  487, placed: 118, rate: 78, lang: 'A1', sector: 'Textiles' },
+  { name: 'Kolhapur',      candidates:  423, placed: 104, rate: 83, lang: 'B1', sector: 'Engineering' },
+  { name: 'Ahmednagar',    candidates:  398, placed:  87, rate: 71, lang: 'A2', sector: 'Agriculture' },
+  { name: 'Satara',        candidates:  367, placed:  92, rate: 85, lang: 'B2', sector: 'Nursing' },
+  { name: 'Sangli',        candidates:  342, placed:  77, rate: 79, lang: 'B1', sector: 'Healthcare' },
+  { name: 'Latur',         candidates:  298, placed:  61, rate: 66, lang: 'A1', sector: 'Construction' },
+  { name: 'Jalgaon',       candidates:  287, placed:  69, rate: 74, lang: 'A2', sector: 'Electricians' },
+  { name: 'Amravati',      candidates:  276, placed:  58, rate: 72, lang: 'A2', sector: 'Hospitality' },
+  { name: 'Nanded',        candidates:  243, placed:  48, rate: 68, lang: 'A1', sector: 'Caregivers' },
+];
+
+/* ─── Infrastructure Cost Data ─── */
+const INFRA_ROWS = [
+  {
+    category: 'Database',
+    icon: <Database className="w-4 h-4" />,
+    color: ACCENT,
+    k1:  { provider: 'Supabase Pro',          usd: 25,    inr: 2_083,   note: '8GB RAM, 2-vCPU' },
+    k10: { provider: 'Supabase Pro + Scale',  usd: 200,   inr: 16_680,  note: '16GB RAM + read replica' },
+    l1:  { provider: 'AWS RDS Aurora (r6g.xlarge)', usd: 750, inr: 62_550, note: 'Multi-AZ, auto-scale' },
+  },
+  {
+    category: 'App Server / Compute',
+    icon: <Server className="w-4 h-4" />,
+    color: BLUE,
+    k1:  { provider: 'Railway Starter',        usd: 20,   inr: 1_670,   note: '512MB RAM, shared CPU' },
+    k10: { provider: 'Railway Pro (2×)',        usd: 60,   inr: 5_004,   note: '2 instances, 2GB each' },
+    l1:  { provider: 'AWS ECS Fargate (3×t3.large)', usd: 310, inr: 25_882, note: 'Auto-scaling cluster' },
+  },
+  {
+    category: 'AI / LLM API',
+    icon: <Cpu className="w-4 h-4" />,
+    color: PURPLE,
+    k1:  { provider: 'Groq Dev Tier',          usd: 5,    inr: 417,     note: '~50K tokens/day free' },
+    k10: { provider: 'Groq Production',        usd: 48,   inr: 4_008,   note: '~5M tokens/mo at $0.27/M' },
+    l1:  { provider: 'Groq + OpenAI fallback', usd: 340,  inr: 28_390,  note: '~50M tokens/mo blended' },
+  },
+  {
+    category: 'File Storage (docs/photos)',
+    icon: <Cloud className="w-4 h-4" />,
+    color: CYAN,
+    k1:  { provider: 'Cloudflare R2 (5 GB)',   usd: 2,    inr: 167,     note: 'No egress fees' },
+    k10: { provider: 'Cloudflare R2 (50 GB)',  usd: 8,    inr: 668,     note: 'Still no egress' },
+    l1:  { provider: 'AWS S3 (500 GB)',         usd: 12,   inr: 1_002,   note: 'Egress ~$0.09/GB' },
+  },
+  {
+    category: 'CDN / Edge Network',
+    icon: <Globe className="w-4 h-4" />,
+    color: SUCCESS,
+    k1:  { provider: 'Cloudflare Free',        usd: 0,    inr: 0,       note: 'Unlimited bandwidth' },
+    k10: { provider: 'Cloudflare Pro',         usd: 20,   inr: 1_670,   note: 'Advanced WAF + analytics' },
+    l1:  { provider: 'Cloudflare Business',    usd: 200,  inr: 16_700,  note: 'Custom rules, SLA 100%' },
+  },
+  {
+    category: 'Email (Transactional)',
+    icon: <Zap className="w-4 h-4" />,
+    color: ORANGE,
+    k1:  { provider: 'Resend Free',             usd: 0,   inr: 0,       note: '3,000 emails/mo free' },
+    k10: { provider: 'Resend Pro',              usd: 20,  inr: 1_670,   note: '50K emails/mo' },
+    l1:  { provider: 'AWS SES',                 usd: 40,  inr: 3_340,   note: '$0.10/1K emails, 400K/mo' },
+  },
+  {
+    category: 'Cache / Redis',
+    icon: <BarChart2 className="w-4 h-4" />,
+    color: '#F43F5E',
+    k1:  { provider: 'Upstash Free',            usd: 0,   inr: 0,       note: '10K commands/day free' },
+    k10: { provider: 'Upstash Pay-as-you-go',   usd: 30,  inr: 2_505,   note: '~3M cmd/mo at $0.2/100K' },
+    l1:  { provider: 'AWS ElastiCache (r6g.large)', usd: 148, inr: 12_358, note: 'Dedicated Redis cluster' },
+  },
+  {
+    category: 'Monitoring & Logs',
+    icon: <Activity className="w-4 h-4" />,
+    color: '#34D399',
+    k1:  { provider: 'Built-in (Pino logs)',     usd: 0,  inr: 0,        note: 'Basic stdout logging' },
+    k10: { provider: 'Sentry + Axiom Free',      usd: 0,  inr: 0,        note: 'Error tracking + logs' },
+    l1:  { provider: 'Datadog Pro',              usd: 200, inr: 16_700,  note: 'APM + infra monitoring' },
+  },
+];
+
+const INR_TOTALS = {
+  k1:  INFRA_ROWS.reduce((s, r) => s + r.k1.inr, 0),
+  k10: INFRA_ROWS.reduce((s, r) => s + r.k10.inr, 0),
+  l1:  INFRA_ROWS.reduce((s, r) => s + r.l1.inr, 0),
 };
 
-const PIPELINE_DATA = [
-  { stage: 'Profile Created', count: 24568, color: ACCENT },
-  { stage: 'Doc Verified', count: 22340, color: '#C084FC' },
-  { stage: 'Lang Training', count: 19245, color: BLUE },
-  { stage: 'Skill Assessment', count: 17833, color: PURPLE },
-  { stage: 'Employer Match', count: 11456, color: '#06B6D4' },
-  { stage: 'Interview', count: 6821, color: '#10B981' },
-  { stage: 'Offer Issued', count: 4982, color: SUCCESS },
-  { stage: 'Visa Processing', count: 3775, color: '#F59E0B' },
-  { stage: 'Migrated ✈', count: 7856, color: '#34D399' },
-];
+const USD_TOTALS = {
+  k1:  INFRA_ROWS.reduce((s, r) => s + r.k1.usd, 0),
+  k10: INFRA_ROWS.reduce((s, r) => s + r.k10.usd, 0),
+  l1:  INFRA_ROWS.reduce((s, r) => s + r.l1.usd, 0),
+};
 
-const FINANCIAL_DATA = [
-  { label: 'Training Cost', value: 18, color: ACCENT },
-  { label: 'Language Training', value: 12, color: '#C084FC' },
-  { label: 'Assessment', value: 4, color: PURPLE },
-  { label: 'Visa Support', value: 5, color: BLUE },
-  { label: 'Technology', value: 3, color: '#06B6D4' },
-  { label: 'Administrative', value: 6, color: '#10B981' },
-];
+/* ─────────── HELPERS ─────────── */
+function fmt(n: number) { return n >= 1_00_000 ? `₹${(n/1_00_000).toFixed(1)}L` : n >= 1_000 ? `₹${(n/1_000).toFixed(1)}K` : `₹${n}`; }
 
-const LANGUAGE_DATA = [
-  { level: 'A1', completed: 18500 },
-  { level: 'A2', completed: 14230 },
-  { level: 'B1', completed: 8900 },
-  { level: 'B2', completed: 4540 },
-  { level: 'In Progress', completed: 6210 },
-];
-
-const VISA_DATA = [
-  { name: 'Approved', value: 7542, color: SUCCESS },
-  { name: 'Pending', value: 100, color: ACCENT },
-  { name: 'Rejected', value: 203, color: DANGER },
-];
-
-const DEMAND_DATA = [
-  { role: 'Caregivers', required: 5320, matched: 3200 },
-  { role: 'Nurses', required: 4230, matched: 2890 },
-  { role: 'Electricians', required: 2432, matched: 1845 },
-  { role: 'Hospitality', required: 2421, matched: 1540 },
-  { role: 'Drivers', required: 1980, matched: 1120 },
-  { role: 'Plumbers', required: 1342, matched: 880 },
-];
-
-const DEMO_DATA = [
-  { month: 'Jan', migrated: 380, registered: 2100 },
-  { month: 'Feb', migrated: 420, registered: 2400 },
-  { month: 'Mar', migrated: 510, registered: 2800 },
-  { month: 'Apr', migrated: 680, registered: 3100 },
-  { month: 'May', migrated: 750, registered: 3400 },
-  { month: 'Jun', migrated: 820, registered: 3800 },
-  { month: 'Jul', migrated: 900, registered: 4200 },
-  { month: 'Aug', migrated: 1050, registered: 4600 },
-];
-
-const AGE_DATA = [
-  { age: '18–25', count: 11230 },
-  { age: '26–35', count: 9540 },
-  { age: '36–45', count: 3798 },
-];
-
-function StatCard({ label, value, sub, icon, accent, format: fmt }: {
-  label: string; value: string | number; sub?: string;
-  icon: React.ReactNode; accent: string; format?: string;
+function KpiCard({ label, value, sub, icon, color, trend }: {
+  label: string; value: string; sub: string; icon: React.ReactNode; color: string; trend?: 'up' | 'down' | null;
 }) {
   return (
-    <div className="rounded-2xl p-5" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
+    <div className="rounded-2xl p-5 relative overflow-hidden" style={{ background: CARD, border: `1px solid ${color}20` }}>
+      <div className="absolute top-0 right-0 w-24 h-24 rounded-full -translate-y-8 translate-x-8 opacity-5" style={{ background: color }} />
       <div className="flex items-start justify-between mb-3">
-        <div className="p-2 rounded-xl" style={{ background: `${accent}18` }}>
-          <div style={{ color: accent }}>{icon}</div>
+        <div className="p-2.5 rounded-xl" style={{ background: `${color}18` }}>
+          <div style={{ color }}>{icon}</div>
         </div>
+        {trend && (
+          <span className="flex items-center gap-0.5 text-[11px] font-bold px-2 py-0.5 rounded-full"
+            style={{ background: trend === 'up' ? `${SUCCESS}18` : `${DANGER}18`, color: trend === 'up' ? SUCCESS : DANGER }}>
+            {trend === 'up' ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
+            {trend === 'up' ? '+12%' : '-3%'}
+          </span>
+        )}
       </div>
-      <div className="text-3xl font-bold text-white mb-1">{value}</div>
-      <div className="text-sm font-semibold text-white mb-0.5">{label}</div>
-      {sub && <div className="text-xs" style={{ color: TEXT2 }}>{sub}</div>}
+      <div className="text-2xl font-black text-white leading-tight">{value}</div>
+      <div className="text-sm font-semibold text-white mt-0.5">{label}</div>
+      <div className="text-xs mt-0.5" style={{ color: TEXT2 }}>{sub}</div>
     </div>
   );
 }
 
-export function GovernmentDashboard() {
-  const [activeTab, setActiveTab] = useState<'overview' | 'financial' | 'pipeline' | 'visa' | 'skills' | 'demographics'>('overview');
+function RadialScore({ pct, color, label }: { pct: number; color: string; label: string }) {
+  const r = 42, circ = 2 * Math.PI * r;
+  const offset = circ - (pct / 100) * circ;
+  return (
+    <div className="flex flex-col items-center gap-1">
+      <div className="relative w-24 h-24">
+        <svg width="96" height="96" className="transform -rotate-90">
+          <circle cx="48" cy="48" r={r} stroke="rgba(255,255,255,0.06)" strokeWidth="8" fill="none" />
+          <circle cx="48" cy="48" r={r} stroke={color} strokeWidth="8" fill="none"
+            strokeDasharray={circ} strokeDashoffset={offset} strokeLinecap="round"
+            style={{ filter: `drop-shadow(0 0 5px ${color})` }} />
+        </svg>
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <span className="text-xl font-black text-white">{pct}%</span>
+        </div>
+      </div>
+      <span className="text-xs font-medium text-center" style={{ color: TEXT2 }}>{label}</span>
+    </div>
+  );
+}
 
-  const tabs = ['overview', 'financial', 'pipeline', 'visa', 'skills', 'demographics'] as const;
+/* ─────────── MAIN COMPONENT ─────────── */
+export function GovernmentDashboard() {
+  const [tab, setTab] = useState<'overview' | 'pipeline' | 'districts' | 'visa' | 'skills' | 'financial' | 'infra'>('overview');
+  const [sortDistrict, setSortDistrict] = useState<'candidates' | 'placed' | 'rate'>('candidates');
+
+  const tabs: { id: typeof tab; label: string; icon: string }[] = [
+    { id: 'overview',   label: 'Overview',   icon: '🏛️' },
+    { id: 'pipeline',   label: 'Pipeline',   icon: '🔄' },
+    { id: 'districts',  label: 'Districts',  icon: '📍' },
+    { id: 'visa',       label: 'Visa',       icon: '🛂' },
+    { id: 'skills',     label: 'Skills',     icon: '📚' },
+    { id: 'financial',  label: 'Financial',  icon: '💰' },
+    { id: 'infra',      label: 'Infra Cost', icon: '🖥️' },
+  ];
+
+  const sortedDistricts = [...DISTRICTS].sort((a, b) => b[sortDistrict] - a[sortDistrict]);
 
   return (
-    <div className="space-y-6 min-h-screen" style={{ background: BG }}>
+    <div className="space-y-6" style={{ background: BG }}>
+      {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: SUCCESS }} />
-            <span className="text-xs font-medium uppercase tracking-wider" style={{ color: SUCCESS }}>Live Dashboard</span>
+            <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: SUCCESS }} />
+            <span className="text-xs font-bold uppercase tracking-wider" style={{ color: SUCCESS }}>Live Dashboard</span>
           </div>
-          <h1 className="text-3xl font-bold text-white tracking-tight">Indo-German Corridor Command Center</h1>
-          <p className="mt-1" style={{ color: TEXT2 }}>Ministry of Skill Development · Real-time migration analytics & financial intelligence</p>
+          <h1 className="text-3xl font-black text-white tracking-tight">Indo-German Command Center</h1>
+          <p className="mt-1 text-sm" style={{ color: TEXT2 }}>Ministry of Skill Development · Real-time analytics</p>
         </div>
         <div className="flex items-center gap-2 px-4 py-2 rounded-xl" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
           <Clock className="w-4 h-4" style={{ color: ACCENT }} />
-          <span className="text-sm text-white">Updated: {new Date().toLocaleTimeString()}</span>
+          <span className="text-sm text-white">{new Date().toLocaleTimeString()}</span>
         </div>
       </div>
 
-      {/* Tab Navigation */}
+      {/* Tabs */}
       <div className="flex flex-wrap gap-2">
-        {tabs.map(tab => (
-          <button
-            key={tab}
-            onClick={() => setActiveTab(tab)}
-            className="px-4 py-2 rounded-xl text-sm font-medium capitalize transition-all"
+        {tabs.map(t => (
+          <button key={t.id} onClick={() => setTab(t.id)}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-semibold transition-all"
             style={{
-              background: activeTab === tab ? ACCENT : CARD2,
-              color: activeTab === tab ? '#0F0520' : TEXT2,
-              border: `1px solid ${activeTab === tab ? ACCENT : BORDER}`,
-            }}
-          >
-            {tab}
+              background: tab === t.id ? ACCENT : CARD2,
+              color: tab === t.id ? '#0F0520' : TEXT2,
+              border: `1px solid ${tab === t.id ? ACCENT : BORDER}`,
+            }}>
+            {t.icon} {t.label}
           </button>
         ))}
       </div>
 
-      {/* ─── OVERVIEW TAB ─── */}
-      {activeTab === 'overview' && (
+      {/* ─── OVERVIEW ─── */}
+      {tab === 'overview' && (
         <div className="space-y-6">
-          {/* KPI Row 1 */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            <StatCard label="Total Registered" value="24,568" sub="Candidates" icon={<Users className="w-5 h-5" />} accent={ACCENT} />
-            <StatCard label="Active Pipeline" value="18,342" sub="In progress" icon={<Activity className="w-5 h-5" />} accent={BLUE} />
-            <StatCard label="Successfully Migrated" value="7,856" sub="To Germany ✈" icon={<Globe className="w-5 h-5" />} accent={SUCCESS} />
-            <StatCard label="German Employers" value="523" sub="Onboarded" icon={<Building className="w-5 h-5" />} accent={PURPLE} />
-            <StatCard label="Active Vacancies" value="12,430" sub="Open roles" icon={<Briefcase className="w-5 h-5" />} accent="#06B6D4" />
-            <StatCard label="Visa Success Rate" value="96.2%" sub="Of applications" icon={<ShieldCheck className="w-5 h-5" />} accent={SUCCESS} />
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <KpiCard label="Total Registered" value="24,568" sub="Candidates on platform" icon={<Users className="w-5 h-5" />} color={ACCENT} trend="up" />
+            <KpiCard label="Successfully Migrated" value="7,856" sub="Now working in Germany" icon={<Plane className="w-5 h-5" />} color={SUCCESS} trend="up" />
+            <KpiCard label="Active Pipeline" value="18,342" sub="In progress right now" icon={<Activity className="w-5 h-5" />} color={BLUE} trend="up" />
+            <KpiCard label="Visa Success Rate" value="96.2%" sub="Of all applications" icon={<ShieldCheck className="w-5 h-5" />} color={SUCCESS} trend={null} />
           </div>
 
-          {/* KPI Row 2 */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            <StatCard label="Salary Generated" value="€287M" sub="Abroad annually" icon={<Euro className="w-5 h-5" />} accent={ACCENT} />
-            <StatCard label="Govt Investment" value="₹48 Cr" sub="Total outlay" icon={<IndianRupee className="w-5 h-5" />} accent={BLUE} />
-            <StatCard label="ROI on Investment" value="54×" sub="₹2,600 Cr salary" icon={<TrendingUp className="w-5 h-5" />} accent={SUCCESS} />
-            <StatCard label="Women Candidates" value="8,432" sub="34.3% of total" icon={<Heart className="w-5 h-5" />} accent="#EC4899" />
-            <StatCard label="Rural Candidates" value="13,578" sub="55.3% rural" icon={<MapPin className="w-5 h-5" />} accent={PURPLE} />
-            <StatCard label="Avg Placement Time" value="84 Days" sub="Profile → Migration" icon={<Clock className="w-5 h-5" />} accent="#F59E0B" />
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <KpiCard label="German Employers" value="523" sub="Onboarded & active" icon={<Building className="w-5 h-5" />} color={PURPLE} trend="up" />
+            <KpiCard label="Open Vacancies" value="12,430" sub="Ready to hire" icon={<Briefcase className="w-5 h-5" />} color={CYAN} trend="up" />
+            <KpiCard label="Avg. Time to Place" value="84 Days" sub="Profile → Germany" icon={<Clock className="w-5 h-5" />} color={ORANGE} trend={null} />
+            <KpiCard label="Salary Remittances" value="₹780 Cr" sub="Annual India ← Germany" icon={<IndianRupee className="w-5 h-5" />} color={SUCCESS} trend="up" />
           </div>
 
-          {/* Monthly Trend */}
+          {/* Radial progress section */}
+          <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
+            <div className="text-base font-bold text-white mb-6">Key Performance Indicators</div>
+            <div className="grid grid-cols-3 md:grid-cols-6 gap-6">
+              <RadialScore pct={96} color={SUCCESS} label="Visa Approval" />
+              <RadialScore pct={78} color={ACCENT} label="Doc Verified" />
+              <RadialScore pct={65} color={BLUE} label="Lang Certified" />
+              <RadialScore pct={32} color={PURPLE} label="Migrated" />
+              <RadialScore pct={47} color={CYAN} label="Employer Match" />
+              <RadialScore pct={34} color={ORANGE} label="Women Share" />
+            </div>
+          </div>
+
+          {/* Trend chart + Demand chart */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
-              <h3 className="text-lg font-bold text-white mb-1">Registration & Migration Trend</h3>
-              <p className="text-sm mb-6" style={{ color: TEXT2 }}>Monthly comparison of new registrations vs successful migrations</p>
-              <ResponsiveContainer width="100%" height={260}>
-                <AreaChart data={DEMO_DATA}>
+              <div className="font-bold text-white mb-0.5">Registration & Migration Trend</div>
+              <div className="text-xs mb-5" style={{ color: TEXT2 }}>Monthly new registrations vs successful migrations</div>
+              <ResponsiveContainer width="100%" height={220}>
+                <AreaChart data={MONTHLY}>
                   <defs>
-                    <linearGradient id="regGrad" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient id="rg1" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor={ACCENT} stopOpacity={0.3} />
                       <stop offset="95%" stopColor={ACCENT} stopOpacity={0} />
                     </linearGradient>
-                    <linearGradient id="migGrad" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient id="mg1" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor={SUCCESS} stopOpacity={0.3} />
                       <stop offset="95%" stopColor={SUCCESS} stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" />
-                  <XAxis dataKey="month" tick={{ fill: TEXT2, fontSize: 12 }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fill: TEXT2, fontSize: 12 }} axisLine={false} tickLine={false} />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" />
+                  <XAxis dataKey="month" tick={{ fill: TEXT2, fontSize: 11 }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fill: TEXT2, fontSize: 11 }} axisLine={false} tickLine={false} />
                   <Tooltip contentStyle={{ background: CARD2, border: `1px solid ${BORDER}`, borderRadius: 12, color: TEXT }} />
-                  <Area type="monotone" dataKey="registered" name="Registered" stroke={ACCENT} fill="url(#regGrad)" strokeWidth={2} />
-                  <Area type="monotone" dataKey="migrated" name="Migrated" stroke={SUCCESS} fill="url(#migGrad)" strokeWidth={2} />
-                  <Legend wrapperStyle={{ color: TEXT2 }} />
+                  <Area type="monotone" dataKey="registered" name="Registered" stroke={ACCENT} fill="url(#rg1)" strokeWidth={2} />
+                  <Area type="monotone" dataKey="migrated" name="Migrated" stroke={SUCCESS} fill="url(#mg1)" strokeWidth={2} />
+                  <Legend wrapperStyle={{ color: TEXT2, fontSize: 11 }} />
                 </AreaChart>
               </ResponsiveContainer>
             </div>
 
             <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
-              <h3 className="text-lg font-bold text-white mb-1">Germany Demand vs Supply</h3>
-              <p className="text-sm mb-6" style={{ color: TEXT2 }}>Required positions vs matched/available candidates</p>
-              <ResponsiveContainer width="100%" height={260}>
-                <BarChart data={DEMAND_DATA} layout="vertical">
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" horizontal={false} />
-                  <XAxis type="number" tick={{ fill: TEXT2, fontSize: 11 }} axisLine={false} tickLine={false} />
-                  <YAxis dataKey="role" type="category" tick={{ fill: TEXT2, fontSize: 11 }} axisLine={false} tickLine={false} width={80} />
-                  <Tooltip contentStyle={{ background: CARD2, border: `1px solid ${BORDER}`, borderRadius: 12, color: TEXT }} />
-                  <Bar dataKey="required" name="Germany Needs" fill={ACCENT} radius={[0, 4, 4, 0]} barSize={10} />
-                  <Bar dataKey="matched" name="Matched Candidates" fill={SUCCESS} radius={[0, 4, 4, 0]} barSize={10} />
-                  <Legend wrapperStyle={{ color: TEXT2 }} />
-                </BarChart>
-              </ResponsiveContainer>
+              <div className="font-bold text-white mb-0.5">Germany Demand vs Supply Gap</div>
+              <div className="text-xs mb-5" style={{ color: TEXT2 }}>Roles with highest unfilled demand</div>
+              <div className="space-y-4">
+                {DEMAND_ROLES.map((r, i) => {
+                  const gap = r.required - r.matched;
+                  const matchPct = Math.round((r.matched / r.required) * 100);
+                  return (
+                    <div key={i}>
+                      <div className="flex justify-between items-center mb-1.5">
+                        <span className="text-sm font-semibold text-white">{r.role}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold" style={{ color: r.color }}>{r.matched.toLocaleString()}/{r.required.toLocaleString()}</span>
+                          <span className="text-[10px] px-1.5 py-0.5 rounded-full font-bold"
+                            style={{ background: `${DANGER}18`, color: DANGER }}>
+                            −{gap.toLocaleString()} gap
+                          </span>
+                        </div>
+                      </div>
+                      <div className="h-2.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                        <div className="h-full rounded-full" style={{ width: `${matchPct}%`, background: `linear-gradient(90deg, ${r.color}99, ${r.color})` }} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* ─── FINANCIAL TAB ─── */}
-      {activeTab === 'financial' && (
+      {/* ─── PIPELINE ─── */}
+      {tab === 'pipeline' && (
         <div className="space-y-6">
-          {/* Financial KPI Row */}
+          <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
+            <div className="font-bold text-white mb-0.5">10-Stage Migration Funnel</div>
+            <div className="text-xs mb-6" style={{ color: TEXT2 }}>Candidate count at each critical stage of the journey</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {PIPELINE_STAGES.map((s, i) => (
+                <div key={i} className="flex items-center gap-4 p-4 rounded-2xl transition-all hover:scale-[1.01]"
+                  style={{ background: CARD2, border: `1px solid ${s.color}25` }}>
+                  <div className="text-2xl w-9 flex-shrink-0">{s.icon}</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-semibold text-white truncate">{s.stage}</span>
+                      <span className="text-xs font-black ml-2 flex-shrink-0" style={{ color: s.color }}>{s.count.toLocaleString()}</span>
+                    </div>
+                    <div className="h-1.5 rounded-full" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                      <div className="h-full rounded-full" style={{ width: `${s.pct}%`, background: s.color }} />
+                    </div>
+                  </div>
+                  <span className="text-xs font-bold w-10 text-right flex-shrink-0" style={{ color: s.color }}>{s.pct}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
+            <div className="font-bold text-white mb-0.5">Monthly Progress Trend</div>
+            <div className="text-xs mb-4" style={{ color: TEXT2 }}>Registered, migrated and visa approvals per month</div>
+            <ResponsiveContainer width="100%" height={280}>
+              <BarChart data={MONTHLY} barGap={2}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
+                <XAxis dataKey="month" tick={{ fill: TEXT2, fontSize: 11 }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: TEXT2, fontSize: 11 }} axisLine={false} tickLine={false} />
+                <Tooltip contentStyle={{ background: CARD2, border: `1px solid ${BORDER}`, borderRadius: 12, color: TEXT }} />
+                <Bar dataKey="registered" name="Registered" fill={ACCENT} radius={[4, 4, 0, 0]} barSize={14} />
+                <Bar dataKey="visas" name="Visa Approved" fill={BLUE} radius={[4, 4, 0, 0]} barSize={14} />
+                <Bar dataKey="migrated" name="Migrated" fill={SUCCESS} radius={[4, 4, 0, 0]} barSize={14} />
+                <Legend wrapperStyle={{ color: TEXT2, fontSize: 11 }} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      )}
+
+      {/* ─── DISTRICTS ─── */}
+      {tab === 'districts' && (
+        <div className="space-y-6">
+          <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+              <div>
+                <div className="font-bold text-white">Maharashtra — District-wise Analytics</div>
+                <div className="text-xs mt-0.5" style={{ color: TEXT2 }}>Top 15 contributing districts · Source: MSDE State Portal</div>
+              </div>
+              <div className="flex gap-2">
+                {(['candidates', 'placed', 'rate'] as const).map(s => (
+                  <button key={s} onClick={() => setSortDistrict(s)}
+                    className="px-3 py-1.5 rounded-xl text-xs font-semibold capitalize transition-all"
+                    style={{
+                      background: sortDistrict === s ? ACCENT : CARD2,
+                      color: sortDistrict === s ? '#0F0520' : TEXT2,
+                      border: `1px solid ${sortDistrict === s ? ACCENT : BORDER}`,
+                    }}>
+                    Sort: {s}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Summary row */}
+            <div className="grid grid-cols-3 gap-3 mb-6">
+              {[
+                { label: 'Total Candidates', value: DISTRICTS.reduce((s, d) => s + d.candidates, 0).toLocaleString(), color: ACCENT },
+                { label: 'Total Placed', value: DISTRICTS.reduce((s, d) => s + d.placed, 0).toLocaleString(), color: SUCCESS },
+                { label: 'Avg Success Rate', value: Math.round(DISTRICTS.reduce((s, d) => s + d.rate, 0) / DISTRICTS.length) + '%', color: BLUE },
+              ].map((m, i) => (
+                <div key={i} className="rounded-xl p-4 text-center" style={{ background: CARD2, border: `1px solid ${m.color}20` }}>
+                  <div className="text-2xl font-black" style={{ color: m.color }}>{m.value}</div>
+                  <div className="text-xs mt-0.5" style={{ color: TEXT2 }}>{m.label}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* District cards grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+              {sortedDistricts.map((d, i) => {
+                const rankColor = i === 0 ? '#F59E0B' : i === 1 ? '#9CA3AF' : i === 2 ? '#CD7F32' : TEXT2;
+                const rateColor = d.rate >= 80 ? SUCCESS : d.rate >= 70 ? ACCENT : ORANGE;
+                return (
+                  <div key={d.name} className="rounded-2xl p-4" style={{ background: CARD2, border: `1px solid rgba(168,85,247,0.12)` }}>
+                    <div className="flex items-start justify-between mb-3">
+                      <div className="flex items-center gap-2">
+                        <span className="text-base font-black w-6 text-center" style={{ color: rankColor }}>#{i + 1}</span>
+                        <div>
+                          <div className="font-bold text-white leading-tight">{d.name}</div>
+                          <div className="text-[10px]" style={{ color: TEXT2 }}>{d.sector} · Lang: {d.lang}</div>
+                        </div>
+                      </div>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold"
+                        style={{ background: `${rateColor}18`, color: rateColor, border: `1px solid ${rateColor}30` }}>
+                        {d.rate}% placed
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 mb-3">
+                      <div className="rounded-xl p-2.5 text-center" style={{ background: CARD }}>
+                        <div className="text-lg font-black" style={{ color: ACCENT }}>{d.candidates.toLocaleString()}</div>
+                        <div className="text-[10px]" style={{ color: TEXT2 }}>Registered</div>
+                      </div>
+                      <div className="rounded-xl p-2.5 text-center" style={{ background: CARD }}>
+                        <div className="text-lg font-black" style={{ color: SUCCESS }}>{d.placed.toLocaleString()}</div>
+                        <div className="text-[10px]" style={{ color: TEXT2 }}>Placed in Germany</div>
+                      </div>
+                    </div>
+                    <div className="space-y-1.5">
+                      <div className="flex justify-between text-[10px] mb-1">
+                        <span style={{ color: TEXT2 }}>Placement rate</span>
+                        <span style={{ color: rateColor }}>{d.rate}%</span>
+                      </div>
+                      <div className="h-1.5 rounded-full" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                        <div className="h-full rounded-full" style={{ width: `${d.rate}%`, background: `linear-gradient(90deg, ${rateColor}80, ${rateColor})` }} />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ─── VISA ─── */}
+      {tab === 'visa' && (
+        <div className="space-y-6">
+          {/* Hero visa rate */}
+          <div className="rounded-2xl p-8" style={{ background: 'linear-gradient(135deg, #130828 0%, #1A0B3B 100%)', border: `1px solid ${SUCCESS}30` }}>
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="relative">
+                <svg width="160" height="160" className="transform -rotate-90">
+                  <circle cx="80" cy="80" r="68" stroke="rgba(255,255,255,0.05)" strokeWidth="12" fill="none" />
+                  <circle cx="80" cy="80" r="68" stroke={SUCCESS} strokeWidth="12" fill="none"
+                    strokeDasharray={2 * Math.PI * 68} strokeDashoffset={2 * Math.PI * 68 * (1 - 0.962)}
+                    strokeLinecap="round" style={{ filter: `drop-shadow(0 0 8px ${SUCCESS})` }} />
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-4xl font-black text-white">96.2%</span>
+                  <span className="text-xs" style={{ color: SUCCESS }}>Visa Success</span>
+                </div>
+              </div>
+              <div className="flex-1">
+                <h2 className="text-2xl font-black text-white mb-2">World-Class Visa Approval Rate</h2>
+                <p className="text-sm mb-4" style={{ color: TEXT2 }}>7,542 of 7,845 applications approved — exceeding the India-Germany migration corridor benchmark of 89%</p>
+                <div className="grid grid-cols-3 gap-4">
+                  {[
+                    { label: 'Approved', val: '7,542', color: SUCCESS },
+                    { label: 'Pending', val: '100', color: BLUE },
+                    { label: 'Rejected', val: '203', color: DANGER },
+                  ].map((s, i) => (
+                    <div key={i} className="rounded-xl p-3 text-center" style={{ background: CARD2, border: `1px solid ${s.color}20` }}>
+                      <div className="text-2xl font-black" style={{ color: s.color }}>{s.val}</div>
+                      <div className="text-xs mt-0.5" style={{ color: TEXT2 }}>{s.label}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Visa type breakdown */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
+              <div className="font-bold text-white mb-0.5">Visa Pathway Distribution</div>
+              <div className="text-xs mb-5" style={{ color: TEXT2 }}>Applications by visa category</div>
+              <div className="space-y-4">
+                {VISA_TYPES.map((v, i) => (
+                  <div key={i} className="p-4 rounded-2xl" style={{ background: CARD2, border: `1px solid ${v.color}20` }}>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-semibold text-white">{v.type}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm font-black" style={{ color: v.color }}>{v.count.toLocaleString()}</span>
+                        <span className="text-xs px-2 py-0.5 rounded-full font-bold" style={{ background: `${v.color}18`, color: v.color }}>{v.pct}%</span>
+                      </div>
+                    </div>
+                    <div className="h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                      <div className="h-full rounded-full" style={{ width: `${v.pct}%`, background: v.color }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
+              <div className="font-bold text-white mb-0.5">Processing Timeline</div>
+              <div className="text-xs mb-5" style={{ color: TEXT2 }}>Average days at each visa stage</div>
+              <div className="space-y-3">
+                {[
+                  { stage: 'Document Submission', days: 8, max: 30, color: BLUE },
+                  { stage: 'Embassy Review', days: 14, max: 30, color: ACCENT },
+                  { stage: 'Medical Check', days: 7, max: 30, color: PURPLE },
+                  { stage: 'Biometrics', days: 5, max: 30, color: CYAN },
+                  { stage: 'Final Decision', days: 12, max: 30, color: SUCCESS },
+                  { stage: 'Visa Stamping', days: 4, max: 30, color: ORANGE },
+                ].map((s, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <div className="text-xs text-right w-36 flex-shrink-0" style={{ color: TEXT2 }}>{s.stage}</div>
+                    <div className="flex-1 h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                      <div className="h-full rounded-full" style={{ width: `${(s.days / s.max) * 100}%`, background: s.color }} />
+                    </div>
+                    <div className="text-xs font-bold w-12 flex-shrink-0" style={{ color: s.color }}>{s.days} days</div>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-4 flex items-center gap-2 p-3 rounded-xl" style={{ background: `${SUCCESS}10`, border: `1px solid ${SUCCESS}25` }}>
+                <CheckCircle2 className="w-4 h-4" style={{ color: SUCCESS }} />
+                <span className="text-xs text-white">Total avg. processing: <strong>50 days</strong> — 20% faster than national average</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ─── SKILLS ─── */}
+      {tab === 'skills' && (
+        <div className="space-y-6">
+          {/* Language levels */}
+          <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
+            <div className="font-bold text-white mb-0.5">CEFR Language Training Progress</div>
+            <div className="text-xs mb-6" style={{ color: TEXT2 }}>Candidates who completed or are in each level</div>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+              {LANG_LEVELS.map((l, i) => (
+                <div key={i} className="rounded-2xl p-4 text-center flex flex-col items-center gap-3"
+                  style={{ background: CARD2, border: `1px solid ${l.color}25` }}>
+                  <div className="text-2xl font-black px-3 py-1 rounded-xl"
+                    style={{ background: `${l.color}15`, color: l.color }}>{l.level}</div>
+                  <div className="text-xl font-black text-white">{(l.done / 1000).toFixed(1)}K</div>
+                  <div className="text-[11px]" style={{ color: TEXT2 }}>candidates</div>
+                  <div className="w-full h-1.5 rounded-full" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                    <div className="h-full rounded-full" style={{ width: `${(l.done / 18500) * 100}%`, background: l.color }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Qualification recognition */}
+          <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
+            <div className="font-bold text-white mb-0.5">Qualification Recognition — ZAB / ANABIN</div>
+            <div className="text-xs mb-5" style={{ color: TEXT2 }}>Outcome of credential equivalence assessments</div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {RECOGNITION.map((r, i) => (
+                <div key={i} className="rounded-2xl p-5 flex flex-col items-center gap-2 text-center"
+                  style={{ background: CARD2, border: `1px solid ${r.color}20` }}>
+                  <div className="relative w-16 h-16">
+                    <svg width="64" height="64" className="transform -rotate-90">
+                      <circle cx="32" cy="32" r="26" stroke="rgba(255,255,255,0.06)" strokeWidth="6" fill="none" />
+                      <circle cx="32" cy="32" r="26" stroke={r.color} strokeWidth="6" fill="none"
+                        strokeDasharray={2 * Math.PI * 26} strokeDashoffset={2 * Math.PI * 26 * (1 - r.pct / 100)}
+                        strokeLinecap="round" />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-sm font-black text-white">{r.pct}%</span>
+                    </div>
+                  </div>
+                  <div className="text-lg font-black" style={{ color: r.color }}>{r.count.toLocaleString()}</div>
+                  <div className="text-xs font-semibold text-white">{r.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ─── FINANCIAL ─── */}
+      {tab === 'financial' && (
+        <div className="space-y-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="rounded-2xl p-5 col-span-2" style={{ background: 'linear-gradient(135deg, #130828, #1A0B3B)', border: `1px solid ${BORDER}` }}>
               <div className="text-sm font-medium mb-1" style={{ color: TEXT2 }}>Total Government Investment</div>
               <div className="text-5xl font-black mb-1" style={{ color: ACCENT }}>₹48 Cr</div>
-              <div className="text-sm" style={{ color: TEXT2 }}>Across training, language, visa & technology</div>
-              <div className="mt-4 flex gap-4">
-                <div>
-                  <div className="text-2xl font-bold" style={{ color: SUCCESS }}>₹2,600 Cr</div>
-                  <div className="text-xs" style={{ color: TEXT2 }}>Total salary generated</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold" style={{ color: ACCENT }}>54×</div>
-                  <div className="text-xs" style={{ color: TEXT2 }}>Return on investment</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold" style={{ color: BLUE }}>₹780 Cr</div>
-                  <div className="text-xs" style={{ color: TEXT2 }}>Remittances expected</div>
-                </div>
+              <div className="text-sm" style={{ color: TEXT2 }}>Training · Language · Visa · Technology</div>
+              <div className="mt-4 flex gap-6">
+                <div><div className="text-2xl font-bold" style={{ color: SUCCESS }}>₹2,600 Cr</div><div className="text-xs" style={{ color: TEXT2 }}>Total salary generated</div></div>
+                <div><div className="text-2xl font-bold" style={{ color: ACCENT }}>54×</div><div className="text-xs" style={{ color: TEXT2 }}>Return on investment</div></div>
+                <div><div className="text-2xl font-bold" style={{ color: BLUE }}>₹780 Cr</div><div className="text-xs" style={{ color: TEXT2 }}>Remittances expected</div></div>
               </div>
             </div>
-            <StatCard label="Training Budget" value="₹18 Cr" sub="Skill development" icon={<GraduationCap className="w-5 h-5" />} accent={ACCENT} />
-            <StatCard label="Language Training" value="₹12 Cr" sub="A1→B2 programs" icon={<Award className="w-5 h-5" />} accent={PURPLE} />
+            <KpiCard label="Training Budget" value="₹18 Cr" sub="Skill development" icon={<GraduationCap className="w-5 h-5" />} color={ACCENT} trend={null} />
+            <KpiCard label="Language Training" value="₹12 Cr" sub="A1→B2 programs" icon={<Award className="w-5 h-5" />} color={PURPLE} trend={null} />
           </div>
-
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <StatCard label="Visa Support" value="₹5 Cr" sub="Application & legal" icon={<ShieldCheck className="w-5 h-5" />} accent={BLUE} />
-            <StatCard label="Assessment Centres" value="₹4 Cr" sub="Skill evaluation" icon={<CheckCircle className="w-5 h-5" />} accent={SUCCESS} />
-            <StatCard label="Technology Platform" value="₹3 Cr" sub="This platform" icon={<Activity className="w-5 h-5" />} accent="#06B6D4" />
-            <StatCard label="Administrative" value="₹6 Cr" sub="Ops & compliance" icon={<Building className="w-5 h-5" />} accent="#F59E0B" />
+            <KpiCard label="Visa Support" value="₹5 Cr" sub="Application & legal" icon={<ShieldCheck className="w-5 h-5" />} color={BLUE} trend={null} />
+            <KpiCard label="Assessment" value="₹4 Cr" sub="Skill evaluation" icon={<Star className="w-5 h-5" />} color={SUCCESS} trend={null} />
+            <KpiCard label="Technology" value="₹3 Cr" sub="This platform" icon={<Activity className="w-5 h-5" />} color={CYAN} trend={null} />
+            <KpiCard label="Administrative" value="₹6 Cr" sub="Ops & compliance" icon={<Building className="w-5 h-5" />} color={ORANGE} trend={null} />
           </div>
-
-          {/* Budget breakdown pie + ROI table */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
-              <h3 className="text-lg font-bold text-white mb-1">Budget Allocation</h3>
-              <p className="text-sm mb-4" style={{ color: TEXT2 }}>₹48 Crore breakdown by category</p>
-              <ResponsiveContainer width="100%" height={280}>
+              <div className="font-bold text-white mb-4">Budget Allocation (₹48 Crore)</div>
+              <ResponsiveContainer width="100%" height={260}>
                 <PieChart>
-                  <Pie data={FINANCIAL_DATA} dataKey="value" nameKey="label" cx="50%" cy="50%" innerRadius={70} outerRadius={110} paddingAngle={3}>
-                    {FINANCIAL_DATA.map((entry, i) => (
-                      <Cell key={i} fill={entry.color} />
-                    ))}
+                  <Pie data={[
+                    { label: 'Training', value: 18, color: ACCENT },
+                    { label: 'Language', value: 12, color: PURPLE },
+                    { label: 'Admin', value: 6, color: ORANGE },
+                    { label: 'Visa', value: 5, color: BLUE },
+                    { label: 'Assessment', value: 4, color: SUCCESS },
+                    { label: 'Technology', value: 3, color: CYAN },
+                  ]} dataKey="value" nameKey="label" cx="50%" cy="50%" innerRadius={65} outerRadius={105} paddingAngle={3}>
+                    {[ACCENT, PURPLE, ORANGE, BLUE, SUCCESS, CYAN].map((c, i) => <Cell key={i} fill={c} />)}
                   </Pie>
-                  <Tooltip contentStyle={{ background: CARD2, border: `1px solid ${BORDER}`, borderRadius: 12, color: TEXT }} formatter={(v: any) => [`₹${v} Cr`, '']} />
+                  <Tooltip contentStyle={{ background: CARD2, border: `1px solid ${BORDER}`, borderRadius: 12 }} formatter={(v: any) => [`₹${v} Cr`, '']} />
                   <Legend wrapperStyle={{ color: TEXT2, fontSize: 12 }} />
                 </PieChart>
               </ResponsiveContainer>
             </div>
-
             <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
-              <h3 className="text-lg font-bold text-white mb-1">Employment Outcome Financials</h3>
-              <p className="text-sm mb-4" style={{ color: TEXT2 }}>Hiring & offer statistics with salary data</p>
+              <div className="font-bold text-white mb-4">Employment Financials</div>
               <div className="space-y-3">
                 {[
-                  { label: 'Total Job Offers Issued', value: '12,430', color: ACCENT },
+                  { label: 'Total Offers Issued', value: '12,430', color: ACCENT },
                   { label: 'Offers Accepted', value: '8,542', color: SUCCESS },
-                  { label: 'Offers Rejected', value: '1,245', color: DANGER },
-                  { label: 'Interviews Scheduled', value: '9,845', color: BLUE },
-                  { label: 'Interviews Completed', value: '8,943', color: PURPLE },
-                  { label: 'Average CTC (Germany)', value: '€42,000/yr', color: ACCENT },
-                  { label: 'Net Salary (avg) per candidate', value: '€34,000/yr', color: SUCCESS },
-                  { label: 'Total Salary Pool (all placed)', value: '€287 Million', color: '#F59E0B' },
+                  { label: 'Avg CTC (Germany)', value: '€42,000/yr', color: BLUE },
+                  { label: 'Net Salary (avg/candidate)', value: '€34,000/yr', color: SUCCESS },
+                  { label: 'Total Salary Pool', value: '€287 Million', color: ORANGE },
+                  { label: 'Agency Fee (avg)', value: '₹50,000/hire', color: PURPLE },
+                  { label: 'Platform Revenue', value: '₹184 Cr', color: SUCCESS },
+                  { label: 'Net Remittances (India)', value: '₹780 Cr/yr', color: CYAN },
                 ].map((row, i) => (
                   <div key={i} className="flex justify-between items-center py-2 border-b" style={{ borderColor: 'rgba(255,255,255,0.06)' }}>
                     <span className="text-sm" style={{ color: TEXT2 }}>{row.label}</span>
@@ -301,264 +702,134 @@ export function GovernmentDashboard() {
               </div>
             </div>
           </div>
+        </div>
+      )}
 
-          {/* Deep Financial Stats */}
-          <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
-            <h3 className="text-lg font-bold text-white mb-1">Revenue & Invoicing — Recruitment Agency Transactions</h3>
-            <p className="text-sm mb-5" style={{ color: TEXT2 }}>Total clearances, agency fees, visa expenditure and salary disbursement intelligence</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      {/* ─── INFRA COST ─── */}
+      {tab === 'infra' && (
+        <div className="space-y-6">
+          {/* Header card */}
+          <div className="rounded-2xl p-6" style={{ background: 'linear-gradient(135deg, #130828, #1A0B3B)', border: `1px solid ${BLUE}30` }}>
+            <div className="flex items-start gap-3 mb-4">
+              <div className="p-2.5 rounded-xl" style={{ background: `${BLUE}20` }}>
+                <Server className="w-5 h-5" style={{ color: BLUE }} />
+              </div>
+              <div>
+                <div className="font-black text-white text-lg">Infrastructure Cost Estimation — INR</div>
+                <div className="text-xs mt-0.5" style={{ color: TEXT2 }}>Realistic monthly costs for 3 scale tiers. Rate: 1 USD = ₹83.5 · Sources: Supabase, AWS, Railway, Cloudflare, Groq pricing pages (Jun 2025)</div>
+              </div>
+            </div>
+            <div className="grid grid-cols-3 gap-4">
               {[
-                { label: 'Total Revenue Generated', sublabel: 'Platform & placement fees', value: '₹184 Cr', color: SUCCESS, icon: '💰' },
-                { label: 'Invoices Cleared', sublabel: 'To recruitment agencies', value: '₹42.8 Cr', color: ACCENT, icon: '🧾' },
-                { label: 'Total Visa Expenditure', sublabel: 'All candidates combined', value: '₹5.2 Cr', color: BLUE, icon: '🛂' },
-                { label: 'Net Salary Remittances', sublabel: 'India ← Germany (est.)', value: '₹780 Cr', color: PURPLE, icon: '💸' },
-              ].map((item, i) => (
-                <div key={i} className="rounded-xl p-4" style={{ background: CARD2, border: `1px solid ${item.color}25` }}>
-                  <div className="text-2xl mb-2">{item.icon}</div>
-                  <div className="text-2xl font-black mb-0.5" style={{ color: item.color }}>{item.value}</div>
-                  <div className="text-sm font-semibold text-white mb-0.5">{item.label}</div>
-                  <div className="text-xs" style={{ color: TEXT2 }}>{item.sublabel}</div>
+                { tier: '1K Users', conc: '~50–100 concurrent', total: USD_TOTALS.k1, totalInr: INR_TOTALS.k1, color: SUCCESS },
+                { tier: '10K Users', conc: '~500–1,000 concurrent', total: USD_TOTALS.k10, totalInr: INR_TOTALS.k10, color: ACCENT },
+                { tier: '1 Lakh Users', conc: '~5,000–10,000 concurrent', total: USD_TOTALS.l1, totalInr: INR_TOTALS.l1, color: ORANGE },
+              ].map((t, i) => (
+                <div key={i} className="rounded-xl p-4" style={{ background: CARD2, border: `1px solid ${t.color}25` }}>
+                  <div className="text-xs mb-1" style={{ color: TEXT2 }}>{t.conc}</div>
+                  <div className="font-black text-white text-lg">{t.tier}</div>
+                  <div className="text-2xl font-black mt-2" style={{ color: t.color }}>{fmt(t.totalInr)}/mo</div>
+                  <div className="text-xs mt-0.5" style={{ color: TEXT2 }}>(~${t.total}/mo)</div>
                 </div>
               ))}
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <div className="text-sm font-semibold text-white mb-3">Agency Invoice Breakdown</div>
-                <div className="space-y-2">
-                  {[
-                    { label: 'Placement Fee (per hire)', value: '₹45,000–₹1.2 Lakh', color: ACCENT },
-                    { label: 'Total Invoices Raised', value: '8,542 invoices', color: TEXT },
-                    { label: 'Avg Invoice Value', value: '₹50,000', color: SUCCESS },
-                    { label: 'Disputed / Pending', value: '₹2.1 Cr (4.9%)', color: DANGER },
-                    { label: 'Fully Settled', value: '₹40.7 Cr (95.1%)', color: SUCCESS },
-                  ].map((row, i) => (
-                    <div key={i} className="flex justify-between text-xs py-1.5 border-b" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
-                      <span style={{ color: TEXT2 }}>{row.label}</span>
-                      <span className="font-semibold" style={{ color: row.color }}>{row.value}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <div className="text-sm font-semibold text-white mb-3">Salary & CTC Intelligence</div>
-                <div className="space-y-2">
-                  {[
-                    { label: 'Avg Annual CTC (Germany)', value: '€42,000', color: ACCENT },
-                    { label: 'Avg Net Salary / month', value: '€2,833 (~₹2.6 L)', color: SUCCESS },
-                    { label: 'Highest CTC role (Nurse)', value: '€52,000/yr', color: SUCCESS },
-                    { label: 'Lowest CTC role (Domestic Help)', value: '€26,400/yr', color: '#F59E0B' },
-                    { label: 'Total Annual Salary Pool', value: '€287 Million', color: ACCENT },
-                    { label: 'Employer Social Contribution', value: '~20% on top of CTC', color: PURPLE },
-                  ].map((row, i) => (
-                    <div key={i} className="flex justify-between text-xs py-1.5 border-b" style={{ borderColor: 'rgba(255,255,255,0.05)' }}>
-                      <span style={{ color: TEXT2 }}>{row.label}</span>
-                      <span className="font-semibold" style={{ color: row.color }}>{row.value}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
           </div>
-        </div>
-      )}
 
-      {/* ─── PIPELINE TAB ─── */}
-      {activeTab === 'pipeline' && (
-        <div className="space-y-6">
-          <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
-            <h3 className="text-lg font-bold text-white mb-1">10-Stage Migration Pipeline Funnel</h3>
-            <p className="text-sm mb-6" style={{ color: TEXT2 }}>Candidate progression across all stages of the migration journey</p>
-            <div className="space-y-3">
-              {PIPELINE_DATA.map((stage, i) => {
-                const pct = Math.round((stage.count / 24568) * 100);
-                return (
-                  <div key={i}>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-sm font-medium text-white">{stage.stage}</span>
-                      <div className="flex gap-3">
-                        <span className="text-sm font-bold" style={{ color: stage.color }}>{stage.count.toLocaleString()}</span>
-                        <span className="text-xs" style={{ color: TEXT2 }}>{pct}%</span>
-                      </div>
-                    </div>
-                    <div className="h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.08)' }}>
-                      <div className="h-2 rounded-full transition-all" style={{ width: `${pct}%`, background: stage.color }} />
-                    </div>
+          {/* Detailed table */}
+          <div className="rounded-2xl overflow-hidden" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
+            <div className="p-5 border-b" style={{ borderColor: BORDER }}>
+              <div className="font-bold text-white">Detailed Breakdown — Per Service</div>
+              <div className="text-xs mt-0.5" style={{ color: TEXT2 }}>All prices are monthly estimates. Free tiers used where available. Assumes Indian rupee conversion at ₹83.5/USD.</div>
+            </div>
+
+            {/* Table header */}
+            <div className="grid grid-cols-12 gap-0 text-[11px] font-bold uppercase tracking-wide px-5 py-3 border-b"
+              style={{ borderColor: BORDER, color: TEXT2, background: CARD2 }}>
+              <div className="col-span-3">Service / Provider</div>
+              <div className="col-span-3 text-center">1K Users</div>
+              <div className="col-span-3 text-center">10K Users</div>
+              <div className="col-span-3 text-center">1 Lakh Users</div>
+            </div>
+
+            {INFRA_ROWS.map((row, i) => (
+              <div key={i} className="grid grid-cols-12 gap-0 px-5 py-4 border-b transition-colors hover:bg-[rgba(168,85,247,0.04)]"
+                style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
+                <div className="col-span-3 flex items-center gap-2">
+                  <div className="p-1.5 rounded-lg" style={{ background: `${row.color}18`, color: row.color }}>
+                    {row.icon}
                   </div>
-                );
-              })}
+                  <span className="text-sm font-semibold text-white">{row.category}</span>
+                </div>
+                {([row.k1, row.k10, row.l1] as const).map((cell, j) => (
+                  <div key={j} className="col-span-3 flex flex-col items-center justify-center text-center px-2">
+                    <div className="text-xs" style={{ color: TEXT2 }}>{cell.provider}</div>
+                    <div className="text-base font-black mt-1"
+                      style={{ color: cell.inr === 0 ? SUCCESS : [row.color][0] }}>
+                      {cell.inr === 0 ? 'Free' : fmt(cell.inr)}
+                    </div>
+                    {cell.inr > 0 && <div className="text-[10px]" style={{ color: TEXT2 }}>(${cell.usd}/mo)</div>}
+                    <div className="text-[10px] mt-0.5 italic" style={{ color: 'rgba(196,181,253,0.5)' }}>{cell.note}</div>
+                  </div>
+                ))}
+              </div>
+            ))}
+
+            {/* Total row */}
+            <div className="grid grid-cols-12 gap-0 px-5 py-5"
+              style={{ background: 'rgba(168,85,247,0.08)', borderTop: `1px solid ${ACCENT}30` }}>
+              <div className="col-span-3 flex items-center">
+                <span className="font-black text-white text-sm">TOTAL MONTHLY COST</span>
+              </div>
+              {[
+                { inr: INR_TOTALS.k1,  usd: USD_TOTALS.k1,  color: SUCCESS },
+                { inr: INR_TOTALS.k10, usd: USD_TOTALS.k10, color: ACCENT },
+                { inr: INR_TOTALS.l1,  usd: USD_TOTALS.l1,  color: ORANGE },
+              ].map((t, i) => (
+                <div key={i} className="col-span-3 text-center">
+                  <div className="text-xl font-black" style={{ color: t.color }}>{fmt(t.inr)}</div>
+                  <div className="text-xs" style={{ color: TEXT2 }}>~${t.usd}/mo</div>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
-            <h3 className="text-lg font-bold text-white mb-1">Stage Count Comparison</h3>
-            <p className="text-sm mb-4" style={{ color: TEXT2 }}>Visual breakdown of candidates at each stage</p>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={PIPELINE_DATA}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                <XAxis dataKey="stage" tick={{ fill: TEXT2, fontSize: 10 }} axisLine={false} tickLine={false} angle={-30} textAnchor="end" height={60} />
-                <YAxis tick={{ fill: TEXT2, fontSize: 12 }} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{ background: CARD2, border: `1px solid ${BORDER}`, borderRadius: 12, color: TEXT }} />
-                <Bar dataKey="count" name="Candidates" radius={[6, 6, 0, 0]}>
-                  {PIPELINE_DATA.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-      )}
-
-      {/* ─── VISA TAB ─── */}
-      {activeTab === 'visa' && (
-        <div className="space-y-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <StatCard label="Applications Submitted" value="7,845" sub="Total filed" icon={<ShieldCheck className="w-5 h-5" />} accent={ACCENT} />
-            <StatCard label="Approved" value="7,542" sub="96.1% rate" icon={<Activity className="w-5 h-5" />} accent={SUCCESS} />
-            <StatCard label="Rejected" value="203" sub="2.6% rate" icon={<Globe className="w-5 h-5" />} accent={DANGER} />
-            <StatCard label="Pending" value="100" sub="Awaiting decision" icon={<Clock className="w-5 h-5" />} accent={BLUE} />
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
-              <h3 className="text-lg font-bold text-white mb-1">Visa Application Outcomes</h3>
-              <p className="text-sm mb-4" style={{ color: TEXT2 }}>Breakdown by decision status</p>
-              <ResponsiveContainer width="100%" height={280}>
-                <PieChart>
-                  <Pie data={VISA_DATA} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={80} outerRadius={120} paddingAngle={3}>
-                    {VISA_DATA.map((entry, i) => (
-                      <Cell key={i} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip contentStyle={{ background: CARD2, border: `1px solid ${BORDER}`, borderRadius: 12, color: TEXT }} />
-                  <Legend wrapperStyle={{ color: TEXT2 }} />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-
-            <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
-              <h3 className="text-lg font-bold text-white mb-1">Visa Pathway Breakdown</h3>
-              <p className="text-sm mb-4" style={{ color: TEXT2 }}>Applications by visa type</p>
-              <div className="space-y-4">
+          {/* Notes */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="rounded-2xl p-5" style={{ background: CARD, border: `1px solid ${ORANGE}20` }}>
+              <div className="flex items-center gap-2 mb-3">
+                <AlertCircle className="w-4 h-4" style={{ color: ORANGE }} />
+                <div className="font-bold text-white text-sm">Not Included in Estimate</div>
+              </div>
+              <div className="space-y-1.5">
                 {[
-                  { type: 'EU Blue Card', count: 3245, pct: 41, color: BLUE },
-                  { type: 'Skilled Worker Visa (§18a)', count: 2890, pct: 37, color: ACCENT },
-                  { type: 'Recognition Visa (§17b)', count: 1120, pct: 14, color: PURPLE },
-                  { type: 'Visa for Qualification (§17)', count: 590, pct: 8, color: SUCCESS },
-                ].map((row, i) => (
-                  <div key={i}>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-sm font-medium text-white">{row.type}</span>
-                      <span className="text-sm font-bold" style={{ color: row.color }}>{row.count.toLocaleString()} ({row.pct}%)</span>
-                    </div>
-                    <div className="h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.08)' }}>
-                      <div className="h-2 rounded-full" style={{ width: `${row.pct}%`, background: row.color }} />
-                    </div>
+                  'Domain registration & SSL (~₹1,500/yr)',
+                  'Human support / ops salaries',
+                  'Security audits & compliance (GDPR)',
+                  'Backup & disaster recovery overhead',
+                  'Load testing & staging environment',
+                ].map((n, i) => (
+                  <div key={i} className="flex items-center gap-2 text-xs" style={{ color: TEXT2 }}>
+                    <span style={{ color: ORANGE }}>•</span> {n}
                   </div>
                 ))}
               </div>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* ─── SKILLS TAB ─── */}
-      {activeTab === 'skills' && (
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
-              <h3 className="text-lg font-bold text-white mb-1">Language Training Progress</h3>
-              <p className="text-sm mb-6" style={{ color: TEXT2 }}>Candidates who completed each CEFR level</p>
-              <ResponsiveContainer width="100%" height={280}>
-                <BarChart data={LANGUAGE_DATA}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                  <XAxis dataKey="level" tick={{ fill: TEXT2, fontSize: 12 }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fill: TEXT2, fontSize: 12 }} axisLine={false} tickLine={false} />
-                  <Tooltip contentStyle={{ background: CARD2, border: `1px solid ${BORDER}`, borderRadius: 12, color: TEXT }} />
-                  <Bar dataKey="completed" name="Completed" fill={ACCENT} radius={[6, 6, 0, 0]}>
-                    {LANGUAGE_DATA.map((_, i) => (
-                      <Cell key={i} fill={[ACCENT, '#C084FC', BLUE, SUCCESS, PURPLE][i]} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-
-            <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
-              <h3 className="text-lg font-bold text-white mb-1">Recognition Outcomes</h3>
-              <p className="text-sm mb-4" style={{ color: TEXT2 }}>Qualification equivalence decisions from ZAB / ANABIN</p>
-              <div className="space-y-4">
-                {[
-                  { label: 'Full Recognition', count: 12340, pct: 65, color: SUCCESS },
-                  { label: 'Partial Recognition', count: 4743, pct: 25, color: ACCENT },
-                  { label: 'Pending Review', count: 1517, pct: 8, color: BLUE },
-                  { label: 'Not Recognised', count: 379, pct: 2, color: DANGER },
-                ].map((row, i) => (
-                  <div key={i}>
-                    <div className="flex justify-between mb-1">
-                      <span className="text-sm font-medium text-white">{row.label}</span>
-                      <span className="text-sm font-bold" style={{ color: row.color }}>{row.count.toLocaleString()} ({row.pct}%)</span>
-                    </div>
-                    <div className="h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.08)' }}>
-                      <div className="h-2 rounded-full" style={{ width: `${row.pct}%`, background: row.color }} />
-                    </div>
-                  </div>
-                ))}
+            <div className="rounded-2xl p-5" style={{ background: CARD, border: `1px solid ${SUCCESS}20` }}>
+              <div className="flex items-center gap-2 mb-3">
+                <CheckCircle2 className="w-4 h-4" style={{ color: SUCCESS }} />
+                <div className="font-bold text-white text-sm">Cost-Saving Recommendations</div>
               </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* ─── DEMOGRAPHICS TAB ─── */}
-      {activeTab === 'demographics' && (
-        <div className="space-y-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <StatCard label="Male Candidates" value="15,600" sub="63.5%" icon={<Users className="w-5 h-5" />} accent={BLUE} />
-            <StatCard label="Female Candidates" value="8,432" sub="34.3%" icon={<Heart className="w-5 h-5" />} accent="#EC4899" />
-            <StatCard label="Rural Background" value="13,578" sub="55.3%" icon={<MapPin className="w-5 h-5" />} accent={SUCCESS} />
-            <StatCard label="Urban Background" value="10,990" sub="44.7%" icon={<Building className="w-5 h-5" />} accent={PURPLE} />
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
-              <h3 className="text-lg font-bold text-white mb-1">Age Distribution</h3>
-              <p className="text-sm mb-4" style={{ color: TEXT2 }}>Candidate breakdown by age group</p>
-              <ResponsiveContainer width="100%" height={260}>
-                <BarChart data={AGE_DATA}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
-                  <XAxis dataKey="age" tick={{ fill: TEXT2, fontSize: 12 }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fill: TEXT2, fontSize: 12 }} axisLine={false} tickLine={false} />
-                  <Tooltip contentStyle={{ background: CARD2, border: `1px solid ${BORDER}`, borderRadius: 12, color: TEXT }} />
-                  <Bar dataKey="count" name="Candidates" fill={ACCENT} radius={[6, 6, 0, 0]}>
-                    {AGE_DATA.map((_, i) => (
-                      <Cell key={i} fill={[ACCENT, BLUE, PURPLE][i]} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-
-            <div className="rounded-2xl p-6" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
-              <h3 className="text-lg font-bold text-white mb-1">State-wise Origin (Top 8)</h3>
-              <p className="text-sm mb-4" style={{ color: TEXT2 }}>Indian states contributing most candidates</p>
-              <div className="space-y-3">
+              <div className="space-y-1.5">
                 {[
-                  { state: 'Kerala', count: 6840, pct: 27 },
-                  { state: 'Maharashtra', count: 4912, pct: 20 },
-                  { state: 'Tamil Nadu', count: 3685, pct: 15 },
-                  { state: 'Punjab', count: 2948, pct: 12 },
-                  { state: 'Gujarat', count: 2211, pct: 9 },
-                  { state: 'Karnataka', count: 1965, pct: 8 },
-                  { state: 'Uttar Pradesh', count: 1228, pct: 5 },
-                  { state: 'West Bengal', count: 779, pct: 3 },
-                ].map((row, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <div className="w-20 text-right text-xs" style={{ color: TEXT2 }}>{row.state}</div>
-                    <div className="flex-1 h-2 rounded-full" style={{ background: 'rgba(255,255,255,0.08)' }}>
-                      <div className="h-2 rounded-full" style={{ width: `${row.pct * 3}%`, background: [ACCENT, BLUE, SUCCESS, PURPLE, '#06B6D4', '#F59E0B', '#EC4899', '#10B981'][i] }} />
-                    </div>
-                    <div className="text-xs font-medium text-white w-14 text-right">{row.count.toLocaleString()}</div>
+                  'Use Cloudflare R2 over AWS S3 (no egress cost)',
+                  'Groq is 10–20× cheaper than OpenAI GPT-4',
+                  'Railway + Neon beats AWS for &lt;10K users',
+                  'Supabase PgBouncer eliminates connection limits',
+                  '1-yr reserved instances save 30–40% on AWS',
+                ].map((n, i) => (
+                  <div key={i} className="flex items-center gap-2 text-xs" style={{ color: TEXT2 }}>
+                    <CheckCircle2 className="w-3 h-3 flex-shrink-0" style={{ color: SUCCESS }} />
+                    <span dangerouslySetInnerHTML={{ __html: n }} />
                   </div>
                 ))}
               </div>
@@ -568,8 +839,4 @@ export function GovernmentDashboard() {
       )}
     </div>
   );
-}
-
-function CheckCircle({ className }: { className?: string }) {
-  return <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>;
 }

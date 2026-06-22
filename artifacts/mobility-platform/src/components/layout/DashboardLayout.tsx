@@ -8,6 +8,7 @@ import {
   Sparkles, Network
 } from 'lucide-react';
 import { AIChatPopup } from '@/components/AIChatPopup';
+import { MentorPopup } from '@/components/MentorPopup';
 
 const ACCENT = '#A855F7';
 const ACCENT2 = '#C084FC';
@@ -165,6 +166,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
       </main>
 
       <AIChatPopup />
+      <MentorPopup />
     </div>
   );
 }

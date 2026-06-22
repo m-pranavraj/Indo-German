@@ -20,18 +20,18 @@ const BORDER = 'rgba(168,85,247,0.2)';
 const SUCCESS = '#00C853';
 
 const roles = [
-  { id: 'candidate',    title: 'Candidate',    icon: <User className="w-3.5 h-3.5" /> },
-  { id: 'employer',     title: 'Employer',     icon: <Briefcase className="w-3.5 h-3.5" /> },
-  { id: 'trainer',      title: 'Trainer',      icon: <GraduationCap className="w-3.5 h-3.5" /> },
-  { id: 'facilitator',  title: 'Facilitator',  icon: <Map className="w-3.5 h-3.5" /> },
-  { id: 'government',   title: 'Government',   icon: <Building className="w-3.5 h-3.5" /> },
-  { id: 'admin',        title: 'Admin',        icon: <ShieldCheck className="w-3.5 h-3.5" /> },
+  { id: 'candidate',   title: 'Candidate',   emoji: '👷', desc: 'Skilled worker seeking German employment', stat: '24,318 active', color: '#A855F7' },
+  { id: 'employer',    title: 'Employer',    emoji: '🏢', desc: 'German company hiring Indian talent',        stat: '523 onboarded', color: '#818CF8' },
+  { id: 'trainer',     title: 'Trainer',     emoji: '📚', desc: 'Language & vocational skills institute',    stat: '47 institutes', color: '#34D399' },
+  { id: 'facilitator', title: 'Facilitator', emoji: '🗺️', desc: 'Migration & visa support agency',          stat: '38 agencies',   color: '#C084FC' },
+  { id: 'government',  title: 'Government',  emoji: '🏛️', desc: 'Ministry of Skill Development portal',    stat: 'MSDE official',  color: '#F59E0B' },
+  { id: 'admin',       title: 'Admin',       emoji: '🛡️', desc: 'Platform administration & system access', stat: 'System access',  color: '#EF4444' },
 ];
 
 const demoCreds = [
-  { role: 'candidate', label: 'Arjun Sharma',       sub: 'Automotive Mechanic · Employer Matching', email: 'arjun.sharma@gmail.com',     password: 'Demo@1234', badge: '78% Ready',      color: ACCENT },
-  { role: 'candidate', label: 'Priya Nair',          sub: 'Nurse · Visa Readiness — Offer received!',  email: 'priya.nair@gmail.com',        password: 'Demo@1234', badge: '91% Ready',      color: SUCCESS },
-  { role: 'candidate', label: 'Ravi Kumar',          sub: 'Electrician · Language Training (B1)',       email: 'ravi.kumar@gmail.com',        password: 'Demo@1234', badge: '52% Ready',      color: ACCENT2 },
+  { role: 'candidate', label: 'Arjun Sharma',       sub: 'Automotive Mechanic · Employer Matching', email: 'arjun.sharma@gmail.com',     password: 'Demo@1234', badge: '78/100',         color: ACCENT },
+  { role: 'candidate', label: 'Priya Nair',          sub: 'Nurse · Visa Readiness — Offer received!',  email: 'priya.nair@gmail.com',        password: 'Demo@1234', badge: '91/100',         color: SUCCESS },
+  { role: 'candidate', label: 'Ravi Kumar',          sub: 'Electrician · Language Training (B1)',       email: 'ravi.kumar@gmail.com',        password: 'Demo@1234', badge: '52/100',         color: ACCENT2 },
   { role: 'fresh',     label: 'New to Germany?',     sub: 'AI asks your details, builds your German resume & roadmap', email: '', password: '', badge: '🤖 AI Onboarding', color: '#E879F9' },
   { role: 'employer',  label: 'Robert Bosch GmbH',   sub: 'Automotive · Stuttgart',                     email: 'hr@bosch-germany.de',         password: 'Demo@1234', badge: 'Employer',       color: '#818CF8' },
   { role: 'employer',  label: 'BerlinCare Pflege',   sub: 'Healthcare · Berlin',                        email: 'jobs@carehome-berlin.de',     password: 'Demo@1234', badge: 'Employer',       color: '#818CF8' },
@@ -191,20 +191,43 @@ export function LandingPage() {
             <p className="text-sm" style={{ color: TEXT2 }}>Select a role and use a quick demo login, or enter credentials.</p>
           </div>
 
-          {/* Role selector */}
-          <div className="flex flex-wrap gap-2 mb-6">
-            {roles.map(r => (
-              <button key={r.id} onClick={() => setSelectedRole(r.id)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
-                style={{
-                  background: selectedRole === r.id ? 'rgba(168,85,247,0.2)' : 'rgba(255,255,255,0.04)',
-                  border: `1px solid ${selectedRole === r.id ? ACCENT : 'rgba(255,255,255,0.08)'}`,
-                  color: selectedRole === r.id ? ACCENT : TEXT2,
-                  boxShadow: selectedRole === r.id ? '0 0 12px rgba(168,85,247,0.2)' : 'none',
-                }}>
-                {r.icon}{r.title}
-              </button>
-            ))}
+          {/* Role selector — world-class stakeholder cards */}
+          <div className="mb-5">
+            <div className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: TEXT2 }}>
+              Choose your stakeholder role
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              {roles.map(r => {
+                const isActive = selectedRole === r.id;
+                return (
+                  <button key={r.id} onClick={() => setSelectedRole(r.id)}
+                    className="relative flex flex-col items-start gap-1 p-3 rounded-2xl text-left transition-all duration-200 hover:scale-[1.03] active:scale-[0.98] overflow-hidden group"
+                    style={{
+                      background: isActive ? `${r.color}18` : 'rgba(255,255,255,0.03)',
+                      border: `1.5px solid ${isActive ? r.color : 'rgba(255,255,255,0.07)'}`,
+                      boxShadow: isActive ? `0 0 16px ${r.color}30, inset 0 0 16px ${r.color}08` : 'none',
+                    }}>
+                    {/* Glow blob when active */}
+                    {isActive && (
+                      <div className="absolute -top-4 -right-4 w-16 h-16 rounded-full opacity-20 blur-xl pointer-events-none"
+                        style={{ background: r.color }} />
+                    )}
+                    <span className="text-xl leading-none">{r.emoji}</span>
+                    <span className="text-xs font-black tracking-wide leading-tight"
+                      style={{ color: isActive ? r.color : '#fff' }}>
+                      {r.title.toUpperCase()}
+                    </span>
+                    <span className="text-[9px] leading-tight hidden sm:block" style={{ color: isActive ? `${r.color}cc` : 'rgba(196,181,253,0.5)' }}>
+                      {r.stat}
+                    </span>
+                    {isActive && (
+                      <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full animate-pulse"
+                        style={{ background: r.color }} />
+                    )}
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Demo logins */}
