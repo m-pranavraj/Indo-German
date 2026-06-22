@@ -55,8 +55,9 @@ const roleNavMap: Record<string, { label: string, href: string, icon: React.Reac
     { label: 'Welfare',     href: '/facilitator/welfare',     icon: <LifeBuoy className="h-4 w-4" /> },
   ],
   government: [
-    { label: 'Dashboard', href: '/government/dashboard', icon: <LayoutDashboard className="h-4 w-4" /> },
-    { label: 'Pipeline',  href: '/government/pipeline',  icon: <Route className="h-4 w-4" /> },
+    { label: 'Dashboard',    href: '/government/dashboard', icon: <LayoutDashboard className="h-4 w-4" /> },
+    { label: 'Pipeline',     href: '/government/pipeline',  icon: <Route className="h-4 w-4" /> },
+    { label: 'Districts Map', href: '/government/districts', icon: <MapPin className="h-4 w-4" /> },
   ],
   admin: [
     { label: 'Dashboard',  href: '/admin/dashboard',  icon: <LayoutDashboard className="h-4 w-4" /> },

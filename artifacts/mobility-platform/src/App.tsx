@@ -49,6 +49,7 @@ import { FacilitatorWelfare } from "@/pages/facilitator/FacilitatorWelfare";
 // Government Pages
 import { GovernmentDashboard } from "@/pages/government/GovernmentDashboard";
 import { GovernmentPipeline } from "@/pages/government/GovernmentPipeline";
+import { MaharashtraMap } from "@/pages/government/MaharashtraMap";
 
 // Admin Pages
 import { AdminDashboard } from "@/pages/admin/AdminDashboard";
@@ -127,6 +128,7 @@ function Router() {
       {/* Government Routes */}
       <Route path="/government/dashboard">{() => <ProtectedRoute component={GovernmentDashboard} allowedRoles={["government"]} />}</Route>
       <Route path="/government/pipeline">{() => <ProtectedRoute component={GovernmentPipeline} allowedRoles={["government"]} />}</Route>
+      <Route path="/government/districts">{() => <ProtectedRoute component={MaharashtraMap} allowedRoles={["government"]} />}</Route>
 
       {/* Admin Routes */}
       <Route path="/admin/dashboard">{() => <ProtectedRoute component={AdminDashboard} allowedRoles={["admin"]} />}</Route>

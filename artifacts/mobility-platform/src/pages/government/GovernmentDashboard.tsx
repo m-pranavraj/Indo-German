@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import {
   AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, PieChart, Pie, Cell, Legend, RadialBarChart, RadialBar
+  ResponsiveContainer, PieChart, Pie, Cell, Legend
 } from 'recharts';
 import {
-  Users, Globe, Building, TrendingUp, IndianRupee, Euro, ShieldCheck,
-  MapPin, Briefcase, GraduationCap, Activity, Heart, Award, Clock,
-  CheckCircle2, ArrowUpRight, ArrowDownRight, Plane, Star, Zap,
-  Database, Server, Cpu, Cloud, BarChart2, AlertCircle
+  Users, Globe, Building, IndianRupee, ShieldCheck,
+  MapPin, Briefcase, GraduationCap, Activity, Award, Clock,
+  CheckCircle2, ArrowUpRight, ArrowDownRight, Plane, Star
 } from 'lucide-react';
 
 const BG = '#0F0520';
@@ -99,88 +98,7 @@ const DISTRICTS = [
   { name: 'Nanded',        candidates:  243, placed:  48, rate: 68, lang: 'A1', sector: 'Caregivers' },
 ];
 
-/* ─── Infrastructure Cost Data ─── */
-const INFRA_ROWS = [
-  {
-    category: 'Database',
-    icon: <Database className="w-4 h-4" />,
-    color: ACCENT,
-    k1:  { provider: 'Supabase Pro',          usd: 25,    inr: 2_083,   note: '8GB RAM, 2-vCPU' },
-    k10: { provider: 'Supabase Pro + Scale',  usd: 200,   inr: 16_680,  note: '16GB RAM + read replica' },
-    l1:  { provider: 'AWS RDS Aurora (r6g.xlarge)', usd: 750, inr: 62_550, note: 'Multi-AZ, auto-scale' },
-  },
-  {
-    category: 'App Server / Compute',
-    icon: <Server className="w-4 h-4" />,
-    color: BLUE,
-    k1:  { provider: 'Railway Starter',        usd: 20,   inr: 1_670,   note: '512MB RAM, shared CPU' },
-    k10: { provider: 'Railway Pro (2×)',        usd: 60,   inr: 5_004,   note: '2 instances, 2GB each' },
-    l1:  { provider: 'AWS ECS Fargate (3×t3.large)', usd: 310, inr: 25_882, note: 'Auto-scaling cluster' },
-  },
-  {
-    category: 'AI / LLM API',
-    icon: <Cpu className="w-4 h-4" />,
-    color: PURPLE,
-    k1:  { provider: 'Groq Dev Tier',          usd: 5,    inr: 417,     note: '~50K tokens/day free' },
-    k10: { provider: 'Groq Production',        usd: 48,   inr: 4_008,   note: '~5M tokens/mo at $0.27/M' },
-    l1:  { provider: 'Groq + OpenAI fallback', usd: 340,  inr: 28_390,  note: '~50M tokens/mo blended' },
-  },
-  {
-    category: 'File Storage (docs/photos)',
-    icon: <Cloud className="w-4 h-4" />,
-    color: CYAN,
-    k1:  { provider: 'Cloudflare R2 (5 GB)',   usd: 2,    inr: 167,     note: 'No egress fees' },
-    k10: { provider: 'Cloudflare R2 (50 GB)',  usd: 8,    inr: 668,     note: 'Still no egress' },
-    l1:  { provider: 'AWS S3 (500 GB)',         usd: 12,   inr: 1_002,   note: 'Egress ~$0.09/GB' },
-  },
-  {
-    category: 'CDN / Edge Network',
-    icon: <Globe className="w-4 h-4" />,
-    color: SUCCESS,
-    k1:  { provider: 'Cloudflare Free',        usd: 0,    inr: 0,       note: 'Unlimited bandwidth' },
-    k10: { provider: 'Cloudflare Pro',         usd: 20,   inr: 1_670,   note: 'Advanced WAF + analytics' },
-    l1:  { provider: 'Cloudflare Business',    usd: 200,  inr: 16_700,  note: 'Custom rules, SLA 100%' },
-  },
-  {
-    category: 'Email (Transactional)',
-    icon: <Zap className="w-4 h-4" />,
-    color: ORANGE,
-    k1:  { provider: 'Resend Free',             usd: 0,   inr: 0,       note: '3,000 emails/mo free' },
-    k10: { provider: 'Resend Pro',              usd: 20,  inr: 1_670,   note: '50K emails/mo' },
-    l1:  { provider: 'AWS SES',                 usd: 40,  inr: 3_340,   note: '$0.10/1K emails, 400K/mo' },
-  },
-  {
-    category: 'Cache / Redis',
-    icon: <BarChart2 className="w-4 h-4" />,
-    color: '#F43F5E',
-    k1:  { provider: 'Upstash Free',            usd: 0,   inr: 0,       note: '10K commands/day free' },
-    k10: { provider: 'Upstash Pay-as-you-go',   usd: 30,  inr: 2_505,   note: '~3M cmd/mo at $0.2/100K' },
-    l1:  { provider: 'AWS ElastiCache (r6g.large)', usd: 148, inr: 12_358, note: 'Dedicated Redis cluster' },
-  },
-  {
-    category: 'Monitoring & Logs',
-    icon: <Activity className="w-4 h-4" />,
-    color: '#34D399',
-    k1:  { provider: 'Built-in (Pino logs)',     usd: 0,  inr: 0,        note: 'Basic stdout logging' },
-    k10: { provider: 'Sentry + Axiom Free',      usd: 0,  inr: 0,        note: 'Error tracking + logs' },
-    l1:  { provider: 'Datadog Pro',              usd: 200, inr: 16_700,  note: 'APM + infra monitoring' },
-  },
-];
-
-const INR_TOTALS = {
-  k1:  INFRA_ROWS.reduce((s, r) => s + r.k1.inr, 0),
-  k10: INFRA_ROWS.reduce((s, r) => s + r.k10.inr, 0),
-  l1:  INFRA_ROWS.reduce((s, r) => s + r.l1.inr, 0),
-};
-
-const USD_TOTALS = {
-  k1:  INFRA_ROWS.reduce((s, r) => s + r.k1.usd, 0),
-  k10: INFRA_ROWS.reduce((s, r) => s + r.k10.usd, 0),
-  l1:  INFRA_ROWS.reduce((s, r) => s + r.l1.usd, 0),
-};
-
 /* ─────────── HELPERS ─────────── */
-function fmt(n: number) { return n >= 1_00_000 ? `₹${(n/1_00_000).toFixed(1)}L` : n >= 1_000 ? `₹${(n/1_000).toFixed(1)}K` : `₹${n}`; }
 
 function KpiCard({ label, value, sub, icon, color, trend }: {
   label: string; value: string; sub: string; icon: React.ReactNode; color: string; trend?: 'up' | 'down' | null;
@@ -240,7 +158,6 @@ export function GovernmentDashboard() {
     { id: 'visa',       label: 'Visa',       icon: '🛂' },
     { id: 'skills',     label: 'Skills',     icon: '📚' },
     { id: 'financial',  label: 'Financial',  icon: '💰' },
-    { id: 'infra',      label: 'Infra Cost', icon: '🖥️' },
   ];
 
   const sortedDistricts = [...DISTRICTS].sort((a, b) => b[sortDistrict] - a[sortDistrict]);
@@ -705,138 +622,6 @@ export function GovernmentDashboard() {
         </div>
       )}
 
-      {/* ─── INFRA COST ─── */}
-      {tab === 'infra' && (
-        <div className="space-y-6">
-          {/* Header card */}
-          <div className="rounded-2xl p-6" style={{ background: 'linear-gradient(135deg, #130828, #1A0B3B)', border: `1px solid ${BLUE}30` }}>
-            <div className="flex items-start gap-3 mb-4">
-              <div className="p-2.5 rounded-xl" style={{ background: `${BLUE}20` }}>
-                <Server className="w-5 h-5" style={{ color: BLUE }} />
-              </div>
-              <div>
-                <div className="font-black text-white text-lg">Infrastructure Cost Estimation — INR</div>
-                <div className="text-xs mt-0.5" style={{ color: TEXT2 }}>Realistic monthly costs for 3 scale tiers. Rate: 1 USD = ₹83.5 · Sources: Supabase, AWS, Railway, Cloudflare, Groq pricing pages (Jun 2025)</div>
-              </div>
-            </div>
-            <div className="grid grid-cols-3 gap-4">
-              {[
-                { tier: '1K Users', conc: '~50–100 concurrent', total: USD_TOTALS.k1, totalInr: INR_TOTALS.k1, color: SUCCESS },
-                { tier: '10K Users', conc: '~500–1,000 concurrent', total: USD_TOTALS.k10, totalInr: INR_TOTALS.k10, color: ACCENT },
-                { tier: '1 Lakh Users', conc: '~5,000–10,000 concurrent', total: USD_TOTALS.l1, totalInr: INR_TOTALS.l1, color: ORANGE },
-              ].map((t, i) => (
-                <div key={i} className="rounded-xl p-4" style={{ background: CARD2, border: `1px solid ${t.color}25` }}>
-                  <div className="text-xs mb-1" style={{ color: TEXT2 }}>{t.conc}</div>
-                  <div className="font-black text-white text-lg">{t.tier}</div>
-                  <div className="text-2xl font-black mt-2" style={{ color: t.color }}>{fmt(t.totalInr)}/mo</div>
-                  <div className="text-xs mt-0.5" style={{ color: TEXT2 }}>(~${t.total}/mo)</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Detailed table */}
-          <div className="rounded-2xl overflow-hidden" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
-            <div className="p-5 border-b" style={{ borderColor: BORDER }}>
-              <div className="font-bold text-white">Detailed Breakdown — Per Service</div>
-              <div className="text-xs mt-0.5" style={{ color: TEXT2 }}>All prices are monthly estimates. Free tiers used where available. Assumes Indian rupee conversion at ₹83.5/USD.</div>
-            </div>
-
-            {/* Table header */}
-            <div className="grid grid-cols-12 gap-0 text-[11px] font-bold uppercase tracking-wide px-5 py-3 border-b"
-              style={{ borderColor: BORDER, color: TEXT2, background: CARD2 }}>
-              <div className="col-span-3">Service / Provider</div>
-              <div className="col-span-3 text-center">1K Users</div>
-              <div className="col-span-3 text-center">10K Users</div>
-              <div className="col-span-3 text-center">1 Lakh Users</div>
-            </div>
-
-            {INFRA_ROWS.map((row, i) => (
-              <div key={i} className="grid grid-cols-12 gap-0 px-5 py-4 border-b transition-colors hover:bg-[rgba(168,85,247,0.04)]"
-                style={{ borderColor: 'rgba(255,255,255,0.04)' }}>
-                <div className="col-span-3 flex items-center gap-2">
-                  <div className="p-1.5 rounded-lg" style={{ background: `${row.color}18`, color: row.color }}>
-                    {row.icon}
-                  </div>
-                  <span className="text-sm font-semibold text-white">{row.category}</span>
-                </div>
-                {([row.k1, row.k10, row.l1] as const).map((cell, j) => (
-                  <div key={j} className="col-span-3 flex flex-col items-center justify-center text-center px-2">
-                    <div className="text-xs" style={{ color: TEXT2 }}>{cell.provider}</div>
-                    <div className="text-base font-black mt-1"
-                      style={{ color: cell.inr === 0 ? SUCCESS : [row.color][0] }}>
-                      {cell.inr === 0 ? 'Free' : fmt(cell.inr)}
-                    </div>
-                    {cell.inr > 0 && <div className="text-[10px]" style={{ color: TEXT2 }}>(${cell.usd}/mo)</div>}
-                    <div className="text-[10px] mt-0.5 italic" style={{ color: 'rgba(196,181,253,0.5)' }}>{cell.note}</div>
-                  </div>
-                ))}
-              </div>
-            ))}
-
-            {/* Total row */}
-            <div className="grid grid-cols-12 gap-0 px-5 py-5"
-              style={{ background: 'rgba(168,85,247,0.08)', borderTop: `1px solid ${ACCENT}30` }}>
-              <div className="col-span-3 flex items-center">
-                <span className="font-black text-white text-sm">TOTAL MONTHLY COST</span>
-              </div>
-              {[
-                { inr: INR_TOTALS.k1,  usd: USD_TOTALS.k1,  color: SUCCESS },
-                { inr: INR_TOTALS.k10, usd: USD_TOTALS.k10, color: ACCENT },
-                { inr: INR_TOTALS.l1,  usd: USD_TOTALS.l1,  color: ORANGE },
-              ].map((t, i) => (
-                <div key={i} className="col-span-3 text-center">
-                  <div className="text-xl font-black" style={{ color: t.color }}>{fmt(t.inr)}</div>
-                  <div className="text-xs" style={{ color: TEXT2 }}>~${t.usd}/mo</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Notes */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="rounded-2xl p-5" style={{ background: CARD, border: `1px solid ${ORANGE}20` }}>
-              <div className="flex items-center gap-2 mb-3">
-                <AlertCircle className="w-4 h-4" style={{ color: ORANGE }} />
-                <div className="font-bold text-white text-sm">Not Included in Estimate</div>
-              </div>
-              <div className="space-y-1.5">
-                {[
-                  'Domain registration & SSL (~₹1,500/yr)',
-                  'Human support / ops salaries',
-                  'Security audits & compliance (GDPR)',
-                  'Backup & disaster recovery overhead',
-                  'Load testing & staging environment',
-                ].map((n, i) => (
-                  <div key={i} className="flex items-center gap-2 text-xs" style={{ color: TEXT2 }}>
-                    <span style={{ color: ORANGE }}>•</span> {n}
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="rounded-2xl p-5" style={{ background: CARD, border: `1px solid ${SUCCESS}20` }}>
-              <div className="flex items-center gap-2 mb-3">
-                <CheckCircle2 className="w-4 h-4" style={{ color: SUCCESS }} />
-                <div className="font-bold text-white text-sm">Cost-Saving Recommendations</div>
-              </div>
-              <div className="space-y-1.5">
-                {[
-                  'Use Cloudflare R2 over AWS S3 (no egress cost)',
-                  'Groq is 10–20× cheaper than OpenAI GPT-4',
-                  'Railway + Neon beats AWS for &lt;10K users',
-                  'Supabase PgBouncer eliminates connection limits',
-                  '1-yr reserved instances save 30–40% on AWS',
-                ].map((n, i) => (
-                  <div key={i} className="flex items-center gap-2 text-xs" style={{ color: TEXT2 }}>
-                    <CheckCircle2 className="w-3 h-3 flex-shrink-0" style={{ color: SUCCESS }} />
-                    <span dangerouslySetInnerHTML={{ __html: n }} />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
