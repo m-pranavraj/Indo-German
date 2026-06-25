@@ -23,6 +23,10 @@ import { CandidateRoadmap } from "@/pages/candidate/CandidateRoadmap";
 import { CandidateResume } from "@/pages/candidate/CandidateResume";
 import { CandidateCertifications } from "@/pages/candidate/CandidateCertifications";
 import { CandidateNetwork } from "@/pages/candidate/CandidateNetwork";
+import { GermanLanguage } from "@/pages/candidate/GermanLanguage";
+import { CultureOrientation } from "@/pages/candidate/CultureOrientation";
+import { InformationHub } from "@/pages/candidate/InformationHub";
+import { SectorJobMap } from "@/pages/candidate/SectorJobMap";
 
 // Employer Pages
 import { EmployerDashboard } from "@/pages/employer/EmployerDashboard";
@@ -102,6 +106,10 @@ function Router() {
       <Route path="/candidate/network">{() => <ProtectedRoute component={CandidateNetwork} allowedRoles={["candidate"]} />}</Route>
       <Route path="/candidate/welfare">{() => <ProtectedRoute component={CandidateWelfare} allowedRoles={["candidate"]} />}</Route>
       <Route path="/candidate/profile">{() => <ProtectedRoute component={CandidateProfile} allowedRoles={["candidate"]} />}</Route>
+      <Route path="/candidate/language">{() => <ProtectedRoute component={GermanLanguage} allowedRoles={["candidate"]} />}</Route>
+      <Route path="/candidate/culture">{() => <ProtectedRoute component={CultureOrientation} allowedRoles={["candidate"]} />}</Route>
+      <Route path="/candidate/info-hub">{() => <ProtectedRoute component={InformationHub} allowedRoles={["candidate"]} />}</Route>
+      <Route path="/candidate/sectors">{() => <ProtectedRoute component={SectorJobMap} allowedRoles={["candidate"]} />}</Route>
 
       {/* Employer Routes */}
       <Route path="/employer/dashboard">{() => <ProtectedRoute component={EmployerDashboard} allowedRoles={["employer"]} />}</Route>

@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
   LogOut, LayoutDashboard, Route, CheckCircle, FileText, BookOpen,
   Briefcase, Award, LifeBuoy, Users, Building, ShieldCheck, MapPin,
-  Sparkles, Network
+  Sparkles, Network, Globe, Landmark, Info, BarChart3
 } from 'lucide-react';
 import { AIChatPopup } from '@/components/AIChatPopup';
 import { MentorPopup } from '@/components/MentorPopup';
@@ -29,7 +29,11 @@ const roleNavMap: Record<string, { label: string, href: string, icon: React.Reac
     { label: 'Training',       href: '/candidate/training',      icon: <BookOpen className="h-4 w-4" /> },
     { label: 'Recognition',    href: '/candidate/recognition',   icon: <Award className="h-4 w-4" /> },
     { label: 'Job Market',     href: '/candidate/applications',  icon: <Briefcase className="h-4 w-4" /> },
+    { label: 'Sectors',        href: '/candidate/sectors',       icon: <BarChart3 className="h-4 w-4" /> },
     { label: 'Visa',           href: '/candidate/visa',          icon: <MapPin className="h-4 w-4" /> },
+    { label: 'German Language',href: '/candidate/language',      icon: <Globe className="h-4 w-4" /> },
+    { label: 'Culture',        href: '/candidate/culture',       icon: <Landmark className="h-4 w-4" /> },
+    { label: 'Info Hub',       href: '/candidate/info-hub',      icon: <Info className="h-4 w-4" /> },
     { label: 'Network',        href: '/candidate/network',       icon: <Network className="h-4 w-4" /> },
     { label: 'Welfare',        href: '/candidate/welfare',       icon: <LifeBuoy className="h-4 w-4" /> },
   ],
