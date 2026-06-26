@@ -15,14 +15,16 @@ const TEXT2 = '#C4B5FD';
 type Gender = 'male' | 'female' | 'other';
 
 const QUESTIONS = [
-  { id: 'name', question: "नमस्ते! 🇮🇳 I'm your Indo German AI guide.\n\nWhat's your full name?", placeholder: 'e.g. Rahul Sharma', autoFill: 'Rahul Sharma', type: 'text', readinessContrib: 5 },
-  { id: 'age', question: "Great to meet you, {name}! 😊\n\nHow old are you?", placeholder: 'e.g. 26', autoFill: '26', type: 'number', readinessContrib: 5 },
-  { id: 'gender', question: "What's your gender?", placeholder: '', autoFill: 'male', type: 'select', options: ['male', 'female', 'other'], readinessContrib: 5 },
-  { id: 'education', question: "What's your highest educational qualification?", placeholder: 'e.g. Diploma in Mechanical Engineering', autoFill: 'Diploma in Automotive Engineering (3 years)', type: 'text', readinessContrib: 15 },
-  { id: 'occupation', question: "What trade or occupation do you work in?", placeholder: 'e.g. Automotive Mechanic, Nurse, Electrician…', autoFill: 'Automotive Mechanic (Kfz-Mechatroniker)', type: 'text', readinessContrib: 20 },
-  { id: 'experience', question: "How many years of work experience do you have in this field?", placeholder: 'e.g. 4', autoFill: '4', type: 'number', readinessContrib: 15 },
-  { id: 'germanLevel', question: "What's your current German language level? 🇩🇪", placeholder: '', autoFill: 'A2', type: 'select', options: ['None / A0', 'A1 (Beginner)', 'A2 (Basic)', 'B1 (Intermediate)', 'B2 (Upper-Intermediate)', 'C1 (Advanced)'], readinessContrib: 20 },
-  { id: 'hasPassport', question: "Do you have a valid Indian passport? 🛂", placeholder: '', autoFill: 'yes', type: 'select', options: ['yes', 'no', 'Applied — awaiting'], readinessContrib: 15 },
+  { id: 'name', question: "नमस्ते! 🇮🇳 I'm your Indo German AI guide.\n\nMay I know your full name?", placeholder: 'e.g. Rahul Sharma', autoFill: 'Rahul Sharma', type: 'text', readinessContrib: 3 },
+  { id: 'age', question: "Great to meet you, {name}! 😊\n\nHow old are you?", placeholder: 'e.g. 26', autoFill: '26', type: 'number', readinessContrib: 3 },
+  { id: 'education', question: "What is your highest educational qualification?\n\n(e.g. ITI Certificate, Diploma, B.Tech, B.Sc Nursing…)", placeholder: 'e.g. Diploma in Mechanical Engineering', autoFill: 'Diploma in Automotive Engineering (3 years)', type: 'text', readinessContrib: 10 },
+  { id: 'occupation', question: "What trade or profession do you currently work in, {name}?", placeholder: 'e.g. Automotive Mechanic, Nurse, Electrician…', autoFill: 'Automotive Mechanic (Kfz-Mechatroniker)', type: 'text', readinessContrib: 10 },
+  { id: 'experience', question: "How many years of experience do you have in {occupation}?", placeholder: 'e.g. 4', autoFill: '4', type: 'number', readinessContrib: 10 },
+  { id: 'city', question: "Which city or district in India are you currently based in?", placeholder: 'e.g. Pune, Nashik, Nagpur…', autoFill: 'Pune', type: 'text', readinessContrib: 4 },
+  { id: 'germanLevel', question: "What is your current German language level? 🇩🇪\n\n(Even A0 / None is totally fine — we have training programs!)", placeholder: '', autoFill: 'A2 (Basic)', type: 'select', options: ['None / A0 — Just starting', 'A1 (Beginner)', 'A2 (Basic)', 'B1 (Intermediate)', 'B2 (Upper-Intermediate)', 'C1 (Advanced)'], readinessContrib: 15 },
+  { id: 'hasPassport', question: "Do you hold a valid Indian passport? 🛂", placeholder: '', autoFill: 'Yes, valid passport', type: 'select', options: ['Yes, valid passport', 'No — need to apply', 'Applied — awaiting'], readinessContrib: 10 },
+  { id: 'sector', question: "Which sector interests you most for working in Germany? 🇩🇪", placeholder: '', autoFill: 'Automotive / Engineering', type: 'select', options: ['Automotive / Engineering', 'Healthcare / Nursing', 'Construction / Civil', 'Hospitality / Tourism', 'IT / Technology', 'Agriculture / Food', 'Logistics / Transport'], readinessContrib: 5 },
+  { id: 'motivation', question: "Finally, {name} — what motivates you most to work in Germany? ✨\n\nTell us in your own words.", placeholder: 'e.g. Better career growth, higher income, global experience…', autoFill: 'I want better career opportunities and a higher standard of living for my family.', type: 'text', readinessContrib: 5 },
 ];
 
 // ── Flight Countdown Banner ──
@@ -247,7 +249,9 @@ export function AIOnboarding() {
   const inputRef = useRef<HTMLInputElement | HTMLSelectElement>(null);
 
   const q = QUESTIONS[currentQ];
-  const questionText = q?.question.replace('{name}', answers.name || 'friend');
+  const questionText = q?.question
+    .replace('{name}', answers.name || 'friend')
+    .replace('{occupation}', answers.occupation || 'your field');
   const { displayed: questionDisplayed, done: questionDone } = useTypewriter(step === 'questions' ? (questionText || '') : '', 20);
 
   // Auto-fill animation
@@ -301,12 +305,14 @@ export function AIOnboarding() {
         profile: {
           name: profileAnswers.name || 'Candidate',
           age: profileAnswers.age || '25',
-          gender: profileAnswers.gender || 'male',
           education: profileAnswers.education || 'Diploma',
           occupation: profileAnswers.occupation || 'Skilled Worker',
           experience: profileAnswers.experience || '3',
-          germanLevel: profileAnswers.germanLevel || 'A1',
-          hasPassport: (profileAnswers.hasPassport || '').toLowerCase() === 'yes',
+          city: profileAnswers.city || 'India',
+          germanLevel: profileAnswers.germanLevel || 'None / A0',
+          hasPassport: (profileAnswers.hasPassport || '').toLowerCase().startsWith('yes'),
+          sector: profileAnswers.sector || 'General',
+          motivation: profileAnswers.motivation || '',
           targetRole: profileAnswers.occupation,
         },
       });
@@ -373,13 +379,13 @@ export function AIOnboarding() {
           </h1>
 
           <p className="text-base mb-8 leading-relaxed" style={{ color: TEXT2 }}>
-            Our AI will ask you 8 quick questions about your skills and background — then instantly generate your <strong style={{ color: '#FFFFFF' }}>German Lebenslauf</strong>, calculate your <strong style={{ color: ACCENT }}>readiness score</strong>, and create a personalised <strong style={{ color: SUCCESS }}>migration roadmap</strong>.
+            Our AI will ask you <strong style={{ color: '#FFFFFF' }}>10 conversational questions</strong> about your skills and background — then instantly generate your <strong style={{ color: '#FFFFFF' }}>German Lebenslauf</strong>, calculate your <strong style={{ color: ACCENT }}>readiness score</strong>, and create a personalised <strong style={{ color: SUCCESS }}>migration roadmap</strong>.
           </p>
 
           <div className="grid grid-cols-3 gap-3 mb-8">
             {[
-              { n: '8', l: 'Quick Questions', icon: '❓' },
-              { n: '60s', l: 'To complete', icon: '⏱️' },
+              { n: '10', l: 'Quick Questions', icon: '❓' },
+              { n: '~90s', l: 'To complete', icon: '⏱️' },
               { n: '100%', l: 'Free & Private', icon: '🔒' },
             ].map(s => (
               <div key={s.l} className="rounded-xl p-3" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
@@ -442,16 +448,31 @@ export function AIOnboarding() {
               </div>
             </div>
 
-            {/* Previous answers */}
-            {Object.entries(answers).slice(-2).map(([key, val]) => {
-              const prevQ = QUESTIONS.find(q => q.id === key);
+            {/* Full conversation history */}
+            {Object.entries(answers).map(([key, val], idx) => {
+              const prevQ = QUESTIONS.find(q2 => q2.id === key);
+              const qText = prevQ?.question
+                .replace('{name}', answers.name || 'friend')
+                .replace('{occupation}', answers.occupation || 'your field')
+                .split('\n')[0];
               return (
-                <div key={key} className="flex justify-end">
-                  <div className="rounded-2xl rounded-tr-sm px-4 py-2.5 text-sm max-w-xs"
-                    style={{ background: 'rgba(168,85,247,0.15)', color: ACCENT, border: `1px solid rgba(168,85,247,0.25)` }}>
-                    {val}
+                <React.Fragment key={key}>
+                  <div className="flex gap-3">
+                    <div className="w-9 h-9 rounded-full flex-shrink-0 flex items-center justify-center opacity-60" style={{ background: `${ACCENT}20` }}>
+                      <Bot className="w-4 h-4" style={{ color: ACCENT }} />
+                    </div>
+                    <div className="rounded-2xl rounded-tl-sm px-4 py-2.5 max-w-sm opacity-60"
+                      style={{ background: CARD, border: `1px solid ${BORDER}` }}>
+                      <p className="text-xs text-white whitespace-pre-wrap">{qText}</p>
+                    </div>
                   </div>
-                </div>
+                  <div className="flex justify-end">
+                    <div className="rounded-2xl rounded-tr-sm px-4 py-2.5 text-sm max-w-xs"
+                      style={{ background: 'rgba(168,85,247,0.15)', color: ACCENT, border: `1px solid rgba(168,85,247,0.25)` }}>
+                      {val}
+                    </div>
+                  </div>
+                </React.Fragment>
               );
             })}
 
@@ -554,7 +575,7 @@ export function AIOnboarding() {
             <button onClick={() => setLocation('/')}
               className="px-3 py-1.5 rounded-lg text-xs font-semibold"
               style={{ background: ACCENT, color: '#0F0520' }}>
-              Create Account →
+              Sign In to Platform →
             </button>
           </div>
         </div>
@@ -679,7 +700,7 @@ export function AIOnboarding() {
                 <button onClick={() => setLocation('/')}
                   className="px-8 py-3 rounded-xl font-bold text-base"
                   style={{ background: ACCENT, color: '#0F0520' }}>
-                  Create Free Account →
+                  Sign In to Platform →
                 </button>
               </div>
             </>

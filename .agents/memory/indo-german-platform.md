@@ -25,14 +25,37 @@ description: Full-stack India→Germany skilled migration platform — auth, AI,
 | Government | official@msde.gov.in |
 | Admin | admin@mobicorridor.in |
 
-## Color System (Phase 2 — Premium German Corporate)
-- BG: #07142B (deep navy)
-- CARD: #183256
-- CARD2: #102544
-- ACCENT: #FF9D00 (gold)
+## Color System (current — dark purple premium)
+- BG: #0F0520 (deep navy-purple)
+- CARD: #1A0B3B
+- CARD2: #130828
+- ACCENT: #A855F7 (purple)
 - SUCCESS: #00C853
-- PURPLE: #8B5CF6
-- All pages use this system consistently
+- PURPLE: #C084FC
+- TEXT2: #C4B5FD
+
+## Landing Page Architecture (current)
+- Two-panel: left hero, right login
+- Right panel: 2 cards ONLY — Arjun demo card + "New to Germany?" AI onboarding card
+- Manual email/password login is collapsed behind a toggle (no role-selector grid)
+- Demo login errors shown ABOVE the toggle (always visible)
+- Trust badges at bottom: MSDE Aligned, FOSA Verified, GDPR Compliant
+- Arjun auto-login: POST /api/auth/login with arjun.sharma@gmail.com / Demo@1234
+
+## AIOnboarding — 10 Questions
+Questions: name, age, education, occupation, experience, city, germanLevel, hasPassport, sector, motivation
+- Full conversation history displayed (all previous Q&A pairs, not just last 2)
+- `{name}` AND `{occupation}` placeholders replaced in question text
+- autoFill for hasPassport must match exact select option string: 'Yes, valid passport'
+- Result screen CTA: "Sign In to Platform →" routes to '/'
+- Result screen: FlightCountdownBanner + readiness score + roadmap + German Lebenslauf download
+
+## Government Dashboard
+- Header: "Government of Maharashtra" (NOT "Ministry of Skill Development")
+- Subtitle: "Indo-German Mobility Command Center · Real-time analytics"
+
+## Nav Labels (DashboardLayout.tsx)
+- Candidate sidebar: "Mentor Network" (NOT "Network") for /candidate/network route
 
 ## AI Routes (GROQ llama-3.1-8b-instant)
 - POST /api/ai/onboarding — full AI onboarding, generates readinessScore, roadmap[], estimatedTimeline, germanResume, keyStrengths

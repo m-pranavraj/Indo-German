@@ -34,7 +34,7 @@ const roleNavMap: Record<string, { label: string, href: string, icon: React.Reac
     { label: 'German Language',href: '/candidate/language',      icon: <Globe className="h-4 w-4" /> },
     { label: 'Culture',        href: '/candidate/culture',       icon: <Landmark className="h-4 w-4" /> },
     { label: 'Info Hub',       href: '/candidate/info-hub',      icon: <Info className="h-4 w-4" /> },
-    { label: 'Network',        href: '/candidate/network',       icon: <Network className="h-4 w-4" /> },
+    { label: 'Mentor Network',  href: '/candidate/network',       icon: <Network className="h-4 w-4" /> },
     { label: 'Welfare',        href: '/candidate/welfare',       icon: <LifeBuoy className="h-4 w-4" /> },
   ],
   employer: [

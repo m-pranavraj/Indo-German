@@ -1,0 +1,788 @@
+# Replit Agent Master Prompt – UI/UX, Data, Product & Platform Refactor
+
+You are a **Principal Product Designer (Apple + Stripe level), Senior UX Architect, Data Visualization Expert, and Staff Full-Stack Engineer**.
+
+Your task is **NOT to patch the existing UI**.
+
+Your task is to transform the IndoGerman Mobility Corridor Platform into a **production-ready enterprise SaaS platform** suitable for:
+
+* Government of Maharashtra
+* German Employers
+* Candidates
+* Facilitators
+* Trainers
+* Administrators
+
+The final product should feel comparable to **Stripe Dashboard, Linear, Notion, Vercel, Retool, Palantir, Tableau, ArcGIS Dashboards and modern government digital platforms.**
+
+---
+
+# MOST IMPORTANT REQUIREMENT
+
+**DO NOT LEAVE ANY PAGE HALF COMPLETE.**
+
+Audit the ENTIRE application.
+
+Every page.
+
+Every card.
+
+Every table.
+
+Every modal.
+
+Every dashboard.
+
+Every analytics page.
+
+Every navigation item.
+
+Every detail page.
+
+Every component.
+
+If something exists, redesign it.
+
+Nothing should look unfinished.
+
+---
+
+# CRITICAL DATA REQUIREMENT
+
+## Seeded Data MUST NEVER disappear.
+
+Currently many dashboards initially show seeded mock data and after rendering become empty, show 0, "-", null or blank.
+
+This is unacceptable.
+
+Fix the data architecture.
+
+Ensure:
+
+* seeded data persists
+* no hydration issues
+* no rendering issues
+* no race conditions
+* no state reset
+* no loading replacing data with empty arrays
+* no broken API fallback
+* no undefined values
+
+Mock data should always remain visible unless intentionally changed by the user.
+
+Do NOT overwrite seeded state after page loads.
+
+Every page must render realistic data immediately.
+
+No flickering.
+
+No disappearing cards.
+
+No disappearing charts.
+
+No disappearing tables.
+
+No disappearing metrics.
+
+No disappearing profile information.
+
+Everything should stay visible throughout navigation.
+
+---
+
+# Seed ALL Modules
+
+Every dashboard should contain realistic production-quality data.
+
+Not placeholder data.
+
+Not lorem ipsum.
+
+Not 0.
+
+Not "-".
+
+Not empty.
+
+Examples include:
+
+Candidates
+
+* Applications
+* Interviews
+* Employers matched
+* Resume score
+* Visa status
+* Language level
+* Certificates
+* Documents
+* Timeline
+* Notifications
+* Messages
+
+Employer
+
+* Active jobs
+* Hiring pipeline
+* Applicants
+* Shortlisted
+* Interview scheduled
+* Offer released
+* Visa processing
+* Hiring analytics
+* Department-wise hiring
+* Company locations
+
+Government
+
+* District migration
+* Industry demand
+* German state analytics
+* Visa approvals
+* Employer participation
+* Skill mapping
+* Training centres
+* Profession analytics
+
+Trainer
+
+* Active batches
+* Students
+* Attendance
+* Performance
+* Certification
+* Placement readiness
+
+Facilitator
+
+* Assigned candidates
+* Pending verification
+* Visa documentation
+* Employer matching
+* Follow-ups
+
+Admin
+
+* Overall platform KPIs
+* User growth
+* Employers
+* Candidates
+* Revenue
+* Active sessions
+* Audit logs
+* Notifications
+* Platform health
+
+Everything must look like a live production platform.
+
+---
+
+# Login Page
+
+Current login page is text heavy.
+
+Too cluttered.
+
+Needs premium redesign.
+
+Keep left hero section.
+
+Improve typography.
+
+Improve spacing.
+
+Improve hierarchy.
+
+Reduce unnecessary copy.
+
+Improve statistics cards.
+
+Improve iconography.
+
+Improve animations.
+
+---
+
+Right side:
+
+Remove all demo accounts except:
+
+## Demo Candidate
+
+One realistic candidate.
+
+Everything populated.
+
+Professional card.
+
+---
+
+Second card:
+
+## New to Germany?
+
+Primary CTA.
+
+Beautiful AI assistant onboarding.
+
+Modern conversational UI.
+
+Large attractive illustration.
+
+Animated chat interface.
+
+---
+
+Remove every other login.
+
+No employer login.
+
+No trainer login.
+
+No facilitator login.
+
+No admin login.
+
+Only:
+
+Demo Candidate
+
+AND
+
+New to Germany
+
+---
+
+# AI Onboarding
+
+Convert onboarding into conversational AI.
+
+Not forms.
+
+Not questionnaire.
+
+Feels like ChatGPT.
+
+Natural conversation.
+
+Current questions = 8
+
+Increase to 10.
+
+Include:
+
+• Highest Qualification
+
+• German Language Level
+
+Along with existing questions.
+
+Conversation should adapt naturally.
+
+---
+
+After onboarding
+
+Show:
+
+"You are just months away from working in Germany."
+
+Generate readiness score.
+
+Example:
+
+15/100
+
+based on onboarding answers.
+
+Then
+
+Continue to Dashboard
+
+---
+
+# Fresh Dashboard
+
+This dashboard represents a completely new candidate.
+
+Everything begins from scratch.
+
+Readiness
+
+15/100
+
+Documents
+
+Pending
+
+Certificates
+
+None uploaded
+
+Resume
+
+Not uploaded
+
+Visa
+
+Not started
+
+Applications
+
+0
+
+Interviews
+
+0
+
+Employer matches
+
+0
+
+Language
+
+Beginner
+
+Everything should encourage completion.
+
+THIS is the ONLY place where zero values are allowed.
+
+Nowhere else.
+
+---
+
+# Demo Candidates
+
+Keep only TWO demo candidates.
+
+Both fully populated.
+
+Rich realistic journey.
+
+No fake data.
+
+No placeholder values.
+
+No empty metrics.
+
+---
+
+# Remove Empty Values
+
+Across entire platform:
+
+Never show:
+
+0
+
+*
+
+Null
+
+Undefined
+
+Empty
+
+Loading forever
+
+Unless it's the Fresh Dashboard.
+
+Populate believable data everywhere.
+
+---
+
+# Home Pages
+
+Every homepage feels cluttered.
+
+Redesign.
+
+Less text.
+
+More whitespace.
+
+Premium cards.
+
+Modern typography.
+
+Professional spacing.
+
+Interactive sections.
+
+Minimalistic.
+
+---
+
+# Resume Upload
+
+Current parser is broken.
+
+Special characters appear.
+
+Fix parsing.
+
+Support proper PDF parsing.
+
+Workflow:
+
+Upload Resume
+
+↓
+
+Parse PDF correctly
+
+↓
+
+Translate to German
+
+↓
+
+Preview translated resume
+
+↓
+
+Download translated PDF
+
+Maintain formatting.
+
+Do NOT dump translated text.
+
+Generate downloadable German PDF.
+
+---
+
+# Candidate Navigation
+
+Rename
+
+Candidate Network
+
+to
+
+Mentor Network
+
+Improve UI completely.
+
+---
+
+# Government Dashboard
+
+Rename:
+
+Ministry of Skill Development
+
+to
+
+Government of Maharashtra
+
+---
+
+Current dashboard is confusing.
+
+Replace number-heavy screens with visual analytics.
+
+---
+
+## Germany Interactive Map
+
+Professional GIS visualization.
+
+Every German federal state clickable.
+
+Display:
+
+Migrants
+
+Industries
+
+Companies
+
+Hiring
+
+Vacancies
+
+Visa success
+
+Average salary
+
+Top professions
+
+Heatmaps
+
+Charts
+
+---
+
+## Maharashtra Interactive Map
+
+District-wise visualization.
+
+Click district.
+
+Display:
+
+Migration
+
+Candidates
+
+Training
+
+Visa
+
+Industry
+
+Language
+
+Employer demand
+
+Charts update dynamically.
+
+---
+
+## Hiring Intelligence Map
+
+Germany map.
+
+Click a state.
+
+Display:
+
+Companies hiring
+
+Roles
+
+Vacancies
+
+Source districts
+
+Hiring trend
+
+Industries
+
+Interactive filters.
+
+---
+
+Replace huge tables with
+
+Maps
+
+Charts
+
+Cards
+
+Filters
+
+Drill-down analytics
+
+Treemaps
+
+Heatmaps
+
+Modern dashboards.
+
+---
+
+# Government UI
+
+Separate clearly:
+
+Migration
+
+Districts
+
+Employers
+
+Training
+
+Reports
+
+Analytics
+
+Policy
+
+Insights
+
+No clutter.
+
+---
+
+# Employer Portal
+
+Current rendering issues.
+
+Fix all rendering.
+
+Seed database correctly.
+
+Populate:
+
+Companies
+
+Jobs
+
+Applicants
+
+Pipeline
+
+Offers
+
+Documents
+
+Hiring
+
+Visa
+
+Everything should work.
+
+---
+
+# Supply vs Demand Analytics
+
+Create premium dashboard.
+
+Germany demand
+
+vs
+
+Available skilled workforce.
+
+Filters:
+
+Profession
+
+Industry
+
+State
+
+District
+
+Language
+
+Visa readiness
+
+Salary
+
+Interactive maps.
+
+---
+
+# Data Visualization
+
+Replace random numbers.
+
+Use:
+
+Heatmaps
+
+Progress rings
+
+Radial charts
+
+Maps
+
+Funnels
+
+Hiring pipeline
+
+Timeline
+
+Completion charts
+
+Skill radar
+
+Readiness gauges
+
+Treemaps
+
+Interactive graphs
+
+Professional BI dashboards.
+
+---
+
+# Visual Language
+
+Reduce text everywhere.
+
+Use:
+
+Illustrations
+
+Icons
+
+Maps
+
+Timelines
+
+Infographics
+
+Charts
+
+Cards
+
+Interactive widgets
+
+Instead of paragraphs.
+
+---
+
+# Performance
+
+Fix:
+
+* disappearing seeded data
+* unnecessary rerenders
+* hydration mismatch
+* loading glitches
+* empty states replacing mock data
+* state resets
+* stale cache
+* duplicate rendering
+* broken chart refresh
+* table flickering
+* profile disappearing after navigation
+
+The application should behave like a production SaaS platform.
+
+---
+
+# Code Quality
+
+Refactor where necessary.
+
+Use reusable components.
+
+Consistent spacing.
+
+Consistent typography.
+
+Responsive layouts.
+
+Dark theme consistency.
+
+Accessibility compliant.
+
+Fast rendering.
+
+Maintainable architecture.
+
+---
+
+# Final Acceptance Criteria
+
+The work is complete only if:
+
+* ✅ Every screen has been audited and redesigned.
+* ✅ Every dashboard has realistic, persistent seeded data.
+* ✅ No seeded data disappears after loading or navigation.
+* ✅ No page displays accidental `0`, `-`, `null`, `undefined`, or blank values (except the brand-new candidate dashboard after AI onboarding).
+* ✅ All charts, maps, tables, and KPIs remain stable across refreshes and route changes.
+* ✅ Employer, Government, Candidate, Trainer, Facilitator, and Admin portals all feel like complete enterprise products.
+* ✅ Resume parsing, German translation, preview, and downloadable PDF work end-to-end.
+* ✅ The login experience is simplified to one Demo Candidate and one AI-powered "New to Germany?" onboarding flow.
+* ✅ Government dashboards feature rich interactive maps, drill-down analytics, and modern data visualizations.
+* ✅ The UI is clean, premium, spacious, and visually driven rather than text-heavy.
+* ✅ There are no placeholder components, broken layouts, unfinished sections, missing mock data, rendering glitches, or inconsistent design patterns anywhere in the application.
+
+**Do not stop after implementing individual tasks. Continue auditing, refining, and fixing every remaining inconsistency until the entire platform feels like a polished, production-ready enterprise application worthy of demonstration to the Government of Maharashtra and German enterprise partners.**

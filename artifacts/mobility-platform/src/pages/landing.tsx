@@ -3,15 +3,16 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { User, Briefcase, GraduationCap, Map, Building, ShieldCheck, Zap, ChevronDown, ChevronUp, Loader2, Sparkles, Bot, ArrowRight, Globe, CheckCircle2 } from 'lucide-react';
+import {
+  Loader2, Sparkles, ArrowRight, Globe, CheckCircle2, ShieldCheck,
+  ChevronDown, ChevronUp, Bot, Zap, Users, Building, MapPin, Star
+} from 'lucide-react';
 import axios from 'axios';
 import { useLocation } from 'wouter';
 
 const ACCENT = '#A855F7';
-const ACCENT2 = '#C084FC';
 const BG = '#0F0520';
 const CARD = '#1A0B3B';
 const CARD2 = '#130828';
@@ -19,58 +20,46 @@ const TEXT2 = '#C4B5FD';
 const BORDER = 'rgba(168,85,247,0.2)';
 const SUCCESS = '#00C853';
 
-const roles = [
-  { id: 'candidate',   title: 'Candidate',   emoji: '👷', desc: 'Skilled worker seeking German employment', stat: '24,318 active', color: '#A855F7' },
-  { id: 'employer',    title: 'Employer',    emoji: '🏢', desc: 'German company hiring Indian talent',        stat: '523 onboarded', color: '#818CF8' },
-  { id: 'trainer',     title: 'Trainer',     emoji: '📚', desc: 'Language & vocational skills institute',    stat: '47 institutes', color: '#34D399' },
-  { id: 'facilitator', title: 'Facilitator', emoji: '🗺️', desc: 'Migration & visa support agency',          stat: '38 agencies',   color: '#C084FC' },
-  { id: 'government',  title: 'Government',  emoji: '🏛️', desc: 'Ministry of Skill Development portal',    stat: 'MSDE official',  color: '#F59E0B' },
-  { id: 'admin',       title: 'Admin',       emoji: '🛡️', desc: 'Platform administration & system access', stat: 'System access',  color: '#EF4444' },
-];
-
-const demoCreds = [
-  { role: 'candidate', label: 'Arjun Sharma',       sub: 'Automotive Mechanic · Employer Matching', email: 'arjun.sharma@gmail.com',     password: 'Demo@1234', badge: '78/100',         color: ACCENT },
-  { role: 'candidate', label: 'Priya Nair',          sub: 'Nurse · Visa Readiness — Offer received!',  email: 'priya.nair@gmail.com',        password: 'Demo@1234', badge: '91/100',         color: SUCCESS },
-  { role: 'candidate', label: 'Ravi Kumar',          sub: 'Electrician · Language Training (B1)',       email: 'ravi.kumar@gmail.com',        password: 'Demo@1234', badge: '52/100',         color: ACCENT2 },
-  { role: 'fresh',     label: 'New to Germany?',     sub: 'AI asks your details, builds your German resume & roadmap', email: '', password: '', badge: '🤖 AI Onboarding', color: '#E879F9' },
-  { role: 'employer',  label: 'Robert Bosch GmbH',   sub: 'Automotive · Stuttgart',                     email: 'hr@bosch-germany.de',         password: 'Demo@1234', badge: 'Employer',       color: '#818CF8' },
-  { role: 'employer',  label: 'BerlinCare Pflege',   sub: 'Healthcare · Berlin',                        email: 'jobs@carehome-berlin.de',     password: 'Demo@1234', badge: 'Employer',       color: '#818CF8' },
-  { role: 'trainer',   label: 'Goethe-Institut Pune',sub: 'Language Training · A1–B2',                  email: 'admin@goethe-pune.in',        password: 'Demo@1234', badge: 'Trainer',        color: '#34D399' },
-  { role: 'facilitator',label:'Indo-German Careers', sub: 'Migration Support Agency',                   email: 'ops@indiagermanyjobs.in',     password: 'Demo@1234', badge: 'Facilitator',    color: ACCENT },
-  { role: 'government',label: 'MSDE Official',       sub: 'Ministry of Skill Development',              email: 'official@msde.gov.in',        password: 'Demo@1234', badge: 'Government',     color: '#F59E0B' },
-  { role: 'admin',     label: 'Platform Admin',      sub: 'Indo German System Admin',                   email: 'admin@mobicorridor.in',       password: 'Demo@1234', badge: 'Admin',          color: '#EF4444' },
-];
-
 const loginSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(1, 'Password is required'),
+  password: z.string().min(1),
 });
+
+const DEMO_CANDIDATE = {
+  name: 'Arjun Sharma',
+  role: 'Automotive Mechanic',
+  location: 'Pune, Maharashtra',
+  email: 'arjun.sharma@gmail.com',
+  password: 'Demo@1234',
+  readiness: 78,
+  stage: 'Employer Matching',
+  langLevel: 'B1',
+  employer: 'Bosch GmbH — Interview Scheduled',
+  tags: ['IHK Recognized', 'B1 Certified', 'Visa Ready'],
+};
 
 export function LandingPage() {
   const { login } = useAuth();
   const [, setLocation] = useLocation();
-  const [selectedRole, setSelectedRole] = useState<string>('candidate');
-  const [showDemo, setShowDemo] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [loginError, setLoginError] = useState<string | null>(null);
+  const [showForm, setShowForm] = useState(false);
 
   const loginForm = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: '', password: '' }
   });
 
-  const handleQuickFill = async (cred: typeof demoCreds[0]) => {
-    if (cred.role === 'fresh') { setLocation('/onboarding'); return; }
-    setSelectedRole(cred.role);
-    setLoginError(null);
-    loginForm.setValue('email', cred.email);
-    loginForm.setValue('password', cred.password);
-    setIsLoading(true);
+  const handleDemoLogin = async () => {
+    setIsLoading(true); setLoginError(null);
     try {
-      const res = await axios.post('/api/auth/login', { email: cred.email, password: cred.password });
+      const res = await axios.post('/api/auth/login', {
+        email: DEMO_CANDIDATE.email,
+        password: DEMO_CANDIDATE.password,
+      });
       login(res.data.user, res.data.token);
     } catch (err: any) {
-      setLoginError(err?.response?.data?.error || 'Invalid credentials.');
+      setLoginError(err?.response?.data?.error || 'Unable to sign in. Please try again.');
     } finally { setIsLoading(false); }
   };
 
@@ -84,89 +73,89 @@ export function LandingPage() {
     } finally { setIsLoading(false); }
   };
 
-  const filteredDemos = demoCreds.filter(d => d.role === selectedRole || (selectedRole === 'candidate' && d.role === 'fresh'));
-
   return (
     <div className="min-h-screen flex flex-col lg:flex-row" style={{ background: BG }}>
 
-      {/* ── Animated BG blobs ── */}
+      {/* Ambient blobs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full opacity-20 blur-3xl" style={{ background: 'radial-gradient(circle, #A855F7, transparent)' }} />
-        <div className="absolute top-1/2 -right-20 w-80 h-80 rounded-full opacity-15 blur-3xl" style={{ background: 'radial-gradient(circle, #7C3AED, transparent)' }} />
-        <div className="absolute -bottom-20 left-1/3 w-72 h-72 rounded-full opacity-10 blur-3xl" style={{ background: 'radial-gradient(circle, #C084FC, transparent)' }} />
+        <div className="absolute -top-48 -left-48 w-[500px] h-[500px] rounded-full opacity-[0.12] blur-3xl" style={{ background: 'radial-gradient(circle, #7C3AED, transparent)' }} />
+        <div className="absolute top-1/3 -right-32 w-96 h-96 rounded-full opacity-10 blur-3xl" style={{ background: 'radial-gradient(circle, #A855F7, transparent)' }} />
+        <div className="absolute -bottom-32 left-1/4 w-80 h-80 rounded-full opacity-[0.08] blur-3xl" style={{ background: 'radial-gradient(circle, #C084FC, transparent)' }} />
       </div>
 
-      {/* ── Left Panel ── */}
-      <div className="relative z-10 lg:w-[55%] text-white p-8 lg:p-14 flex flex-col justify-between"
-        style={{ background: 'linear-gradient(145deg, #0F0520 0%, #1A0B3B 60%, #200D45 100%)' }}>
+      {/* ── LEFT HERO PANEL ── */}
+      <div className="relative z-10 lg:w-[58%] text-white p-10 lg:p-16 flex flex-col justify-between"
+        style={{ background: 'linear-gradient(150deg, #0A0118 0%, #130828 50%, #1A0B3B 100%)' }}>
 
-        <div>
-          {/* Logo */}
-          <div className="flex items-center gap-3 mb-12">
-            <div className="w-12 h-12 rounded-2xl flex items-center justify-center font-black text-lg relative overflow-hidden"
-              style={{ background: 'linear-gradient(135deg, #7C3AED, #A855F7)', boxShadow: '0 0 20px rgba(168,85,247,0.5)' }}>
-              <span className="relative z-10 text-white">IG</span>
-            </div>
-            <div>
-              <div className="font-black text-xl tracking-tight text-white">Indo German</div>
-              <div className="text-[10px] tracking-widest uppercase" style={{ color: TEXT2 }}>Mobility Corridor Platform</div>
-            </div>
+        {/* Logo */}
+        <div className="flex items-center gap-3 mb-16">
+          <div className="w-11 h-11 rounded-2xl flex items-center justify-center font-black text-lg"
+            style={{ background: 'linear-gradient(135deg, #6D28D9, #A855F7)', boxShadow: '0 0 24px rgba(168,85,247,0.45)' }}>
+            IG
+          </div>
+          <div>
+            <div className="font-black text-xl tracking-tight">Indo German</div>
+            <div className="text-[9px] tracking-[0.2em] uppercase" style={{ color: '#6B3FA0' }}>Mobility Corridor Platform</div>
+          </div>
+        </div>
+
+        {/* Hero text */}
+        <div className="flex-1 flex flex-col justify-center max-w-xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-8 w-fit"
+            style={{ background: 'rgba(168,85,247,0.12)', border: '1px solid rgba(168,85,247,0.25)', color: '#C4B5FD' }}>
+            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: SUCCESS }} />
+            Live · 24,318 Candidates · 523 German Employers
           </div>
 
-          {/* Headline */}
-          <div className="mb-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold mb-5"
-              style={{ background: 'rgba(168,85,247,0.15)', border: '1px solid rgba(168,85,247,0.3)', color: ACCENT2 }}>
-              <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: SUCCESS }} />
-              Live Platform · 24,318 Candidates Active
-            </div>
-            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-black leading-[1.05] mb-4">
-              Your career in<br />
-              <span className="relative">
-                <span style={{ background: 'linear-gradient(90deg, #A855F7, #C084FC, #E879F9)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                  Germany
-                </span>
-              </span>
-              <br />starts here.
-            </h1>
-            <p className="text-base leading-relaxed max-w-lg" style={{ color: TEXT2 }}>
-              A verified digital pipeline connecting Indian skilled workers with German employers — language training, credential recognition, visa support &amp; post-arrival, end-to-end.
-            </p>
-          </div>
+          <h1 className="text-5xl xl:text-6xl font-black leading-[1.05] mb-6">
+            Your career<br />
+            in{' '}
+            <span style={{
+              background: 'linear-gradient(90deg, #A855F7 0%, #C084FC 50%, #E879F9 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}>
+              Germany
+            </span>
+            <br />starts here.
+          </h1>
+
+          <p className="text-base leading-relaxed mb-10" style={{ color: '#8B6DB2' }}>
+            A verified digital pipeline connecting Indian skilled workers with German employers —
+            language training, credential recognition, visa support, and post-arrival integration.
+          </p>
 
           {/* Stats */}
           <div className="grid grid-cols-3 gap-3 mb-10">
             {[
-              { n: '10,847',     l: 'Active Job Openings' },
-              { n: '523',        l: 'Verified German Employers' },
-              { n: '3,612',      l: 'Successful Placements' },
-              { n: '96.4%',      l: 'Visa Success Rate' },
-              { n: '€52,400',    l: 'Average Annual Salary' },
-              { n: '16',         l: 'German States Hiring' },
+              { n: '10,847', l: 'Active Job Openings' },
+              { n: '96.4%', l: 'Visa Success Rate' },
+              { n: '€52,400', l: 'Avg. Annual Salary' },
+              { n: '3,612', l: 'Successful Placements' },
+              { n: '47', l: 'Training Institutes' },
+              { n: '16', l: 'German States Hiring' },
             ].map(s => (
-              <div key={s.l} className="rounded-2xl p-4 relative overflow-hidden group transition-all hover:scale-105"
-                style={{ background: 'rgba(168,85,247,0.07)', border: '1px solid rgba(168,85,247,0.15)' }}>
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity" style={{ background: 'rgba(168,85,247,0.05)' }} />
-                <div className="text-xl font-black mb-1" style={{ color: ACCENT }}>{s.n}</div>
-                <div className="text-xs font-medium leading-tight" style={{ color: TEXT2 }}>{s.l}</div>
+              <div key={s.l} className="rounded-2xl p-4 transition-all hover:scale-[1.02]"
+                style={{ background: 'rgba(168,85,247,0.06)', border: '1px solid rgba(168,85,247,0.12)' }}>
+                <div className="text-2xl font-black mb-0.5" style={{ color: ACCENT }}>{s.n}</div>
+                <div className="text-xs leading-tight" style={{ color: '#6B3FA0' }}>{s.l}</div>
               </div>
             ))}
           </div>
 
           {/* Journey steps */}
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             {[
               'Registration & Eligibility Assessment',
               'Language Training (A1 → B2)',
               'Qualification Recognition (ZAB / ANABIN)',
-              'Document Vault & Verification',
               'Employer Matching & Interviews',
               'Visa Application & Pre-departure',
               'Arrival & Integration in Germany 🇩🇪',
             ].map((s, i) => (
-              <div key={i} className="flex items-center gap-3 text-sm" style={{ color: TEXT2 }}>
+              <div key={i} className="flex items-center gap-3 text-sm" style={{ color: '#7C5BA8' }}>
                 <div className="w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black flex-shrink-0"
-                  style={{ background: `linear-gradient(135deg, ${i < 3 ? '#7C3AED' : '#A855F7'}, ${i < 3 ? '#A855F7' : '#C084FC'})`, color: '#fff' }}>
+                  style={{ background: `linear-gradient(135deg,${i < 2 ? '#6D28D9,#A855F7' : i < 4 ? '#A855F7,#C084FC' : '#C084FC,#E879F9'})`, color: '#fff' }}>
                   {i + 1}
                 </div>
                 {s}
@@ -175,181 +164,220 @@ export function LandingPage() {
           </div>
         </div>
 
-        <div className="mt-8 text-xs" style={{ color: '#3D2060' }}>
-          © {new Date().getFullYear()} Indo German Mobility Corridor Platform · Indo-German Partnership Initiative
+        <div className="mt-12 text-[11px]" style={{ color: '#2D1555' }}>
+          © {new Date().getFullYear()} Indo German Mobility Corridor · Indo–German Partnership Initiative
         </div>
       </div>
 
-      {/* ── Right Panel (Login) ── */}
-      <div className="relative z-10 lg:w-[45%] flex items-start lg:items-center justify-center p-6 lg:p-10 overflow-y-auto"
-        style={{ background: 'linear-gradient(180deg, #130828 0%, #0F0520 100%)' }}>
-        <div className="w-full max-w-md">
+      {/* ── RIGHT LOGIN PANEL ── */}
+      <div className="relative z-10 lg:w-[42%] flex items-center justify-center p-8 lg:p-12 overflow-y-auto"
+        style={{ background: 'linear-gradient(180deg, #0D0520 0%, #0A0118 100%)' }}>
+        <div className="w-full max-w-sm">
 
-          {/* Header */}
-          <div className="mb-6">
-            <h2 className="text-2xl font-black text-white mb-1">Sign in to your dashboard</h2>
-            <p className="text-sm" style={{ color: TEXT2 }}>Select a role and use a quick demo login, or enter credentials.</p>
+          <div className="mb-8">
+            <h2 className="text-2xl font-black text-white mb-1">Welcome</h2>
+            <p className="text-sm" style={{ color: TEXT2 }}>Choose how you'd like to explore the platform.</p>
           </div>
 
-          {/* Role selector — world-class stakeholder cards */}
-          <div className="mb-5">
-            <div className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: TEXT2 }}>
-              Choose your stakeholder role
-            </div>
-            <div className="grid grid-cols-3 gap-2">
-              {roles.map(r => {
-                const isActive = selectedRole === r.id;
-                return (
-                  <button key={r.id} onClick={() => setSelectedRole(r.id)}
-                    className="relative flex flex-col items-start gap-1 p-3 rounded-2xl text-left transition-all duration-200 hover:scale-[1.03] active:scale-[0.98] overflow-hidden group"
-                    style={{
-                      background: isActive ? `${r.color}18` : 'rgba(255,255,255,0.03)',
-                      border: `1.5px solid ${isActive ? r.color : 'rgba(255,255,255,0.07)'}`,
-                      boxShadow: isActive ? `0 0 16px ${r.color}30, inset 0 0 16px ${r.color}08` : 'none',
-                    }}>
-                    {/* Glow blob when active */}
-                    {isActive && (
-                      <div className="absolute -top-4 -right-4 w-16 h-16 rounded-full opacity-20 blur-xl pointer-events-none"
-                        style={{ background: r.color }} />
-                    )}
-                    <span className="text-xl leading-none">{r.emoji}</span>
-                    <span className="text-xs font-black tracking-wide leading-tight"
-                      style={{ color: isActive ? r.color : '#fff' }}>
-                      {r.title.toUpperCase()}
-                    </span>
-                    <span className="text-[9px] leading-tight hidden sm:block" style={{ color: isActive ? `${r.color}cc` : 'rgba(196,181,253,0.5)' }}>
-                      {r.stat}
-                    </span>
-                    {isActive && (
-                      <span className="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full animate-pulse"
-                        style={{ background: r.color }} />
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
+          {/* ── Card 1: Demo Candidate ── */}
+          <button
+            onClick={handleDemoLogin}
+            disabled={isLoading}
+            className="w-full text-left mb-4 rounded-2xl overflow-hidden transition-all hover:scale-[1.01] active:scale-[0.99] group disabled:opacity-70"
+            style={{
+              background: 'linear-gradient(135deg, #1E0D3F 0%, #2A1258 100%)',
+              border: '1.5px solid rgba(168,85,247,0.35)',
+              boxShadow: '0 8px 32px rgba(168,85,247,0.12)',
+            }}
+          >
+            {/* Card header */}
+            <div className="px-5 pt-5 pb-3">
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center font-black text-base"
+                    style={{ background: 'linear-gradient(135deg, #6D28D9, #A855F7)', boxShadow: '0 0 12px rgba(168,85,247,0.4)' }}>
+                    A
+                  </div>
+                  <div>
+                    <div className="font-bold text-white text-base">{DEMO_CANDIDATE.name}</div>
+                    <div className="text-xs" style={{ color: TEXT2 }}>{DEMO_CANDIDATE.role} · {DEMO_CANDIDATE.location}</div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-black" style={{ color: SUCCESS }}>{DEMO_CANDIDATE.readiness}</div>
+                  <div className="text-[9px] uppercase tracking-widest" style={{ color: TEXT2 }}>/ 100</div>
+                </div>
+              </div>
 
-          {/* Demo logins */}
-          <div className="mb-5">
-            <button className="flex items-center justify-between w-full text-sm font-semibold mb-3"
-              style={{ color: TEXT2 }} onClick={() => setShowDemo(v => !v)}>
-              <span className="flex items-center gap-2">
-                <Zap className="w-4 h-4" style={{ color: ACCENT }} />
-                Quick Demo Logins
-              </span>
-              {showDemo ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+              {/* Progress bar */}
+              <div className="h-1.5 rounded-full overflow-hidden mb-3" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                <div className="h-full rounded-full" style={{ width: `${DEMO_CANDIDATE.readiness}%`, background: `linear-gradient(90deg, ${ACCENT}, ${SUCCESS})` }} />
+              </div>
+
+              {/* Metric pills */}
+              <div className="grid grid-cols-3 gap-2 mb-3">
+                <div className="rounded-xl p-2 text-center" style={{ background: 'rgba(168,85,247,0.08)' }}>
+                  <div className="text-[10px]" style={{ color: TEXT2 }}>Stage</div>
+                  <div className="text-xs font-bold text-white truncate">{DEMO_CANDIDATE.stage}</div>
+                </div>
+                <div className="rounded-xl p-2 text-center" style={{ background: 'rgba(168,85,247,0.08)' }}>
+                  <div className="text-[10px]" style={{ color: TEXT2 }}>German</div>
+                  <div className="text-xs font-bold" style={{ color: ACCENT }}>{DEMO_CANDIDATE.langLevel}</div>
+                </div>
+                <div className="rounded-xl p-2 text-center" style={{ background: 'rgba(0,200,83,0.08)' }}>
+                  <div className="text-[10px]" style={{ color: TEXT2 }}>Status</div>
+                  <div className="text-xs font-bold" style={{ color: SUCCESS }}>Active</div>
+                </div>
+              </div>
+
+              <div className="text-xs mb-3 rounded-lg px-3 py-2" style={{ background: 'rgba(0,200,83,0.08)', color: SUCCESS, border: '1px solid rgba(0,200,83,0.2)' }}>
+                🏢 {DEMO_CANDIDATE.employer}
+              </div>
+
+              <div className="flex flex-wrap gap-1.5">
+                {DEMO_CANDIDATE.tags.map(t => (
+                  <span key={t} className="text-[10px] font-medium px-2 py-0.5 rounded-full"
+                    style={{ background: 'rgba(168,85,247,0.12)', color: ACCENT, border: '1px solid rgba(168,85,247,0.2)' }}>
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* CTA footer */}
+            <div className="px-5 py-3 flex items-center justify-between"
+              style={{ borderTop: '1px solid rgba(168,85,247,0.15)', background: 'rgba(168,85,247,0.04)' }}>
+              <span className="text-xs font-semibold" style={{ color: TEXT2 }}>View full candidate journey</span>
+              <div className="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg transition-all group-hover:translate-x-0.5"
+                style={{ background: ACCENT, color: '#0F0520' }}>
+                {isLoading ? <Loader2 className="w-3 h-3 animate-spin" /> : <><span>Enter as Arjun</span><ArrowRight className="w-3.5 h-3.5" /></>}
+              </div>
+            </div>
+          </button>
+
+          {/* ── Card 2: AI Onboarding ── */}
+          <button
+            onClick={() => setLocation('/onboarding')}
+            className="w-full text-left mb-6 rounded-2xl overflow-hidden transition-all hover:scale-[1.01] active:scale-[0.99] group"
+            style={{
+              background: 'linear-gradient(135deg, #1A0830 0%, #220B42 100%)',
+              border: '1.5px solid rgba(232,121,249,0.3)',
+              boxShadow: '0 8px 32px rgba(232,121,249,0.08)',
+            }}
+          >
+            <div className="p-5">
+              <div className="flex items-start gap-4">
+                {/* Illustration */}
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 relative overflow-hidden"
+                  style={{ background: 'linear-gradient(135deg, rgba(124,58,237,0.3), rgba(232,121,249,0.2))', border: '1.5px solid rgba(232,121,249,0.3)' }}>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    {/* Chat bubbles illustration */}
+                    <div className="relative">
+                      <div className="absolute -top-3 -left-4 w-6 h-4 rounded-full rounded-bl-none" style={{ background: 'rgba(232,121,249,0.4)' }} />
+                      <div className="absolute -bottom-2 -right-4 w-8 h-4 rounded-full rounded-br-none" style={{ background: 'rgba(168,85,247,0.5)' }} />
+                      <Bot className="w-6 h-6 relative z-10" style={{ color: '#E879F9' }} />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="font-bold text-white text-base">New to Germany?</span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                      style={{ background: 'rgba(232,121,249,0.15)', color: '#E879F9', border: '1px solid rgba(232,121,249,0.25)' }}>AI</span>
+                  </div>
+                  <p className="text-xs leading-relaxed mb-3" style={{ color: TEXT2 }}>
+                    Our AI guide asks you 10 conversational questions, then instantly builds your
+                    German <strong className="text-white">Lebenslauf</strong>, calculates your{' '}
+                    <strong style={{ color: ACCENT }}>readiness score</strong>, and maps your{' '}
+                    <strong style={{ color: SUCCESS }}>migration timeline</strong>.
+                  </p>
+                  <div className="flex gap-3 text-[11px]" style={{ color: '#9B7DB6' }}>
+                    <span>✦ 10 questions</span>
+                    <span>✦ ~90 seconds</span>
+                    <span>✦ Free &amp; private</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="px-5 py-3 flex items-center justify-between"
+              style={{ borderTop: '1px solid rgba(232,121,249,0.12)', background: 'rgba(232,121,249,0.04)' }}>
+              <div className="flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5" style={{ color: '#E879F9' }} />
+                <span className="text-xs font-semibold" style={{ color: '#E879F9' }}>Powered by Groq LLaMA</span>
+              </div>
+              <div className="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg group-hover:translate-x-0.5 transition-all"
+                style={{ background: 'linear-gradient(135deg, #7C3AED, #A855F7)', color: '#fff' }}>
+                Start AI Journey <ArrowRight className="w-3.5 h-3.5" />
+              </div>
+            </div>
+          </button>
+
+          {/* Demo login error — always visible */}
+          {loginError && !showForm && (
+            <div className="text-xs text-red-400 bg-red-400/10 border border-red-400/20 rounded-xl px-3 py-2 mb-3">{loginError}</div>
+          )}
+
+          {/* Manual login toggle */}
+          <div>
+            <button
+              onClick={() => setShowForm(v => !v)}
+              className="flex items-center justify-between w-full text-xs mb-3"
+              style={{ color: '#9B7DB6' }}
+            >
+              <span>Sign in with credentials</span>
+              {showForm ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
             </button>
 
-            {showDemo && (
-              <div className="space-y-2 max-h-64 overflow-y-auto pr-0.5">
-                {filteredDemos.map((cred, i) => {
-                  const isFresh = cred.role === 'fresh';
-                  return (
-                    <button key={i} onClick={() => handleQuickFill(cred)} disabled={isLoading}
-                      className="w-full text-left p-3 rounded-xl transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-60 group"
-                      style={{
-                        background: `rgba(${isFresh ? '232,121,249' : '168,85,247'},0.06)`,
-                        border: `1px solid rgba(${isFresh ? '232,121,249' : '168,85,247'},0.2)`,
-                      }}>
-                      <div className="flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-2.5 min-w-0">
-                          <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm"
-                            style={{ background: `${cred.color}20`, color: cred.color }}>
-                            {isFresh ? <Bot className="w-4 h-4" /> : cred.label.charAt(0)}
-                          </div>
-                          <div className="min-w-0">
-                            <div className="text-sm font-semibold text-white truncate">{cred.label}</div>
-                            <div className="text-xs truncate" style={{ color: TEXT2 }}>{cred.sub}</div>
-                          </div>
-                        </div>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 whitespace-nowrap"
-                          style={{ background: `${cred.color}18`, color: cred.color, border: `1px solid ${cred.color}30` }}>
-                          {cred.badge}
-                        </span>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
+            {showForm && (
+              <Form {...loginForm}>
+                <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-3">
+                  <FormField control={loginForm.control} name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input {...field} type="email" placeholder="Email address"
+                            className="text-white placeholder:text-purple-400/40 text-sm border"
+                            style={{ background: CARD, borderColor: 'rgba(168,85,247,0.2)', color: '#fff', borderRadius: 12 }} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                  <FormField control={loginForm.control} name="password"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input {...field} type="password" placeholder="Password"
+                            className="text-white placeholder:text-purple-400/40 text-sm border"
+                            style={{ background: CARD, borderColor: 'rgba(168,85,247,0.2)', color: '#fff', borderRadius: 12 }} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+
+                  {loginError && (
+                    <div className="text-xs text-red-400 bg-red-400/10 border border-red-400/20 rounded-xl px-3 py-2">{loginError}</div>
+                  )}
+
+                  <button type="submit" disabled={isLoading}
+                    className="w-full py-2.5 rounded-xl font-bold text-white text-sm transition-all hover:opacity-90 flex items-center justify-center gap-2 disabled:opacity-60"
+                    style={{ background: 'linear-gradient(135deg, #6D28D9, #A855F7)' }}>
+                    {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Sign In'}
+                  </button>
+                </form>
+              </Form>
             )}
           </div>
 
-          {/* Divider */}
-          <div className="flex items-center gap-3 mb-5">
-            <div className="flex-1 h-px" style={{ background: 'rgba(168,85,247,0.15)' }} />
-            <span className="text-xs" style={{ color: '#5B3B8A' }}>or enter credentials</span>
-            <div className="flex-1 h-px" style={{ background: 'rgba(168,85,247,0.15)' }} />
-          </div>
-
-          {/* Login form */}
-          <Form {...loginForm}>
-            <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-4">
-              <FormField control={loginForm.control} name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-sm font-medium" style={{ color: TEXT2 }}>Email</FormLabel>
-                    <FormControl>
-                      <Input {...field} type="email" placeholder="you@example.com"
-                        className="text-white placeholder:text-purple-300 border transition-all focus:ring-2 focus:ring-purple-500/20"
-                        style={{ background: '#1A0B3B', borderColor: 'rgba(168,85,247,0.2)', color: '#fff' }} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )} />
-              <FormField control={loginForm.control} name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-sm font-medium" style={{ color: TEXT2 }}>Password</FormLabel>
-                    <FormControl>
-                      <Input {...field} type="password" placeholder="••••••••"
-                        className="text-white placeholder:text-purple-300 border transition-all focus:ring-2 focus:ring-purple-500/20"
-                        style={{ background: '#1A0B3B', borderColor: 'rgba(168,85,247,0.2)', color: '#fff' }} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )} />
-
-              {loginError && (
-                <div className="text-sm text-red-400 bg-red-400/10 border border-red-400/20 rounded-xl p-3">{loginError}</div>
-              )}
-
-              <button type="submit" disabled={isLoading}
-                className="w-full py-3 rounded-xl font-bold text-white text-sm transition-all hover:opacity-90 active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-60"
-                style={{ background: 'linear-gradient(135deg, #7C3AED, #A855F7)', boxShadow: '0 4px 20px rgba(168,85,247,0.35)' }}>
-                {isLoading ? <><Loader2 className="w-4 h-4 animate-spin" /> Signing in…</> : <>Sign In <ArrowRight className="w-4 h-4" /></>}
-              </button>
-            </form>
-          </Form>
-
-          {/* AI Onboarding CTA */}
-          <div className="mt-5 p-4 rounded-2xl relative overflow-hidden"
-            style={{ background: 'linear-gradient(135deg, rgba(124,58,237,0.15), rgba(232,121,249,0.08))', border: '1px solid rgba(168,85,247,0.25)' }}>
-            <div className="absolute top-0 right-0 w-20 h-20 rounded-full opacity-10 blur-xl" style={{ background: '#E879F9' }} />
-            <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-1.5">
-                <Sparkles className="w-4 h-4" style={{ color: '#E879F9' }} />
-                <span className="text-sm font-bold" style={{ color: '#E879F9' }}>AI Onboarding — Fresh Start</span>
-              </div>
-              <p className="text-xs mb-3" style={{ color: TEXT2 }}>
-                New to Germany? Our AI guide builds your German resume &amp; full migration roadmap in minutes.
-              </p>
-              <button onClick={() => setLocation('/onboarding')}
-                className="flex items-center gap-2 text-xs font-bold px-4 py-2 rounded-xl transition-all hover:opacity-90 active:scale-95"
-                style={{ background: 'linear-gradient(135deg, rgba(124,58,237,0.4), rgba(232,121,249,0.3))', color: '#E879F9', border: '1px solid rgba(232,121,249,0.3)' }}>
-                🤖 Start AI Journey <ArrowRight className="w-3 h-3" />
-              </button>
-            </div>
-          </div>
-
           {/* Trust badges */}
-          <div className="mt-5 flex items-center justify-center gap-4">
+          <div className="mt-6 flex items-center justify-center gap-5">
             {[
-              { icon: <CheckCircle2 className="w-3.5 h-3.5" />, text: 'MSDE Aligned' },
-              { icon: <Globe className="w-3.5 h-3.5" />, text: 'FOSA Verified' },
-              { icon: <ShieldCheck className="w-3.5 h-3.5" />, text: 'GDPR Compliant' },
+              { icon: <CheckCircle2 className="w-3 h-3" />, text: 'MSDE Aligned' },
+              { icon: <Globe className="w-3 h-3" />, text: 'FOSA Verified' },
+              { icon: <ShieldCheck className="w-3 h-3" />, text: 'GDPR Compliant' },
             ].map((b, i) => (
-              <div key={i} className="flex items-center gap-1 text-[10px] font-medium" style={{ color: '#5B3B8A' }}>
+              <div key={i} className="flex items-center gap-1 text-[10px] font-medium" style={{ color: '#7C5BA8' }}>
                 {b.icon} {b.text}
               </div>
             ))}

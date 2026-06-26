@@ -171,8 +171,8 @@ export function GovernmentDashboard() {
             <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: SUCCESS }} />
             <span className="text-xs font-bold uppercase tracking-wider" style={{ color: SUCCESS }}>Live Dashboard</span>
           </div>
-          <h1 className="text-3xl font-black text-white tracking-tight">Indo-German Command Center</h1>
-          <p className="mt-1 text-sm" style={{ color: TEXT2 }}>Ministry of Skill Development · Real-time analytics</p>
+          <h1 className="text-3xl font-black text-white tracking-tight">Government of Maharashtra</h1>
+          <p className="mt-1 text-sm" style={{ color: TEXT2 }}>Indo-German Mobility Command Center · Real-time analytics</p>
         </div>
         <div className="flex items-center gap-2 px-4 py-2 rounded-xl" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
           <Clock className="w-4 h-4" style={{ color: ACCENT }} />

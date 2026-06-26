@@ -1,0 +1,655 @@
+You are redesigning the Government of Maharashtra Intelligence Dashboard.
+
+Forget the current implementation.
+
+It is too basic, text-heavy, and looks like a student dashboard.
+
+Build something that looks like a combination of:
+
+Palantir Foundry
+ArcGIS Dashboards
+Tableau Enterprise
+Microsoft Power BI
+Datadog
+Snowflake Horizon
+Airbus Intelligence Dashboard
+Government Command Centre
+Deloitte Public Sector Analytics
+
+This is NOT a CRUD dashboard.
+
+This is a live decision-making platform used by IAS Officers, Government Officials and Policy Makers.
+
+PRIMARY OBJECTIVE
+
+Replace numbers and tables with intelligence.
+
+Every screen should answer questions visually.
+
+Government officers should understand migration status within seconds.
+
+1. COMPLETE PIPELINE REDESIGN
+
+The current pipeline is unacceptable.
+
+Do NOT use a horizontal bar chart.
+
+Do NOT use simple progress bars.
+
+Do NOT use stacked rectangles.
+
+Instead build a true End-to-End Migration Intelligence Pipeline.
+
+Think of it as an airport baggage tracking system or supply chain flow.
+
+The pipeline should contain every stage:
+
+Discovery
+
+↓
+
+Registration
+
+↓
+
+Eligibility Verification
+
+↓
+
+Qualification Assessment
+
+↓
+
+German Language Learning
+
+↓
+
+A1
+
+↓
+
+A2
+
+↓
+
+B1
+
+↓
+
+B2
+
+↓
+
+Document Collection
+
+↓
+
+Document Verification
+
+↓
+
+Qualification Recognition
+
+↓
+
+Employer Matching
+
+↓
+
+Interview Scheduled
+
+↓
+
+Interview Completed
+
+↓
+
+Offer Letter
+
+↓
+
+Visa Documentation
+
+↓
+
+Visa Submitted
+
+↓
+
+Visa Approved
+
+↓
+
+Pre Departure
+
+↓
+
+Travel
+
+↓
+
+Arrived Germany
+
+↓
+
+Employer Onboarding
+
+↓
+
+Working
+
+↓
+
+Retention (6 months)
+
+↓
+
+Retention (1 year)
+
+Each stage should display:
+
+Number of candidates
+
+Drop-off percentage
+
+Conversion rate
+
+Average days spent
+
+Pending
+
+Completed
+
+Risk score
+
+State average
+
+District average
+
+AI prediction
+
+2. CLICKABLE PIPELINE
+
+Every stage should be clickable.
+
+Clicking "Employer Matching"
+
+opens a beautiful popup.
+
+Not a modal full of text.
+
+A modern side panel.
+
+Inside show candidate cards.
+
+Each card contains:
+
+Photo
+
+Name
+
+Profession
+
+District
+
+Language Level
+
+Readiness Score
+
+Employer Assigned
+
+Visa Status
+
+Progress Ring
+
+Current Stage
+
+Risk Indicator
+
+ETA
+
+Documents
+
+Interview Status
+
+Hovering a candidate should show a quick preview.
+
+Clicking opens complete timeline.
+
+3. COMPLETE CANDIDATE JOURNEY
+
+Every candidate should have a complete timeline.
+
+Example:
+
+Registration
+
+↓
+
+Passed Eligibility
+
+↓
+
+Completed A1
+
+↓
+
+Completed A2
+
+↓
+
+Resume Approved
+
+↓
+
+Employer BMW
+
+↓
+
+Interview Passed
+
+↓
+
+Visa Approved
+
+↓
+
+Reached Munich
+
+↓
+
+Working
+
+Each milestone should contain:
+
+Date
+
+Officer
+
+Status
+
+Uploaded Documents
+
+Verification logs
+
+Notes
+
+Timeline
+
+Images
+
+Documents
+
+Progress
+
+4. MAPS SHOULD BE COMPLETELY REDESIGNED
+
+Current maps look basic.
+
+Either redesign them completely or replace them.
+
+Representation is more important than simply showing a map.
+
+Use modern GIS visualizations.
+
+Germany
+
+Interactive Germany map.
+
+Professional vector style.
+
+Each federal state glows.
+
+Hover:
+
+Vacancies
+
+Employers
+
+Industries
+
+Candidates required
+
+Average Salary
+
+Hiring trend
+
+Skill shortage
+
+Click:
+
+Expand into city-level analytics.
+
+Companies.
+
+Roles.
+
+Visa success.
+
+Language demand.
+
+Salary distribution.
+
+Hiring timeline.
+
+Maharashtra
+
+Professional district map.
+
+Each district colour-coded.
+
+Heatmap.
+
+Click district.
+
+Show:
+
+Registered
+
+Training
+
+Language
+
+Employer Match
+
+Visa
+
+Migration
+
+Top Profession
+
+Dropout %
+
+Women %
+
+Age Distribution
+
+Income Distribution
+
+Training Centres
+
+Skill Institutes
+
+5. DRAW LINES BETWEEN MAHARASHTRA → GERMANY
+
+This is important.
+
+Show migration flow.
+
+Animated curved lines.
+
+Example:
+
+Nagpur
+
+↓
+
+Bavaria
+
+↓
+
+BMW
+
+18 candidates
+
+Another:
+
+Pune
+
+↓
+
+Berlin
+
+↓
+
+Siemens
+
+32 candidates
+
+Another:
+
+Kolhapur
+
+↓
+
+Hamburg
+
+↓
+
+Healthcare
+
+56 nurses
+
+Government should instantly see migration routes.
+
+6. DRILL-DOWN ANALYTICS
+
+Every visualization should support drill-down.
+
+State
+
+↓
+
+District
+
+↓
+
+Taluka
+
+↓
+
+Training Centre
+
+↓
+
+Candidate
+
+↓
+
+Complete Journey
+
+No dead charts.
+
+Everything interactive.
+
+7. AI INSIGHTS PANEL
+
+Every page should contain an AI-generated insight section.
+
+Examples:
+
+"Nagpur shows a 14% increase in healthcare migration."
+
+"Kolhapur candidates require more B1 completion."
+
+"Pune engineering demand increased by 28%."
+
+"Visa approvals slowed in Bavaria."
+
+These insights should update dynamically.
+
+8. REAL COMMAND CENTER
+
+Top should feel like a live operations room.
+
+Live counters:
+
+Candidates in Germany
+
+Today's Interviews
+
+Today's Visa Approvals
+
+New Registrations
+
+Offers Released
+
+Flights Scheduled
+
+Delayed Cases
+
+Critical Cases
+
+Each updates visually.
+
+9. ADVANCED FILTERS
+
+Everything filterable.
+
+Profession
+
+District
+
+Gender
+
+Age
+
+Language
+
+Qualification
+
+Employer
+
+German State
+
+Visa Status
+
+Training Centre
+
+Migration Status
+
+Date Range
+
+10. BETTER VISUALIZATION
+
+Replace text with visuals.
+
+Use:
+
+Sankey Diagrams
+
+Flow Charts
+
+Network Graphs
+
+Chord Diagrams
+
+Treemaps
+
+Sunburst Charts
+
+Bubble Maps
+
+Heatmaps
+
+Timeline Charts
+
+Waterfall Charts
+
+Geospatial Maps
+
+Node Graphs
+
+Relationship Graphs
+
+Cluster Charts
+
+Interactive Dashboards
+
+Avoid boring tables wherever possible.
+
+11. EVERY CANDIDATE SHOULD BE SEARCHABLE
+
+Global Search.
+
+Search:
+
+Name
+
+District
+
+Employer
+
+Passport
+
+Profession
+
+Language Level
+
+Phone
+
+Candidate ID
+
+Click result.
+
+Instant popup.
+
+Complete journey.
+
+12. EVERY CARD SHOULD EXPAND
+
+Cards should not just display numbers.
+
+Click:
+
+Language Learning
+
+See all students.
+
+Click:
+
+Employer Matching
+
+See all employers.
+
+Click:
+
+Visa
+
+See pending candidates.
+
+Click:
+
+Interviews
+
+See interview schedule.
+
+Everything connected.
+
+13. REDUCE TEXT ACROSS ENTIRE APPLICATION
+
+Across the entire platform, perform a complete UX audit.
+
+Current problem:
+
+Too many paragraphs.
+Too many explanations.
+Too many labels.
+Too much repeated information.
+Crowded cards.
+Large blocks of text.
+
+Refactor every page using these principles:
+
+Replace paragraphs with concise summaries.
+Replace text with icons, charts, maps, badges, timelines, and infographics.
+Increase whitespace and visual hierarchy.
+Standardize typography, spacing, iconography, and card layouts across all dashboards.
+Remove duplicate metrics and repetitive labels.
+Use progressive disclosure: show only essential information first, with expandable details on demand.
+Every page should feel clean, premium, and executive-ready.
+14. FINAL GOAL
+
+The Government Dashboard should feel like a National Migration Command Centre, not a reporting website.
+
+When an IAS Officer opens the dashboard, they should immediately understand:
+
+Where candidates are in the pipeline.
+Which districts are performing well or poorly.
+Which German states need more skilled workers.
+Which employers are hiring.
+Where bottlenecks exist.
+Which candidates need intervention.
+What actions should be taken next.
+
+Every visualization should be interactive, drillable, and backed by persistent seeded data. Eliminate static charts, generic progress bars, and clutter. The experience should be polished enough to demonstrate to senior government officials and enterprise stakeholders with confidence.
